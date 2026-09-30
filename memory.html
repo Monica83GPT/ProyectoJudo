@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory de Vehiculos</title>
+  <link rel="stylesheet" href="memory.css">
+</head>
+<body>
+  <main class="app">
+    <section class="panel">
+      <div>
+        <p class="etiqueta">Juego memory</p>
+        <h1>Vehiculos pastel</h1>
+      </div>
+
+      <form class="controles" id="configuracion">
+        <label for="casillas">Numero de casillas</label>
+        <select id="casillas" name="casillas">
+          <option value="8">8 casillas</option>
+          <option value="12" selected>12 casillas</option>
+          <option value="16">16 casillas</option>
+          <option value="20">20 casillas</option>
+          <option value="24">24 casillas</option>
+        </select>
+        <button type="submit">Nueva partida</button>
+      </form>
+    </section>
+
+    <section class="marcador" aria-label="Marcador">
+      <article class="jugador activo" id="tarjetaJugador">
+        <span>Tu puntuacion</span>
+        <strong id="puntosJugador">0</strong>
+      </article>
+      <article class="jugador" id="tarjetaMaquina">
+        <span>Maquina</span>
+        <strong id="puntosMaquina">0</strong>
+      </article>
+      <article class="estado">
+        <span>Turno</span>
+        <strong id="turnoTexto">Jugador</strong>
+      </article>
+    </section>
+
+    <p class="mensaje" id="mensaje">Elige dos cartas para encontrar una pareja.</p>
+
+    <section class="tablero" id="tablero" aria-label="Tablero de cartas memory"></section>
+  </main>
+
+  <script src="memory.js"></script>
+</body>
+</html>
