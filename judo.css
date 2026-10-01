@@ -30,8 +30,8 @@
         }
 
         header {
-            background: #eef3f8;
-            border-bottom: 1px solid #d5e0eb;
+            background: #f8e8e8;
+            border-bottom: 1px solid #f8e8e8;
         }
 
         .nav {
@@ -55,8 +55,8 @@
         }
 
         .brand-logo {
-            width: 45px;
-            height: 52px;
+            width: clamp(46px, 5vw, 58px);
+            height: clamp(52px, 5vw, 58px);
             display: block;
             object-fit: contain;
         }
@@ -73,7 +73,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            color: #50617a;
+            color: var(--ink);
             font-size: 14px;
             font-weight: 650;
         }
@@ -83,11 +83,11 @@
         }
 
         .login {
-            border: 1px solid var(--blue);
-            border-radius: 5px;
-            padding: 10px 12px;
+            border: 0;
+            padding: 0;
             color: var(--blue);
-            font-size: 12px;
+            font-size: inherit;
+            font-weight: 800;
         }
 
         .hero {
@@ -205,7 +205,7 @@
 
         .hero-card small {
             color: var(--red);
-            text-transform: uppercase;
+            color: #ff9a9d;
             letter-spacing: .13em;
             font-size: 10px;
             font-weight: 850;

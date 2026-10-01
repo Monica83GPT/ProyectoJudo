@@ -1,17 +1,111 @@
-:root { --ink:#10233e; --blue:#123d6b; --red:#e23b42; }
-* { box-sizing:border-box; }
-body { margin:0; padding:40px 20px; background:#f6f8fb; color:var(--ink); font-family:Arial,sans-serif; }
-main { width:min(100%,1000px); margin:auto; }
-h1 { margin:0 0 7px; font-size:clamp(25px,4vw,38px); }
-.intro { margin:0 0 32px; color:#617089; }
-.preview { margin:18px 0 24px; padding:14px 0 0; border-top:1px solid #dbe4ef; }
-.preview small { display:block; margin-bottom:9px; color:#617089; font-weight:700; }
-.nav { min-height:72px; display:flex; align-items:center; gap:12px; padding:0 20px; border-bottom:1px solid #d5e0eb; color:#50617a; font-size:13px; }
-.nav strong { margin-right:auto; color:var(--blue); font-size:16px; letter-spacing:.08em; }
-.nav b { padding:10px 12px; border:1px solid var(--blue); border-radius:5px; color:var(--blue); font-size:12px; }
-.preview-actual .nav { background:#eef3f8; }
-.preview-navy .nav { background:#10233e; color:#dce8f5; border-color:#10233e; }
-.preview-navy .nav strong, .preview-navy .nav b { color:#fff; border-color:#fff; }
-.preview-warm .nav { background:#f1f0ec; }
-.preview-red .nav { background:#f8e8e8; }
-@media (max-width:700px) { .nav span { display:none; } .nav { gap:6px; padding:0 10px; } .nav b { padding:8px 7px; font-size:10px; } }
+:root {
+    --ink: #10233e;
+    --blue: #123d6b;
+    --red: #e23b42;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 40px 20px;
+    background: #f6f8fb;
+    color: var(--ink);
+    font-family: Arial, sans-serif;
+}
+
+main {
+    width: min(100%, 1000px);
+    margin: auto;
+}
+
+h1 {
+    margin: 0 0 7px;
+    font-size: clamp(25px, 4vw, 38px);
+}
+
+.intro {
+    margin: 0 0 32px;
+    color: #617089;
+}
+
+.preview {
+    margin: 18px 0 24px;
+    padding: 14px 0 0;
+    border-top: 1px solid #dbe4ef;
+}
+
+.preview small {
+    display: block;
+    margin-bottom: 9px;
+    color: #617089;
+    font-weight: 700;
+}
+
+.nav {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+    border-bottom: 1px solid #d5e0eb;
+    color: #50617a;
+    font-size: 13px;
+}
+
+.nav strong {
+    margin-right: auto;
+    color: var(--blue);
+    font-size: 16px;
+    letter-spacing: .08em;
+}
+
+.nav b {
+    padding: 10px 12px;
+    border: 1px solid var(--blue);
+    border-radius: 5px;
+    color: var(--blue);
+    font-size: 12px;
+}
+
+.preview-actual .nav {
+    background: #eef3f8;
+}
+
+.preview-navy .nav {
+    background: #10233e;
+    color: #dce8f5;
+    border-color: #10233e;
+}
+
+.preview-navy .nav strong,
+.preview-navy .nav b {
+    color: #fff;
+    border-color: #fff;
+}
+
+.preview-warm .nav {
+    background: #f1f0ec;
+}
+
+.preview-red .nav {
+    background: #f8e8e8;
+}
+
+@media (max-width:700px) {
+    .nav span {
+        display: none;
+    }
+
+    .nav {
+        gap: 6px;
+        padding: 0 10px;
+    }
+
+    .nav b {
+        padding: 8px 7px;
+        font-size: 10px;
+    }
+}
