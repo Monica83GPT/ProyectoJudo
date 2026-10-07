@@ -30,8 +30,8 @@
         }
 
         header {
-            background: #f8e8e8;
-            border-bottom: 1px solid #f8e8e8;
+            background: #eef3f8;
+            border-bottom: 1px solid #d6e0eb;
         }
 
         .nav {
@@ -50,8 +50,9 @@
             gap: 13px;
             font-size: 13px;
             font-weight: 800;
-            letter-spacing: .08em;
+            letter-spacing: .06em;
             line-height: 1.15;
+            color: var(--ink);
         }
 
         .brand-logo {
@@ -73,7 +74,8 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            color: var(--ink);
+            color: #465872;
+            font-family: Georgia, "Times New Roman", serif;
             font-size: 14px;
             font-weight: 650;
         }
@@ -84,7 +86,9 @@
 
         .login {
             border: 0;
-            padding: 0;
+            border-bottom: 3px solid var(--red);
+            border-radius: 0;
+            padding: 0 0 6px;
             color: var(--blue);
             font-size: inherit;
             font-weight: 800;
@@ -93,7 +97,7 @@
         .hero {
             position: relative;
             overflow: hidden;
-            background: #080a0e url('imagenes/judokas-combate-fmjuda.png') 50% center / cover no-repeat;
+            background: #080a0e url('imagenes/judokas-combate-fmjuda-azul-blanco.png') 50% center / cover no-repeat;
             color: white;
         }
 
@@ -254,7 +258,7 @@
         main {
             width: min(1180px, calc(100% - 40px));
             margin: 0 auto;
-            padding: 53px 0 72px;
+            padding: 26px 0 32px;
         }
 
         .section-heading {
@@ -284,23 +288,345 @@
         }
 
         .card {
+            position: relative;
+            overflow: hidden;
             background: #fff;
             border: 1px solid var(--line);
             border-radius: 6px;
             padding: 25px 23px;
             min-height: 174px;
-            transition: transform .2s, box-shadow .2s;
+            transform-style: preserve-3d;
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
         }
 
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(31, 62, 96, .1);
+        .card:before {
+            content: "";
+            position: absolute;
+            inset: -55% auto auto -25%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(226, 59, 66, .16), transparent 67%);
+            opacity: 0;
+            transform: scale(.7);
+            transition: opacity .25s ease, transform .25s ease;
+            pointer-events: none;
+        }
+
+        .card:hover,
+        .card:focus-visible {
+            border-color: rgba(226, 59, 66, .35);
+            transform: translateY(-6px) rotateX(2deg);
+            box-shadow: 0 18px 34px rgba(31, 62, 96, .15), 0 0 0 3px rgba(226, 59, 66, .08);
+            outline: none;
+        }
+
+        .card:hover:before,
+        .card:focus-visible:before {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .card-icon {
-            color: var(--red);
-            font-size: 24px;
+            position: relative;
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
             margin-bottom: 17px;
+            isolation: isolate;
+            perspective: 220px;
+            transform: translateZ(22px);
+        }
+
+        .card-icon:before,
+        .card-icon:after {
+            content: "";
+            position: absolute;
+            border-radius: 999px;
+            pointer-events: none;
+        }
+
+        .card-icon:before {
+            inset: 5px;
+            z-index: 0;
+            background: linear-gradient(145deg, #fff, #dce7f3);
+            box-shadow: 0 16px 22px rgba(16, 35, 62, .18), inset -7px -8px 13px rgba(18, 61, 107, .14), inset 7px 7px 12px rgba(255, 255, 255, .9);
+            transform: rotateX(58deg) rotateZ(-17deg);
+            transition: transform .28s ease, box-shadow .28s ease;
+        }
+
+        .card-icon:after {
+            width: 16px;
+            height: 5px;
+            left: 21px;
+            bottom: 3px;
+            z-index: 0;
+            background: rgba(16, 35, 62, .16);
+            filter: blur(4px);
+            transform: scaleX(1.9);
+            transition: transform .28s ease, opacity .28s ease;
+        }
+
+        .card:hover .card-icon:before,
+        .card:focus-visible .card-icon:before {
+            transform: rotateX(58deg) rotateZ(13deg) translateY(-4px);
+            box-shadow: 0 23px 28px rgba(16, 35, 62, .2), inset -7px -8px 13px rgba(18, 61, 107, .14), inset 7px 7px 12px rgba(255, 255, 255, .9);
+        }
+
+        .card:hover .card-icon:after,
+        .card:focus-visible .card-icon:after {
+            opacity: .65;
+            transform: scaleX(2.35);
+        }
+
+        .card-icon span {
+            position: absolute;
+            display: block;
+            transition: transform .28s ease, opacity .28s ease;
+        }
+
+        .icon-folder .icon-folder-back {
+            z-index: 1;
+            left: 10px;
+            bottom: 17px;
+            width: 39px;
+            height: 28px;
+            border-radius: 6px 7px 8px 8px;
+            background: linear-gradient(145deg, #2b6da2, var(--blue));
+            box-shadow: 0 8px 12px rgba(18, 61, 107, .22);
+            transform: rotateX(54deg) rotateZ(-8deg);
+        }
+
+        .icon-folder .icon-folder-back:before {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: -7px;
+            width: 18px;
+            height: 9px;
+            border-radius: 5px 5px 0 0;
+            background: var(--blue-2);
+        }
+
+        .icon-folder .icon-folder-paper {
+            z-index: 2;
+            left: 18px;
+            bottom: 22px;
+            width: 25px;
+            height: 30px;
+            border-radius: 4px;
+            background: linear-gradient(160deg, #fff, #edf3f9);
+            box-shadow: inset -4px -5px 8px rgba(16, 35, 62, .1), 0 8px 12px rgba(18, 61, 107, .12);
+            transform: rotateZ(5deg);
+        }
+
+        .icon-folder .icon-folder-paper:before,
+        .icon-folder .icon-folder-paper:after {
+            content: "";
+            position: absolute;
+            left: 6px;
+            right: 6px;
+            height: 2px;
+            border-radius: 999px;
+            background: #b9c9da;
+        }
+
+        .icon-folder .icon-folder-paper:before {
+            top: 9px;
+        }
+
+        .icon-folder .icon-folder-paper:after {
+            top: 15px;
+        }
+
+        .icon-folder .icon-folder-front {
+            z-index: 3;
+            left: 8px;
+            bottom: 10px;
+            width: 43px;
+            height: 26px;
+            border-radius: 7px 8px 9px 9px;
+            background: linear-gradient(145deg, #ff646a, var(--red));
+            box-shadow: inset -6px -7px 10px rgba(132, 25, 31, .24), inset 4px 4px 8px rgba(255, 255, 255, .28), 0 10px 14px rgba(226, 59, 66, .24);
+            transform: rotateX(50deg) rotateZ(-8deg);
+        }
+
+        .icon-folder .icon-folder-check {
+            z-index: 4;
+            width: 14px;
+            height: 9px;
+            left: 24px;
+            bottom: 22px;
+            border: 3px solid #fff;
+            border-top: 0;
+            border-right: 0;
+            transform: rotate(-45deg);
+        }
+
+        .card:hover .icon-folder .icon-folder-front,
+        .card:focus-visible .icon-folder .icon-folder-front {
+            transform: rotateX(50deg) rotateZ(8deg) translateY(-5px);
+        }
+
+        .card:hover .icon-folder .icon-folder-paper,
+        .card:focus-visible .icon-folder .icon-folder-paper {
+            transform: rotateZ(10deg) translate(2px, -8px);
+        }
+
+        .card:hover .icon-folder .icon-folder-check,
+        .card:focus-visible .icon-folder .icon-folder-check {
+            transform: rotate(-45deg) translate(2px, -5px) scale(1.08);
+        }
+
+        .icon-live .icon-tatami {
+            z-index: 1;
+            width: 46px;
+            height: 46px;
+            left: 6px;
+            bottom: 8px;
+            border-radius: 8px;
+            background:
+                linear-gradient(90deg, transparent 0 12%, rgba(255, 255, 255, .52) 12% 15%, transparent 15% 85%, rgba(255, 255, 255, .52) 85% 88%, transparent 88%),
+                linear-gradient(0deg, transparent 0 12%, rgba(255, 255, 255, .52) 12% 15%, transparent 15% 85%, rgba(255, 255, 255, .52) 85% 88%, transparent 88%),
+                linear-gradient(135deg, #d93d43 0 18%, #f4d46a 18% 82%, #123d6b 82% 100%);
+            box-shadow: inset -8px -8px 11px rgba(16, 35, 62, .2), inset 5px 5px 9px rgba(255, 255, 255, .32), 0 11px 15px rgba(18, 61, 107, .22);
+            transform: rotateX(58deg) rotateZ(-10deg);
+        }
+
+        .icon-live .icon-tatami-zone {
+            z-index: 2;
+            width: 24px;
+            height: 24px;
+            left: 17px;
+            bottom: 19px;
+            border: 2px solid rgba(18, 61, 107, .42);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, .16);
+            transform: rotateX(58deg) rotateZ(-10deg);
+        }
+
+        .icon-live .icon-judoka {
+            z-index: 3;
+            width: 12px;
+            height: 16px;
+            bottom: 26px;
+            border-radius: 50%;
+            box-shadow: 0 7px 8px rgba(16, 35, 62, .18);
+        }
+
+        .icon-live .icon-judoka:before,
+        .icon-live .icon-judoka:after {
+            content: "";
+            position: absolute;
+            background: inherit;
+            border-radius: 999px;
+        }
+
+        .icon-live .icon-judoka:before {
+            width: 8px;
+            height: 8px;
+            left: 2px;
+            top: -7px;
+        }
+
+        .icon-live .icon-judoka:after {
+            width: 20px;
+            height: 5px;
+            left: -4px;
+            top: 7px;
+        }
+
+        .icon-live .icon-judoka-blue {
+            left: 17px;
+            background: var(--blue);
+            transform: rotateZ(33deg);
+        }
+
+        .icon-live .icon-judoka-red {
+            right: 15px;
+            background: var(--red);
+            transform: rotateZ(-33deg);
+        }
+
+        .card:hover .icon-live .icon-tatami,
+        .card:focus-visible .icon-live .icon-tatami {
+            transform: rotateX(58deg) rotateZ(8deg) translateY(-4px);
+        }
+
+        .card:hover .icon-live .icon-tatami-zone,
+        .card:focus-visible .icon-live .icon-tatami-zone {
+            transform: rotateX(58deg) rotateZ(8deg) translateY(-4px);
+        }
+
+        .card:hover .icon-live .icon-judoka-blue,
+        .card:focus-visible .icon-live .icon-judoka-blue {
+            transform: rotateZ(48deg) translate(2px, -7px);
+        }
+
+        .card:hover .icon-live .icon-judoka-red,
+        .card:focus-visible .icon-live .icon-judoka-red {
+            transform: rotateZ(-48deg) translate(-2px, -7px);
+        }
+
+        .icon-logo .icon-logo-disc {
+            z-index: 2;
+            top: 8px;
+            left: 9px;
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: inset -7px -8px 11px rgba(18, 61, 107, .12), inset 5px 5px 10px rgba(255, 255, 255, .9), 0 11px 16px rgba(18, 61, 107, .24);
+            transform: rotateX(9deg) rotateZ(-8deg);
+        }
+
+        .icon-logo .icon-logo-disc img {
+            width: 31px;
+            height: 31px;
+            display: block;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 2px rgba(16, 35, 62, .12));
+        }
+
+        .icon-logo .icon-logo-ring {
+            z-index: 1;
+            top: 5px;
+            left: 6px;
+            width: 46px;
+            height: 46px;
+            border: 2px solid rgba(226, 59, 66, .45);
+            border-radius: 50%;
+            border-left-color: transparent;
+            box-shadow: 0 9px 13px rgba(226, 59, 66, .14);
+            transform: rotate(-28deg);
+        }
+
+        .card:hover .icon-logo .icon-logo-disc,
+        .card:focus-visible .icon-logo .icon-logo-disc {
+            transform: rotateY(25deg) rotateZ(8deg) translateY(-5px);
+        }
+
+        .card:hover .icon-logo .icon-logo-ring,
+        .card:focus-visible .icon-logo .icon-logo-ring {
+            opacity: .45;
+            transform: rotate(25deg) scale(1.13);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card,
+            .card:before,
+            .card-icon:before,
+            .card-icon:after,
+            .card-icon span {
+                transition: none;
+            }
+
+            .card:hover,
+            .card:focus-visible {
+                transform: translateY(-3px);
+            }
         }
 
         .card h3 {
@@ -347,7 +673,8 @@
             }
 
             main {
-                padding-top: 40px;
+                padding-top: 28px;
+                padding-bottom: 30px;
             }
         }
 
