@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3000" height="2050" viewBox="0 0 3000 2050">
+  <defs>
+    <style>
+      .title { font: 700 38px 'Arial', sans-serif; fill: #17212b; }
+      .subtitle { font: 18px 'Arial', sans-serif; fill: #465563; }
+      .legend { font: 17px 'Arial', sans-serif; fill: #17212b; }
+      .table { fill: #fff; stroke-width: 3; }
+      .kept { stroke: #2b7a4b; }
+      .changed { stroke: #bf7816; }
+      .added { stroke: #2873a8; }
+      .head-kept { fill: #e2f2e8; }
+      .head-changed { fill: #fff0d6; }
+      .head-added { fill: #e1f0fb; }
+      .table-name { font: 700 20px 'Arial', sans-serif; fill: #17212b; }
+      .field { font: 16px 'Consolas', monospace; fill: #263440; }
+      .note { font: 15px 'Arial', sans-serif; fill: #53616c; }
+      .relation { fill: none; stroke: #596a77; stroke-width: 2.5; }
+      .cardinality { font: 700 15px 'Arial', sans-serif; fill: #364650; }
+      .group { font: 700 17px 'Arial', sans-serif; fill: #4b5862; letter-spacing: 1px; }
+    </style>
+  </defs>
+  <rect width="3000" height="2050" fill="#ffffff"/>
+  <text x="60" y="62" class="title">COMPETICIONES DE JUDO | MODELO LOGICO PROPUESTO</text>
+  <text x="60" y="94" class="subtitle">Comparado con LogicoCombates / DDL_COMBATES. PK = clave primaria · FK = clave foranea.</text>
+  <rect x="60" y="118" width="18" height="18" rx="3" fill="#e2f2e8" stroke="#2b7a4b" stroke-width="2"/><text x="88" y="133" class="legend">Se conserva</text>
+  <rect x="230" y="118" width="18" height="18" rx="3" fill="#fff0d6" stroke="#bf7816" stroke-width="2"/><text x="258" y="133" class="legend">Se modifica</text>
+  <rect x="415" y="118" width="18" height="18" rx="3" fill="#e1f0fb" stroke="#2873a8" stroke-width="2"/><text x="443" y="133" class="legend">Se anade</text>
+  <text x="690" y="133" class="note">Las lineas representan relaciones FK; 1, N y 0..1 indican cardinalidad.</text>
+  <text x="60" y="178" class="group">DATOS BASE (VERDE) Y RELACIONES EXISTENTES (AMBAR)</text>
+
+  <!-- Relationships behind the tables -->
+  <path class="relation" d="M390 267 H420 V500 H390"/><text x="398" y="257" class="cardinality">1</text><text x="398" y="490" class="cardinality">N</text>
+  <path class="relation" d="M60 452 H30 V808 H60"/><text x="62" y="442" class="cardinality">1</text><text x="62" y="798" class="cardinality">N</text>
+  <path class="relation" d="M390 712 H500 V717"/><text x="396" y="702" class="cardinality">1</text><text x="476" y="707" class="cardinality">N</text>
+  <path class="relation" d="M900 741 H940 V1044 H900"/><text x="906" y="731" class="cardinality">N</text><text x="906" y="1034" class="cardinality">1</text>
+  <path class="relation" d="M390 1342 H450 V1438 H500"/><text x="396" y="1332" class="cardinality">1</text><text x="476" y="1428" class="cardinality">N</text>
+  <path class="relation" d="M900 1342 H1000 V528 H1080"/><text x="906" y="1332" class="cardinality">1</text><text x="1050" y="518" class="cardinality">N</text>
+  <path class="relation" d="M1440 267 H1460 V504 H1080"/><text x="1445" y="257" class="cardinality">1</text><text x="1090" y="494" class="cardinality">N</text>
+  <path class="relation" d="M1080 267 H1040 V816 H1080"/><text x="1082" y="257" class="cardinality">1</text><text x="1082" y="806" class="cardinality">N</text>
+  <path class="relation" d="M1440 504 H1480 V816 H1490"/><text x="1445" y="494" class="cardinality">1</text><text x="1492" y="806" class="cardinality">N</text>
+  <path class="relation" d="M1440 528 H1500 V840 H1490"/><text x="1445" y="518" class="cardinality">1</text><text x="1492" y="830" class="cardinality">N</text>
+  <path class="relation" d="M1440 267 H1495 V291 H1550"/><text x="1445" y="257" class="cardinality">1</text><text x="1532" y="281" class="cardinality">N</text>
+  <path class="relation" d="M1440 267 H1480 V576 H1550"/><text x="1445" y="257" class="cardinality">1</text><text x="1532" y="566" class="cardinality">N</text>
+  <path class="relation" d="M1550 576 H1480 V504 H1440"/><text x="1450" y="494" class="cardinality">N</text><text x="1555" y="566" class="cardinality">1</text>
+  <path class="relation" d="M1550 600 H1460 V528 H1440"/><text x="1450" y="518" class="cardinality">N</text><text x="1555" y="590" class="cardinality">1</text>
+  <path class="relation" d="M1980 624 H2130 V267 H2200"/><text x="1985" y="614" class="cardinality">N</text><text x="2190" y="257" class="cardinality">1</text>
+  <path class="relation" d="M1980 648 H2160 V467 H2200"/><text x="1985" y="638" class="cardinality">N</text><text x="2190" y="457" class="cardinality">1</text>
+  <path class="relation" d="M1980 552 H2040 V852 H2060"/><text x="1985" y="542" class="cardinality">1</text><text x="2050" y="842" class="cardinality">N</text>
+  <path class="relation" d="M1490 792 H1520 V876 H1550"/><text x="1458" y="782" class="cardinality">0..1</text><text x="1554" y="866" class="cardinality">1</text>
+  <path class="relation" d="M1490 816 H1530 V900 H1550"/>
+  <path class="relation" d="M1490 840 H1540 V924 H1550"/>
+  <path class="relation" d="M1490 792 H1040 V1044 H900"/><text x="1458" y="782" class="cardinality">N</text><text x="906" y="1034" class="cardinality">1</text>
+  <path class="relation" d="M2200 736 H2100 V852 H2060"/><text x="2190" y="726" class="cardinality">N</text><text x="2050" y="842" class="cardinality">1</text>
+  <path class="relation" d="M2200 832 H2140 V868 H2060"/><text x="2190" y="822" class="cardinality">N</text><text x="2050" y="858" class="cardinality">1</text><text x="2110" y="822" class="note">AZUL</text>
+  <path class="relation" d="M2200 856 H2160 V876 H2060"/><text x="2190" y="846" class="cardinality">N</text><text x="2050" y="866" class="cardinality">1</text><text x="2130" y="846" class="note">BLANCO</text>
+  <path class="relation" d="M2200 712 H2160 V1212 H2120"/><text x="2190" y="702" class="cardinality">1</text><text x="2100" y="1202" class="cardinality">0..1</text>
+  <path class="relation" d="M1550 1236 H1450 V1044 H900"/><text x="1555" y="1226" class="cardinality">N</text><text x="906" y="1034" class="cardinality">1</text>
+  <path class="relation" d="M2770 712 H2870 V1532 H2770"/><text x="2760" y="702" class="cardinality">1</text><text x="2760" y="1522" class="cardinality">N</text>
+  <path class="relation" d="M2770 712 H2920 V1580 H2770"/><text x="2760" y="702" class="cardinality">1</text><text x="2760" y="1570" class="cardinality">N</text>
+
+  <g transform="translate(60 205)"><rect class="table kept" width="330" height="112" rx="3"/><path class="head-kept" d="M3 3 H327 V36 H3 Z"/><text x="165" y="27" text-anchor="middle" class="table-name">ZONAS</text><text x="16" y="62" class="field">PK idzona</text><text x="16" y="86" class="field">nomzona</text></g>
+  <g transform="translate(60 390)"><rect class="table kept" width="330" height="135" rx="3"/><path class="head-kept" d="M3 3 H327 V36 H3 Z"/><text x="165" y="27" text-anchor="middle" class="table-name">MUNICIPIOS</text><text x="16" y="62" class="field">PK idmunicipio</text><text x="16" y="86" class="field">nommunicipio</text><text x="16" y="110" class="field">FK idzona</text></g>
+  <g transform="translate(60 650)"><rect class="table kept" width="330" height="184" rx="3"/><path class="head-kept" d="M3 3 H327 V36 H3 Z"/><text x="165" y="27" text-anchor="middle" class="table-name">CLUBS</text><text x="16" y="62" class="field">PK idclub</text><text x="16" y="86" class="field">nomclub</text><text x="16" y="110" class="field">dirclub</text><text x="16" y="134" class="field">logoclub</text><text x="16" y="158" class="field">FK idmunicipio</text></g>
+  <g transform="translate(500 1280)"><rect class="table kept" width="400" height="174" rx="3"/><path class="head-kept" d="M3 3 H397 V36 H3 Z"/><text x="200" y="27" text-anchor="middle" class="table-name">SUBCATEGORIAS</text><text x="16" y="62" class="field">PK idsubcategoria</text><text x="16" y="86" class="field">nomrangopesaje</text><text x="16" y="110" class="field">pesajemin</text><text x="16" y="134" class="field">pesajemax</text><text x="16" y="158" class="field">FK idcategoria</text></g>
+  <g transform="translate(60 1280)"><rect class="table kept" width="330" height="174" rx="3"/><path class="head-kept" d="M3 3 H327 V36 H3 Z"/><text x="165" y="27" text-anchor="middle" class="table-name">CATEGORIAS</text><text x="16" y="62" class="field">PK idcategoria</text><text x="16" y="86" class="field">nomcategoria</text><text x="16" y="110" class="field">genero</text><text x="16" y="134" class="field">edadmin</text><text x="16" y="158" class="field">edadmax</text></g>
+  <g transform="translate(500 655)"><rect class="table changed" width="400" height="175" rx="3"/><path class="head-changed" d="M3 3 H397 V36 H3 Z"/><text x="200" y="27" text-anchor="middle" class="table-name">PERTENECIENTES</text><text x="16" y="62" class="field">PK/FK idclub</text><text x="16" y="86" class="field">PK/FK numfederado</text><text x="16" y="110" class="field">PK fechaaltaclub</text><text x="16" y="134" class="field">+ fechabajaclub</text><text x="16" y="158" class="note">Historial de clubes del judoka.</text></g>
+  <g transform="translate(500 982)"><rect class="table kept" width="400" height="218" rx="3"/><path class="head-kept" d="M3 3 H397 V36 H3 Z"/><text x="200" y="27" text-anchor="middle" class="table-name">JUDOKAS</text><text x="16" y="62" class="field">PK numfederado</text><text x="16" y="82" class="field">nombre</text><text x="16" y="102" class="field">apellidos</text><text x="16" y="122" class="field">fecnacimiento</text><text x="16" y="142" class="field">genero</text><text x="16" y="162" class="field">fotojudoka</text><text x="16" y="182" class="field">pesaje actual (no del evento)</text></g>
+
+  <g transform="translate(1080 205)"><rect class="table changed" width="360" height="180" rx="3"/><path class="head-changed" d="M3 3 H357 V36 H3 Z"/><text x="180" y="27" text-anchor="middle" class="table-name">CAMPEONATOS</text><text x="16" y="62" class="field">PK idcampeonato</text><text x="16" y="86" class="field">nombre</text><text x="16" y="110" class="field">fecha</text><text x="16" y="134" class="field">logo</text><text x="16" y="158" class="field">+ sede</text></g>
+  <g transform="translate(1080 442)"><rect class="table kept" width="360" height="150" rx="3"/><path class="head-kept" d="M3 3 H357 V36 H3 Z"/><text x="180" y="27" text-anchor="middle" class="table-name">NIVELESCOMPETICION</text><text x="16" y="62" class="field">PK/FK idcampeonato</text><text x="16" y="86" class="field">PK/FK idsubcategoria</text><text x="16" y="120" class="note">Subcategorias ofrecidas en el evento.</text></g>
+  <g transform="translate(1080 730)"><rect class="table changed" width="410" height="255" rx="3"/><path class="head-changed" d="M3 3 H407 V36 H3 Z"/><text x="205" y="27" text-anchor="middle" class="table-name">INSCRITOS</text><text x="16" y="62" class="field">PK/FK numfederado</text><text x="16" y="86" class="field">PK/FK idcampeonato</text><text x="16" y="110" class="field">PK/FK idsubcategoria</text><text x="16" y="134" class="field">fechainscripcion</text><text x="16" y="158" class="field">+ estado</text><text x="16" y="182" class="field">+ pesajeevento</text><text x="16" y="224" class="note">UNIQUE judoka + campeonato, como ahora.</text></g>
+  <g transform="translate(1550 205)"><rect class="table added" width="430" height="250" rx="3"/><path class="head-added" d="M3 3 H427 V36 H3 Z"/><text x="215" y="27" text-anchor="middle" class="table-name">CONVOCATORIAS (NUEVA)</text><text x="16" y="62" class="field">PK idconvocatoria</text><text x="16" y="86" class="field">FK idcampeonato</text><text x="16" y="110" class="field">organismo_emisor</text><text x="16" y="134" class="field">plazo_inscripcion</text><text x="16" y="158" class="field">requisitos</text><text x="16" y="182" class="field">documentos</text><text x="16" y="206" class="field">reglamento_version</text><text x="16" y="230" class="field">fecha_corte_edad</text></g>
+
+  <g transform="translate(1550 490)"><rect class="table added" width="430" height="254" rx="3"/><path class="head-added" d="M3 3 H427 V36 H3 Z"/><text x="215" y="27" text-anchor="middle" class="table-name">CUADROS (NUEVA)</text><text x="16" y="62" class="field">PK idcuadro</text><text x="16" y="86" class="field">FK idcampeonato</text><text x="16" y="110" class="field">FK idsubcategoria</text><text x="16" y="134" class="field">FK idformato</text><text x="16" y="158" class="field">FK idsistema_repescas</text><text x="16" y="182" class="field">tamano</text><text x="16" y="210" class="note">FK compuesta a NIVELESCOMPETICION:</text><text x="16" y="234" class="note">idcampeonato + idsubcategoria.</text></g>
+  <g transform="translate(1550 790)"><rect class="table added" width="510" height="260" rx="3"/><path class="head-added" d="M3 3 H507 V36 H3 Z"/><text x="255" y="27" text-anchor="middle" class="table-name">PARTICIPANTES_CUADRO (NUEVA)</text><text x="16" y="62" class="field">PK/FK idcuadro</text><text x="16" y="86" class="field">PK/FK numfederado</text><text x="16" y="110" class="field">FK idcampeonato</text><text x="16" y="134" class="field">FK idsubcategoria</text><text x="16" y="158" class="field">posicion (tras el sorteo)</text><text x="16" y="182" class="field">cabeza_serie</text><text x="16" y="218" class="note">FK compuesta a INSCRITOS:</text><text x="16" y="240" class="note">numfederado + idcampeonato + idsubcategoria</text></g>
+  <g transform="translate(2200 650)"><rect class="table changed" width="570" height="406" rx="3"/><path class="head-changed" d="M3 3 H567 V36 H3 Z"/><text x="285" y="27" text-anchor="middle" class="table-name">COMBATES (MODIFICADA)</text><text x="16" y="62" class="field">PK idcombate</text><text x="16" y="86" class="field">FK idcuadro</text><text x="16" y="110" class="field">ronda</text><text x="16" y="134" class="field">tabla</text><text x="16" y="158" class="field">numcombate</text><text x="16" y="182" class="field">FK numfederado_azul</text><text x="16" y="206" class="field">FK numfederado_blanco</text><text x="16" y="230" class="field">fecha</text><text x="16" y="254" class="field">hora</text><text x="16" y="278" class="field">tatami</text><text x="16" y="302" class="field">estado</text><text x="16" y="342" class="note">FK compuestas con idcuadro a PARTICIPANTES_CUADRO.</text><text x="16" y="366" class="note">Un participante azul y otro blanco por combate.</text></g>
+  <g transform="translate(1550 1150)"><rect class="table added" width="570" height="165" rx="3"/><path class="head-added" d="M3 3 H567 V36 H3 Z"/><text x="285" y="27" text-anchor="middle" class="table-name">RESULTADOS_COMBATE (NUEVA)</text><text x="16" y="62" class="field">PK/FK idcombate</text><text x="16" y="86" class="field">FK numfederado_ganador</text><text x="16" y="110" class="field">metodo_victoria</text><text x="16" y="140" class="note">Se crea solo al terminar el combate.</text></g>
+  <g transform="translate(2200 1470)"><rect class="table added" width="570" height="220" rx="3"/><path class="head-added" d="M3 3 H567 V36 H3 Z"/><text x="285" y="27" text-anchor="middle" class="table-name">AVANCES_COMBATE (NUEVA)</text><text x="16" y="62" class="field">PK/FK idcombate_origen</text><text x="16" y="86" class="field">PK tipo (gana/pierde)</text><text x="16" y="110" class="field">FK idcombate_destino</text><text x="16" y="134" class="field">posicion_destino</text><text x="16" y="170" class="note">Conecta combates de distintas rondas.</text><text x="16" y="194" class="note">El perdedor avanza solo si hay repesca.</text></g>
+  <g transform="translate(2200 205)"><rect class="table added" width="570" height="165" rx="3"/><path class="head-added" d="M3 3 H567 V36 H3 Z"/><text x="285" y="27" text-anchor="middle" class="table-name">FORMATOS_COMPETICION (NUEVA)</text><text x="16" y="62" class="field">PK idformato</text><text x="16" y="86" class="field">nombreformato</text><text x="16" y="110" class="field">descripcion</text></g>
+  <g transform="translate(2200 405)"><rect class="table added" width="570" height="165" rx="3"/><path class="head-added" d="M3 3 H567 V36 H3 Z"/><text x="285" y="27" text-anchor="middle" class="table-name">SISTEMAS_REPESCA (NUEVA)</text><text x="16" y="62" class="field">PK idsistema_repescas</text><text x="16" y="86" class="field">nombre_sistema</text><text x="16" y="110" class="field">descripcion</text><text x="16" y="140" class="note">Incluye la opcion "Sin repesca".</text></g>
+
+  <rect x="60" y="1810" width="2710" height="165" rx="5" fill="#f5f7f8" stroke="#cbd3d9" stroke-width="2"/>
+  <text x="82" y="1848" class="table-name">MODULOS OPCIONALES (FUERA DEL CUADRO DEPORTIVO)</text>
+  <text x="82" y="1883" class="legend">Para cursos y grados: EXPEDIENTES_TRAMITE (tipo, solicitante, convocatoria, club si aplica, estado, plazos y resolucion).</text>
+  <text x="82" y="1914" class="legend">DOCUMENTOS_TRAMITE (FK expediente, tipo de documento, fecha de entrega y validacion). Puede anadirse en una segunda fase.</text>
+  <text x="82" y="1954" class="note">El DDL actual incluye DROP DATABASE: haz copia de seguridad antes de ejecutar cualquier cambio de esquema.</text>
+</svg>
