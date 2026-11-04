@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FMJYDA · Gestión de competiciones</title>
+    <meta name="description"
+        content="Portal de campeonatos, eventos y resultados de la Federación Madrileña de Judo y Deportes Asociados.">
+    <link rel='stylesheet' href='judo.css'>
+    <script type="importmap">
+        {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"}}
+    </script>
+</head>
+
+<body>
+    <div class="topline"></div>
+    <header>
+        <div class="nav">
+            <a class="brand" href="#inicio" aria-label="Inicio FMJYDA"><img class="brand-logo"
+                    src="../../imagenes/logo-fmjudo.png" alt="Logo de la Federación Madrileña de Judo"><span>FEDERACIÓN MADRILEÑA<br><small>JUDO Y DEPORTES
+                        ASOCIADOS</small></span></a>
+            <nav aria-label="Navegación principal"><a href="#campeonatos">Campeonatos</a><a
+                    href="#calendario">Calendario</a><a href="#directo">Resultados</a><a class="login"
+                    href="#acceso-clubes">Clubes</a><a class="login" href="#acceso-federados">Federados</a><a
+                    class="login" href="#acceso-organizadores">Organizadores</a></nav>
+        </div>
+    </header>
+    <section class="hero" id="inicio">
+        <div class="hero-inner">
+            <div>
+                <div class="eyebrow">Portal de competición · Madrid</div>
+                <h1>El judo madrileño, en movimiento.</h1>
+                <p>Gestiona campeonatos, sigue los combates en directo y mantén toda la actividad federativa en un mismo
+                    lugar.</p>
+                <div class="hero-actions"><a class="button primary" href="#campeonatos">Ver próximos campeonatos&nbsp;
+                        →</a><a class="button ghost" href="#directo">Resultados</a></div>
+            </div>
+            <section class="technique-stage" aria-label="Demostración 3D de Uchi Mata">
+                <canvas class="technique-canvas" aria-label="Dos judokas ejecutando Uchi Mata en un tatami 3D"></canvas>
+                <div class="stage-topline"><span class="live-dot"></span> TÉCNICA · UCHI MATA</div>
+                <div class="stage-caption" aria-live="polite">
+                    <span class="stage-step">01 / 04</span>
+                    <strong class="stage-phase">Agarre y desequilibrio</strong>
+                    <span class="stage-detail">Control de manga y solapa</span>
+                </div>
+                <div class="technique-navigation" aria-label="Fases de la técnica">
+                    <div class="phase-buttons">
+                        <button type="button" class="phase-button" aria-pressed="true">1 · Agarre</button>
+                        <button type="button" class="phase-button" aria-pressed="false">2 · Giro</button>
+                        <button type="button" class="phase-button" aria-pressed="false">3 · Elevación</button>
+                        <button type="button" class="phase-button" aria-pressed="false">4 · Caída</button>
+                    </div>
+                    <input class="technique-timeline" type="range" min="0" max="100" step="0.1" value="0" aria-label="Recorrer la técnica">
+                </div>
+                <div class="stage-controls" aria-label="Controles de la animación">
+                    <button class="stage-button playback-button" type="button" aria-label="Pausar animación" title="Pausar animación">
+                        <span class="pause-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="stage-button replay-button" type="button" aria-label="Reiniciar técnica" title="Reiniciar técnica">
+                        <span class="replay-icon" aria-hidden="true">↺</span>
+                    </button>
+                    <span class="stage-control-divider" aria-hidden="true"></span>
+                    <button class="stage-button camera-button" type="button" aria-label="Cambiar ángulo de cámara" title="Cambiar ángulo de cámara">
+                        <span class="camera-icon" aria-hidden="true"></span>
+                        <span class="camera-label">Vista lateral</span>
+                    </button>
+                    <span class="drag-hint">ARRASTRA PARA GIRAR</span>
+                </div>
+            </section>
+        </div>
+    </section>
+    <main>
+        <div class="section-heading">
+            <h2>Todo lo que necesitas para competir</h2><a href="#campeonatos">Explorar el portal&nbsp; →</a>
+        </div>
+        <div class="cards" id="campeonatos">
+            <a class="card" href="#acceso">
+                <div class="card-icon icon-registration icon-folder" aria-hidden="true">
+                    <span class="icon-folder-back"></span>
+                    <span class="icon-folder-paper"></span>
+                    <span class="icon-folder-front"></span>
+                    <span class="icon-folder-check"></span>
+                </div>
+                <h3>Inscripciones</h3>
+                <p>Inscribe a tus judokas, consulta categorías y gestiona la documentación de cada campeonato.</p>
+            </a>
+            <a class="card" id="directo" href="#directo">
+                <div class="card-icon icon-live" aria-hidden="true">
+                    <span class="icon-tatami"></span>
+                    <span class="icon-tatami-zone"></span>
+                    <span class="icon-judoka icon-judoka-blue"></span>
+                    <span class="icon-judoka icon-judoka-red"></span>
+                </div>
+                <h3>Combates en directo</h3>
+                <p>Consulta tatamis, horarios, cuadros y resultados mientras la competición está en marcha.</p>
+            </a>
+            <a class="card" href="#acceso">
+                <div class="card-icon icon-federation icon-logo" aria-hidden="true">
+                    <span class="icon-logo-disc">
+                        <img src="../../imagenes/logo-fmjudo.png" alt="">
+                    </span>
+                    <span class="icon-logo-ring"></span>
+                </div>
+                <h3>Área federativa</h3>
+                <p>Un espacio privado para clubes, federados y organizadores, adaptado a cada perfil.</p>
+            </a>
+        </div>
+    </main>
+    <footer id="pie-pagina">
+        <span>FMJYDA · Federación Madrileña de Judo y Deportes Asociados</span>
+        <a class="footer-contact-link" href="https://judo.itsicap.com/contacto/">Contacto</a>
+    </footer>
+    <script type="module" src="judo.js"></script>
+</body>
+
+</html>
+

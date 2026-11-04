@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>FMJYDA · Gestión de competiciones</title>
+	<meta name="description" content="Portal de campeonatos, eventos y resultados de la Federación Madrileña de Judo y Deportes Asociados.">
+	<link rel="stylesheet" href="css/judo.css">
+</head>
+<body>
+	<div class="topline"></div>
+	<header>
+		<div class="nav">
+			<a class="brand" href="#inicio" aria-label="Inicio FMJYDA">
+				<img class="brand-logo" src="imagenes/logo-fmjudo.png" alt="Logo de la Federación Madrileña de Judo">
+				<span>FEDERACIÓN MADRILEÑA<br><small>JUDO Y DEPORTES ASOCIADOS</small></span>
+			</a>
+			<nav aria-label="Navegación principal">
+				<a href="#campeonatos">Campeonatos</a>
+				<a href="#calendario">Calendario</a>
+				<a href="#directo">Resultados</a>
+				<a class="login" href="login.php?perfil=club">Clubes</a>
+				<a class="login" href="login.php?perfil=federado">Federados</a>
+				<a class="login" href="login.php?perfil=organizador">Organizadores</a>
+			</nav>
+		</div>
+	</header>
+
+	<section class="hero" id="inicio">
+		<div class="hero-inner">
+			<div>
+				<div class="eyebrow">Portal de competición · Madrid</div>
+				<h1>El judo madrileño, en movimiento.</h1>
+				<p>Gestiona campeonatos, sigue los combates en directo y mantén toda la actividad federativa en un mismo lugar.</p>
+				<div class="hero-actions">
+					<a class="button primary" href="#campeonatos">Ver próximos campeonatos&nbsp; →</a>
+					<a class="button ghost" href="https://judolive.es/" target="_blank" rel="noopener noreferrer">Directo</a>
+				</div>
+			</div>
+
+			<aside class="hero-card" id="calendario">
+				<small>Próximos eventos</small>
+				<h2>Competiciones y resultados<button class="event-scroll" type="button" aria-label="Desplazar próximos eventos">▾</button></h2>
+				<div class="event-list" id="event-list">
+					##events##
+					<div class="event-row">
+						<div class="date">#eventDay#<br>#eventMonth#</div>
+						<div><strong>#eventName#</strong><span>#eventDescription#</span></div>
+					</div>
+					##/events##
+					##events:empty##
+					<p class="events-empty">No hay campeonatos publicados.</p>
+					##/events:empty##
+				</div>
+			</aside>
+		</div>
+	</section>
+
+	<main>
+		<div class="section-heading">
+			<h2>Todo lo que necesitas para competir</h2>
+			<a href="#campeonatos">Explorar el portal&nbsp; →</a>
+		</div>
+		<div class="cards" id="campeonatos">
+			<a class="card" href="#acceso">
+				<div class="card-icon icon-registration icon-folder" aria-hidden="true">
+					<span class="icon-folder-back"></span><span class="icon-folder-paper"></span>
+					<span class="icon-folder-front"></span><span class="icon-folder-check"></span>
+				</div>
+				<h3>Inscripciones</h3>
+				<p>Inscribe a tus judokas en los #openChampionshipCount# próximos campeonatos disponibles para sénior masculino −100 kg.</p>
+			</a>
+			<a class="card" id="directo" href="https://judolive.es/" target="_blank" rel="noopener noreferrer">
+				<div class="card-icon icon-live" aria-hidden="true">
+					<span class="icon-tatami"></span><span class="icon-tatami-zone"></span>
+					<span class="icon-judoka icon-judoka-blue"></span><span class="icon-judoka icon-judoka-red"></span>
+				</div>
+				<h3>Combates en directo</h3>
+				<p>Sigue el streaming oficial en JudoLive y consulta su historial cuando no haya una emisión activa.</p>
+			</a>
+			<a class="card" href="#acceso">
+				<div class="card-icon icon-federation icon-logo" aria-hidden="true">
+					<span class="icon-logo-disc"><img src="imagenes/logo-fmjudo.png" alt=""></span>
+					<span class="icon-logo-ring"></span>
+				</div>
+				<h3>Área federativa</h3>
+				<p>Gestiona los #judokaCount# judokas y #clubCount# clubes registrados, con acceso adaptado a cada perfil.</p>
+			</a>
+		</div>
+	</main>
+
+	<footer id="pie-pagina">
+		<span>FMJYDA · Federación Madrileña de Judo y Deportes Asociados</span>
+		<a class="footer-contact-link" href="https://judo.itsicap.com/contacto/">Contacto</a>
+	</footer>
+	<script src="js/judo.js"></script>
+</body>
+</html>

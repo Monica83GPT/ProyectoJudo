@@ -1,0 +1,7 @@
+# Configuración de ejemplo para publicar únicamente public/ desde Apache de XAMPP.
+Alias /judo "I:/Personal Monica/Modulo3/ProyectoJudo-GitHub/public"
+
+<Directory "I:/Personal Monica/Modulo3/ProyectoJudo-GitHub/public">
+	AllowOverride All
+	Require all granted
+</Directory>

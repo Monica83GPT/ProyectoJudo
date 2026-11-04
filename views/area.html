@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>#areaTitle# · FMJYDA</title>
+	<link rel="stylesheet" href="css/login.css">
+</head>
+<body class="area-page">
+	<div class="topline"></div>
+	<header class="access-header area-header">
+		<a class="brand" href="judo.php" aria-label="Volver al inicio">
+			<img src="imagenes/logo-fmjudo.png" alt="Logo de la Federación Madrileña de Judo">
+			<span>FEDERACIÓN MADRILEÑA<small>JUDO Y DEPORTES ASOCIADOS</small></span>
+		</a>
+		<form method="post" action="logout.php">
+			<input type="hidden" name="csrf" value="#csrfToken#">
+			<button class="logout-button" type="submit">Cerrar sesión</button>
+		</form>
+	</header>
+
+	<main class="area-shell">
+		<section class="welcome-card">
+			<p class="eyebrow">#areaEyebrow#</p>
+			<h1>#areaTitle#</h1>
+			<p class="welcome-name">Hola, <strong>#displayName#</strong></p>
+			<p class="area-description">#areaDescription#</p>
+			<div class="session-info">
+				<span>Sesión iniciada como</span>
+				<strong>#username#</strong>
+			</div>
+		</section>
+
+		<section class="next-card">
+			<span class="next-number">01</span>
+			<div>
+				<p class="card-kicker">Acceso verificado</p>
+				<h2>Tu área privada está preparada</h2>
+				<p>En los siguientes pasos incorporaremos aquí las funciones específicas de este perfil.</p>
+			</div>
+		</section>
+	</main>
+</body>
+</html>

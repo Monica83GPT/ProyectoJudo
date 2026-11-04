@@ -1,0 +1,9 @@
+# v04b · Lo que hay que añadir a Apache (XAMPP: etc/httpd.conf o etc/extra/httpd-vhosts.conf)
+# para publicar SOLO la carpeta public/ del proyecto, sin tocar el DocumentRoot.
+# Cambia la ruta por la de tu ordenador. El proyecto debe estar FUERA del DocumentRoot (htdocs).
+Alias /nba-v04b "/home/alumno/proyectos/arq01/v04b/public"
+
+<Directory "/home/alumno/proyectos/arq01/v04b/public">
+    AllowOverride All
+    Require all granted
+</Directory>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Acceso privado · FMJYDA</title>
+	<meta name="description" content="Acceso para clubes, federados y organizadores del portal de competición.">
+	<link rel="stylesheet" href="css/login.css">
+</head>
+<body class="login-page">
+	<div class="topline"></div>
+	<header class="access-header">
+		<a class="brand" href="judo.php" aria-label="Volver al inicio">
+			<img src="imagenes/logo-fmjudo.png" alt="Logo de la Federación Madrileña de Judo">
+			<span>FEDERACIÓN MADRILEÑA<small>JUDO Y DEPORTES ASOCIADOS</small></span>
+		</a>
+		<a class="back-link" href="judo.php">← Volver al portal</a>
+	</header>
+
+	<main class="login-shell">
+		<section class="login-intro">
+			<p class="eyebrow">Portal privado</p>
+			<h1>Tu competición empieza aquí.</h1>
+			<p>Un acceso sencillo para gestionar la actividad de clubes, federados y organizadores.</p>
+			<ul>
+				<li>Datos protegidos por perfil</li>
+				<li>Información conectada con COMBATES2</li>
+				<li>Sesión personal y segura</li>
+			</ul>
+		</section>
+
+		<section class="login-card" aria-labelledby="login-title">
+			<p class="card-kicker">Acceso privado</p>
+			<h2 id="login-title">Inicia sesión</h2>
+			<p class="card-help">Selecciona tu perfil e introduce tus credenciales.</p>
+
+			##errors##
+			<div class="form-error" role="alert">#message#</div>
+			##/errors##
+
+			<form method="post" action="login.php">
+				<input type="hidden" name="csrf" value="#csrfToken#">
+
+				<fieldset class="profile-selector">
+					<legend>Tipo de acceso</legend>
+					<label>
+						<input type="radio" name="perfil" value="club" #clubChecked#>
+						<span class="profile-option"><strong>Club</strong><small>Gestión de judokas</small></span>
+					</label>
+					<label>
+						<input type="radio" name="perfil" value="federado" #federadoChecked#>
+						<span class="profile-option"><strong>Federado</strong><small>Perfil deportivo</small></span>
+					</label>
+					<label>
+						<input type="radio" name="perfil" value="organizador" #organizerChecked#>
+						<span class="profile-option"><strong>Organizador</strong><small>Competiciones</small></span>
+					</label>
+				</fieldset>
+
+				<label class="field-label" for="usuario">Usuario</label>
+				<input class="text-field" id="usuario" name="usuario" type="text" value="#username#" maxlength="50" autocomplete="username" required autofocus>
+
+				<label class="field-label" for="password">Contraseña</label>
+				<input class="text-field" id="password" name="password" type="password" autocomplete="current-password" required>
+
+				<button class="submit-button" type="submit">Entrar al área privada <span>→</span></button>
+			</form>
+		</section>
+	</main>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<title>Listado Jugadores</title>
+	<link rel="stylesheet" href="css/players.css">
+</head>
+<body>
+	<h1>Listado Jugadores</h1>
+
+	<form class="filter" method="get">
+		<select name="positionId">
+			<option value="">Todas las posiciones</option>
+			##positions##
+			<option value="#positionId#" #selected#>#positionName#</option>
+			##/positions##
+		</select>
+		<button>Filtrar</button>
+	</form>
+
+	##groups##
+	<section class="position">
+		<h2>#positionName#</h2>
+		##players##
+		<p class="player">#playerId# - #playerName# · #height# cm (#heightFeet#)</p>
+		##/players##
+		##players:empty##
+		<p class="player player--none">Sin jugadores.</p>
+		##/players:empty##
+	</section>
+	##/groups##
+</body>
+</html>

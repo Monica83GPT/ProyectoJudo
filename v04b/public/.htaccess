@@ -1,0 +1,14 @@
+# v04b · La página que se abre al entrar en la carpeta del proyecto:
+#        http://localhost/nba-v04b/  →  players.php  (y en la URL no aparece ningún .php)
+DirectoryIndex players.php
+
+# Opción B, comentada: la posición como parte de la ruta, http://localhost/nba-v04b/players/5
+# Ojo: con ella, las rutas relativas de la plantilla (css/players.css) dejan de valer,
+# porque la página «parece» estar en la carpeta players/. Haría falta un
+# <base href="/nba-v04b/"> en el <head> de las plantillas.
+# El formulario del filtro seguiría generando /nba-v04b/players?positionId=5 (la primera regla).
+#
+# RewriteEngine On
+# RewriteBase /nba-v04b/
+# RewriteRule ^players/?$          players.php                [QSA,L]
+# RewriteRule ^players/([0-9]+)/?$ players.php?positionId=$1  [QSA,L]
