@@ -346,7 +346,7 @@ function mod003_dashboardCards( $role, $summary, $eventCount, $documentCount ) {
 	if ( $role === "CLUB" ) {
 		$cards = [
 			[ "cardUrl" => "club_judoka_nuevo.php", "cardNumber" => "01", "cardTitle" => "Alta de judoka", "cardText" => "Registra un nuevo federado y vincúlalo al club.", "cardMeta" => "Nueva alta" ],
-			[ "cardUrl" => "#gestion", "cardNumber" => "02", "cardTitle" => "Mis judokas", "cardText" => "Consulta y actualiza los deportistas vinculados.", "cardMeta" => $summary[ "primaryCount" ] . " judokas" ],
+			[ "cardUrl" => "club_judokas.php", "cardNumber" => "02", "cardTitle" => "Mis judokas", "cardText" => "Consulta categorías, actividad y resultados del último año.", "cardMeta" => $summary[ "primaryCount" ] . " judokas" ],
 			[ "cardUrl" => "club_inscripcion.php", "cardNumber" => "03", "cardTitle" => "Inscripciones", "cardText" => "Inscribe judokas y revisa el estado de cada solicitud.", "cardMeta" => $summary[ "secondaryCount" ] . " registradas" ],
 		];
 	} elseif ( $role === "FEDERADO" ) {
@@ -364,6 +364,46 @@ function mod003_dashboardCards( $role, $summary, $eventCount, $documentCount ) {
 	}
 
 	return array_merge( $cards, $common );
+}
+
+/* Agrupa los judokas del club y sus participaciones durante los últimos doce meses. */
+function mod003_getClubJudokasData( $auth ) {
+	if ( !is_array( $auth ) || ( $auth[ "role" ] ?? "" ) !== "CLUB" || empty( $auth[ "userId" ] ) ) {
+		throw new DomainException( "La sesión no contiene un club válido." );
+	}
+
+	$judokas = mod002_runQuery( "getClubJudokas", [ ":userId" => $auth[ "userId" ] ] );
+	$judokaIndexes = [];
+	foreach ( $judokas as $index => $judoka ) {
+		$judokaIndexes[ $judoka[ "federationNumber" ] ] = $index;
+		$judokas[ $index ][ "categoryName" ] = $judoka[ "categoryName" ] ?: "Sin categoría compatible";
+		$judokas[ $index ][ "competitions" ] = [];
+	}
+
+	foreach ( mod002_runQuery( "getClubJudokaRecentResults", [ ":userId" => $auth[ "userId" ] ] ) as $result ) {
+		if ( !isset( $judokaIndexes[ $result[ "federationNumber" ] ] ) ) {
+			continue;
+		}
+		$position = $result[ "position" ];
+		$date = $result[ "championshipDate" ];
+		$judokas[ $judokaIndexes[ $result[ "federationNumber" ] ] ][ "competitions" ][] = [
+			"championshipName" => $result[ "championshipName" ],
+			"championshipDate" => $date instanceof DateTimeImmutable ? $date->format( "d/m/Y" ) : "Fecha no disponible",
+			"venue" => $result[ "venue" ],
+			"competitionCategory" => $result[ "competitionCategory" ],
+			"position" => $position === null ? "Sin clasificación" : mod003_ordinalPosition( $position ),
+			"positionClass" => $position !== null && $position <= 3 ? "result-badge--podium" : "result-badge--classified",
+		];
+	}
+
+	$clubName = $judokas[ 0 ][ "clubName" ] ?? ( $auth[ "displayName" ] ?? "Club" );
+	return [
+		"pageTitle" => "Judokas del club",
+		"username" => $auth[ "username" ],
+		"clubName" => $clubName,
+		"judokaCount" => count( $judokas ),
+		"judokas" => $judokas,
+	];
 }
 
 /* Prepara la ficha privada del federado y su historial de clasificaciones. */

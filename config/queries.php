@@ -148,6 +148,13 @@ const CONFIG_QUERIES = [
 		                FROM USUARIOS_CLUB uc
 		                JOIN CLUBS c ON c.idclub = uc.idclub
 		           LEFT JOIN PERTENECIENTES p ON p.idclub = c.idclub
+		                 AND p.idclub = (
+		                     SELECT p2.idclub
+		                       FROM PERTENECIENTES p2
+		                      WHERE p2.numfederado = p.numfederado
+		                   ORDER BY p2.fechaaltaclub DESC, p2.idclub DESC
+		                      LIMIT 1
+		                 )
 		           LEFT JOIN INSCRITOS i ON i.numfederado = p.numfederado
 		               WHERE uc.idusuario = :userId
 		            GROUP BY c.idclub, c.nomclub",
@@ -158,6 +165,106 @@ const CONFIG_QUERIES = [
 			"tertiary_count" => [ "tertiaryCount", "int"    ],
 		],
 		"error" => "No se han podido cargar los datos del club.",
+	],
+	"getClubJudokas" => [
+		"sql" => "SELECT j.numfederado, j.nombre, j.apellidos, j.pesaje,
+		                 c.nomclub,
+		                 (SELECT CONCAT(cat.nomcategoria, ' · ', sc.nomrangopesaje)
+		                    FROM CATEGORIAS cat
+		                    JOIN SUBCATEGORIAS sc ON sc.idcategoria = cat.idcategoria
+		                   WHERE cat.genero = j.genero
+		                     AND TIMESTAMPDIFF(YEAR, j.fecnacimiento, CURDATE()) BETWEEN cat.edadmin AND cat.edadmax
+		                     AND j.pesaje BETWEEN sc.pesajemin AND sc.pesajemax
+		                ORDER BY cat.edadmin DESC, sc.pesajemin DESC
+		                   LIMIT 1) AS categoria_actual
+		            FROM USUARIOS_CLUB uc
+		            JOIN CLUBS c ON c.idclub = uc.idclub
+		            JOIN PERTENECIENTES p ON p.idclub = c.idclub
+		            JOIN JUDOKAS j ON j.numfederado = p.numfederado
+		           WHERE uc.idusuario = :userId
+		             AND p.idclub = (
+		                 SELECT p2.idclub
+		                   FROM PERTENECIENTES p2
+		                  WHERE p2.numfederado = p.numfederado
+		               ORDER BY p2.fechaaltaclub DESC, p2.idclub DESC
+		                  LIMIT 1
+		             )
+		             AND p.fechaaltaclub = (
+		                 SELECT MAX(p3.fechaaltaclub)
+		                   FROM PERTENECIENTES p3
+		                  WHERE p3.numfederado = p.numfederado
+		                    AND p3.idclub = p.idclub
+		             )
+		        ORDER BY j.apellidos, j.nombre",
+		"fields" => [
+			"numfederado" => [ "federationNumber", "string" ],
+			"nombre" => [ "firstName", "string" ],
+			"apellidos" => [ "lastName", "string" ],
+			"pesaje" => [ "weight", "int" ],
+			"nomclub" => [ "clubName", "string" ],
+			"categoria_actual" => [ "categoryName", "string" ],
+		],
+		"error" => "No se han podido cargar los judokas del club.",
+	],
+	"getClubJudokaRecentResults" => [
+		"sql" => "SELECT pc.numfederado, c.nomcampeonato, c.feccampeonato, c.sede,
+		                 CONCAT(cat.nomcategoria, ' · ', sc.nomrangopesaje) AS categoria_competicion,
+		                 CASE
+		                   WHEN EXISTS (
+		                     SELECT 1 FROM COMBATES cb
+		                     JOIN RESULTADOS_COMBATE rc ON rc.idcombate = cb.idcombate
+		                      WHERE cb.idcuadro = pc.idcuadro AND UPPER(cb.ronda) = 'FINAL'
+		                        AND CASE rc.lado_ganador WHEN 'AZUL' THEN cb.numfederado_azul ELSE cb.numfederado_blanco END = pc.numfederado
+		                   ) THEN 1
+		                   WHEN EXISTS (
+		                     SELECT 1 FROM COMBATES cb
+		                     JOIN RESULTADOS_COMBATE rc ON rc.idcombate = cb.idcombate
+		                      WHERE cb.idcuadro = pc.idcuadro AND UPPER(cb.ronda) = 'FINAL'
+		                        AND pc.numfederado IN (cb.numfederado_azul, cb.numfederado_blanco)
+		                   ) THEN 2
+		                   WHEN EXISTS (
+		                     SELECT 1 FROM COMBATES cb
+		                     JOIN RESULTADOS_COMBATE rc ON rc.idcombate = cb.idcombate
+		                      WHERE cb.idcuadro = pc.idcuadro AND UPPER(cb.ronda) = 'BRONCE'
+		                        AND CASE rc.lado_ganador WHEN 'AZUL' THEN cb.numfederado_azul ELSE cb.numfederado_blanco END = pc.numfederado
+		                   ) THEN 3
+		                   WHEN EXISTS (
+		                     SELECT 1 FROM COMBATES cb
+		                     JOIN RESULTADOS_COMBATE rc ON rc.idcombate = cb.idcombate
+		                      WHERE cb.idcuadro = pc.idcuadro AND UPPER(cb.ronda) = 'BRONCE'
+		                        AND pc.numfederado IN (cb.numfederado_azul, cb.numfederado_blanco)
+		                   ) THEN 5
+		                   ELSE NULL
+		                 END AS puesto
+		            FROM USUARIOS_CLUB uc
+		            JOIN PERTENECIENTES p ON p.idclub = uc.idclub
+		            JOIN PARTICIPANTES_CUADRO pc ON pc.numfederado = p.numfederado
+		            JOIN CUADROS cu ON cu.idcuadro = pc.idcuadro
+		            JOIN CAMPEONATOS c ON c.idcampeonato = cu.idcampeonato
+		            JOIN SUBCATEGORIAS sc ON sc.idsubcategoria = cu.idsubcategoria
+		            JOIN CATEGORIAS cat ON cat.idcategoria = sc.idcategoria
+		           WHERE uc.idusuario = :userId
+		             AND p.idclub = (
+		                 SELECT p2.idclub FROM PERTENECIENTES p2
+		                  WHERE p2.numfederado = p.numfederado
+		               ORDER BY p2.fechaaltaclub DESC, p2.idclub DESC LIMIT 1
+		             )
+		             AND p.fechaaltaclub = (
+		                 SELECT MAX(p3.fechaaltaclub) FROM PERTENECIENTES p3
+		                  WHERE p3.numfederado = p.numfederado
+		                    AND p3.idclub = p.idclub
+		             )
+		             AND c.feccampeonato BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 YEAR) AND CURDATE()
+		        ORDER BY pc.numfederado, c.feccampeonato DESC, c.nomcampeonato",
+		"fields" => [
+			"numfederado" => [ "federationNumber", "string" ],
+			"nomcampeonato" => [ "championshipName", "string" ],
+			"feccampeonato" => [ "championshipDate", "dateObject" ],
+			"sede" => [ "venue", "string" ],
+			"categoria_competicion" => [ "competitionCategory", "string" ],
+			"puesto" => [ "position", "int" ],
+		],
+		"error" => "No se han podido cargar los resultados recientes del club.",
 	],
 	"getFederatedDashboard" => [
 		"sql"    => "SELECT CONCAT(j.nombre, ' ', j.apellidos) AS profile_name,

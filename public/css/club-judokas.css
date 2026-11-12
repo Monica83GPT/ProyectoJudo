@@ -1,0 +1,230 @@
+.club-back {
+	margin-bottom: 18px;
+}
+
+.club-back a {
+	color: var(--blue);
+	font-size: 12px;
+	font-weight: 850;
+}
+
+.club-list-hero {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 28px;
+	margin-bottom: 22px;
+	padding: 30px;
+	border-radius: 10px;
+	background: linear-gradient(135deg, var(--ink), var(--blue));
+	color: #fff;
+}
+
+.club-list-hero h1 {
+	margin: 4px 0 8px;
+	font-family: Georgia, serif;
+	font-size: clamp(28px, 4vw, 42px);
+}
+
+.club-list-hero p:last-child {
+	max-width: 700px;
+	margin: 0;
+	color: rgba(255, 255, 255, .78);
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+.club-list-count {
+	min-width: 118px;
+	padding: 17px;
+	border: 1px solid rgba(255, 255, 255, .22);
+	border-radius: 8px;
+	background: rgba(255, 255, 255, .09);
+	text-align: center;
+}
+
+.club-list-count strong,
+.club-list-count span {
+	display: block;
+}
+
+.club-list-count strong {
+	font-family: Georgia, serif;
+	font-size: 34px;
+}
+
+.club-list-count span {
+	font-size: 10px;
+	font-weight: 850;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+}
+
+.judoka-list {
+	display: grid;
+	gap: 15px;
+}
+
+.judoka-card {
+	overflow: hidden;
+	border: 1px solid var(--line);
+	border-radius: 9px;
+	background: #fff;
+	box-shadow: 0 10px 25px rgba(31, 62, 96, .06);
+}
+
+.judoka-card__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	padding: 22px 24px;
+}
+
+.judoka-number {
+	margin: 0 0 5px;
+	color: var(--red);
+	font-size: 10px;
+	font-weight: 900;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+}
+
+.judoka-card h2 {
+	margin: 0;
+	font-family: Georgia, serif;
+	font-size: 23px;
+}
+
+.judoka-category {
+	display: grid;
+	justify-items: end;
+	gap: 3px;
+	text-align: right;
+}
+
+.judoka-category span,
+.judoka-category small {
+	color: var(--muted);
+	font-size: 10px;
+}
+
+.judoka-category strong {
+	color: var(--blue);
+	font-size: 13px;
+}
+
+.competition-block {
+	padding: 18px 24px 22px;
+	border-top: 1px solid var(--line);
+	background: #f7f9fc;
+}
+
+.competition-block h3 {
+	margin: 0 0 11px;
+	font-size: 11px;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+}
+
+.competition-list {
+	display: grid;
+	gap: 8px;
+}
+
+.competition-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 18px;
+	padding: 12px 14px;
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	background: #fff;
+}
+
+.competition-row div {
+	display: grid;
+	gap: 3px;
+}
+
+.competition-row strong {
+	font-size: 13px;
+}
+
+.competition-row span,
+.competition-row small,
+.no-competition {
+	color: var(--muted);
+	font-size: 11px;
+}
+
+.result-badge {
+	flex: 0 0 auto;
+	padding: 7px 10px;
+	border-radius: 999px;
+	font-size: 10px;
+	font-weight: 900;
+}
+
+.result-badge--podium {
+	background: #fff1c7;
+	color: #795400;
+}
+
+.result-badge--classified {
+	background: var(--blue-light);
+	color: var(--blue);
+}
+
+.no-competition {
+	margin: 0;
+	padding: 12px 14px;
+	border: 1px dashed var(--line);
+	border-radius: 6px;
+}
+
+.judoka-empty {
+	padding: 44px 24px;
+	border: 1px dashed var(--line);
+	border-radius: 9px;
+	background: #fff;
+	text-align: center;
+}
+
+.judoka-empty h2 {
+	margin-top: 0;
+}
+
+.judoka-empty a {
+	display: inline-block;
+	margin-top: 8px;
+	padding: 11px 16px;
+	border-radius: 5px;
+	background: var(--blue);
+	color: #fff;
+	font-size: 12px;
+	font-weight: 850;
+}
+
+@media (max-width: 680px) {
+	.club-list-hero,
+	.judoka-card__header,
+	.competition-row {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.club-list-count {
+		align-self: stretch;
+	}
+
+	.judoka-category {
+		justify-items: start;
+		text-align: left;
+	}
+
+	.result-badge {
+		align-self: flex-start;
+	}
+}

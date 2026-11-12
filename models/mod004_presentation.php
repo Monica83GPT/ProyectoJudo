@@ -54,6 +54,12 @@ function mod004_getDashboard( $auth, $csrfToken ) {
 	return render( mod004_readTemplate( "dashboard.html" ), $data );
 }
 
+function mod004_getClubJudokas( $auth, $csrfToken ) {
+	$data = mod003_getClubJudokasData( $auth );
+	$data[ "csrfToken" ] = $csrfToken;
+	return render( mod004_readTemplate( "club_judokas.html" ), $data );
+}
+
 function mod004_getFederatedProfile( $auth, $csrfToken ) {
 	$data = mod003_getFederatedProfileData( $auth );
 	$data[ "csrfToken" ] = $csrfToken;

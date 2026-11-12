@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>#pageTitle# · FMJYDA</title>
+	<meta name="description" content="Judokas, categorías y resultados recientes del club.">
+	<link rel="stylesheet" href="css/login.css?v=20261112-1">
+	<link rel="stylesheet" href="css/club-judokas.css?v=20261112-1">
+</head>
+<body class="dashboard-page club-judokas-page">
+	<div class="topline"></div>
+	<header class="access-header area-header">
+		<a class="brand" href="judo.php" aria-label="Volver al inicio">
+			<img src="imagenes/logo-fmjudo.png" alt="Logo de la Federación Madrileña de Judo">
+			<span>FEDERACIÓN MADRILEÑA<small>JUDO Y DEPORTES ASOCIADOS</small></span>
+		</a>
+		<div class="header-session">
+			<span>#username#</span>
+			<form method="post" action="logout.php">
+				<input type="hidden" name="csrf" value="#csrfToken#">
+				<button class="logout-button" type="submit">Cerrar sesión</button>
+			</form>
+		</div>
+	</header>
+
+	<main class="dashboard-shell">
+		<nav class="club-back" aria-label="Navegación secundaria">
+			<a href="club.php">← Volver al área de clubes</a>
+		</nav>
+		<section class="club-list-hero">
+			<div>
+				<p class="eyebrow">Plantilla deportiva</p>
+				<h1>#clubName#</h1>
+				<p>Consulta la categoría actual y la actividad competitiva de cada judoka durante los últimos doce meses.</p>
+			</div>
+			<div class="club-list-count"><strong>#judokaCount#</strong><span>judokas</span></div>
+		</section>
+
+		<section class="judoka-list" aria-label="Judokas del club">
+			##judokas##
+			<article class="judoka-card">
+				<header class="judoka-card__header">
+					<div>
+						<p class="judoka-number">N.º federado #federationNumber#</p>
+						<h2>#firstName# #lastName#</h2>
+					</div>
+					<div class="judoka-category"><span>Categoría actual</span><strong>#categoryName#</strong><small>#weight# kg</small></div>
+				</header>
+				<div class="competition-block">
+					<h3>Competición en el último año</h3>
+					<div class="competition-list">
+						##competitions##
+						<div class="competition-row">
+							<div><strong>#championshipName#</strong><span>#championshipDate# · #venue#</span><small>#competitionCategory#</small></div>
+							<span class="result-badge #positionClass#">#position#</span>
+						</div>
+						##/competitions##
+						##competitions:empty##<p class="no-competition">No ha competido en los últimos doce meses.</p>##/competitions:empty##
+					</div>
+				</div>
+			</article>
+			##/judokas##
+			##judokas:empty##<div class="judoka-empty"><h2>Todavía no hay judokas vinculados</h2><p>Da de alta el primer judoka para empezar a formar la plantilla del club.</p><a href="club_judoka_nuevo.php">Dar de alta un judoka</a></div>##/judokas:empty##
+		</section>
+	</main>
+</body>
+</html>
