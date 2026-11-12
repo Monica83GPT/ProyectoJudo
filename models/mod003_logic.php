@@ -123,7 +123,10 @@ function mod003_getResultsData() {
 		}
 
 		$podium = [];
-		foreach ( mod002_runQuery( "getBracketRanking", [ ":bracketId" => $category[ "bracketId" ] ] ) as $ranked ) {
+		foreach ( mod002_runQuery( "getBracketRanking", [
+			":bracketId" => $category[ "bracketId" ],
+			":officialBracketId" => $category[ "bracketId" ],
+		] ) as $ranked ) {
 			if ( $ranked[ "position" ] === null || $ranked[ "position" ] > 3 ) {
 				continue;
 			}
@@ -131,8 +134,7 @@ function mod003_getResultsData() {
 				"position" => mod003_ordinalPosition( $ranked[ "position" ] ),
 				"medalClass" => mod003_medalClass( $ranked[ "position" ] ),
 				"fullName" => $ranked[ "fullName" ],
-				"federationNumber" => $ranked[ "federationNumber" ],
-				"clubName" => $ranked[ "clubName" ],
+				"participantMeta" => $ranked[ "clubName" ] . ( $ranked[ "federationNumber" ] !== "" ? " · " . $ranked[ "federationNumber" ] : "" ),
 			];
 		}
 
@@ -140,7 +142,7 @@ function mod003_getResultsData() {
 		$championships[ $index ][ "categories" ][] = [
 			"categoryName" => $category[ "categoryName" ],
 			"podium" => $podium,
-			"rankingUrl" => "ranking_descargar.php?cuadro=" . $category[ "bracketId" ],
+			"rankingUrl" => $category[ "sourceUrl" ] !== "" ? $category[ "sourceUrl" ] : "ranking_descargar.php?cuadro=" . $category[ "bracketId" ],
 		];
 		$categoryCount++;
 	}
@@ -205,7 +207,10 @@ function mod003_getRankingDownloadData( $bracketId ) {
 	}
 
 	$rows = [];
-	foreach ( mod002_runQuery( "getBracketRanking", [ ":bracketId" => $bracketId ] ) as $ranked ) {
+	foreach ( mod002_runQuery( "getBracketRanking", [
+		":bracketId" => $bracketId,
+		":officialBracketId" => $bracketId,
+	] ) as $ranked ) {
 		$rows[] = [
 			"position" => $ranked[ "position" ] === null ? "Sin clasificar" : mod003_ordinalPosition( $ranked[ "position" ] ),
 			"fullName" => $ranked[ "fullName" ],

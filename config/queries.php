@@ -29,7 +29,12 @@ const CONFIG_QUERIES = [
 	"getResultCategories" => [
 		"sql" => "SELECT cu.idcuadro, c.idcampeonato, c.nomcampeonato, c.feccampeonato,
 		                 c.sede, sc.idsubcategoria,
-		                 CONCAT(cat.nomcategoria, ' · ', sc.nomrangopesaje) AS categoria
+		                 CONCAT(cat.nomcategoria, ' · ', sc.nomrangopesaje) AS categoria,
+		                 COALESCE((
+		                   SELECT MIN(co.fuente_url)
+		                     FROM CLASIFICACIONES_OFICIALES co
+		                    WHERE co.idcuadro = cu.idcuadro
+		                 ), '') AS fuente_resultados
 		            FROM CUADROS cu
 		            JOIN CAMPEONATOS c ON c.idcampeonato = cu.idcampeonato
 		            JOIN SUBCATEGORIAS sc ON sc.idsubcategoria = cu.idsubcategoria
@@ -40,6 +45,10 @@ const CONFIG_QUERIES = [
 		                   JOIN RESULTADOS_COMBATE rc ON rc.idcombate = cb.idcombate
 		                  WHERE cb.idcuadro = cu.idcuadro
 		                    AND UPPER(cb.ronda) = 'FINAL'
+		           ) OR EXISTS (
+		                 SELECT 1
+		                   FROM CLASIFICACIONES_OFICIALES co
+		                  WHERE co.idcuadro = cu.idcuadro
 		           )
 		        ORDER BY c.feccampeonato DESC, c.idcampeonato DESC,
 		                 cat.nomcategoria, sc.pesajemin",
@@ -51,11 +60,14 @@ const CONFIG_QUERIES = [
 			"sede" => [ "venue", "string" ],
 			"idsubcategoria" => [ "subcategoryId", "int" ],
 			"categoria" => [ "categoryName", "string" ],
+			"fuente_resultados" => [ "sourceUrl", "string" ],
 		],
 		"error" => "No se han podido cargar las categorías con resultados.",
 	],
 	"getBracketRanking" => [
-		"sql" => "SELECT pc.numfederado, CONCAT(j.nombre, ' ', j.apellidos) AS judoka,
+		"sql" => "SELECT ranking.numfederado, ranking.judoka, ranking.club, ranking.puesto
+		            FROM (
+		            SELECT pc.numfederado, CONCAT(j.nombre, ' ', j.apellidos) AS judoka,
 		                 COALESCE((
 		                   SELECT cl.nomclub
 		                     FROM PERTENECIENTES p
@@ -97,7 +109,13 @@ const CONFIG_QUERIES = [
 		            JOIN CUADROS cu ON cu.idcuadro = pc.idcuadro
 		            JOIN CAMPEONATOS c ON c.idcampeonato = cu.idcampeonato
 		           WHERE pc.idcuadro = :bracketId
-		        ORDER BY puesto IS NULL, puesto, j.apellidos, j.nombre",
+		            UNION ALL
+		            SELECT '' AS numfederado, co.nombre_completo AS judoka,
+		                   co.club, co.posicion AS puesto
+		              FROM CLASIFICACIONES_OFICIALES co
+		             WHERE co.idcuadro = :officialBracketId
+		            ) ranking
+		        ORDER BY ranking.puesto IS NULL, ranking.puesto, ranking.judoka",
 		"fields" => [
 			"numfederado" => [ "federationNumber", "string" ],
 			"judoka" => [ "fullName", "string" ],
