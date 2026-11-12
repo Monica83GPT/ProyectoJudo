@@ -401,7 +401,8 @@ const CONFIG_QUERIES = [
 	],
 	"getCompetitionDocuments" => [
 		"sql"    => "SELECT c.nomcampeonato, cv.organismo_emisor, cv.requisitos,
-		                     cv.documentos, cv.reglamento_version
+		                     cv.documentos, cv.reglamento_version,
+		                     cv.circular_archivo, cv.normativa_archivo
 		                FROM CONVOCATORIAS cv
 		                JOIN CAMPEONATOS c ON c.idcampeonato = cv.idcampeonato
 		            ORDER BY c.feccampeonato DESC",
@@ -411,6 +412,8 @@ const CONFIG_QUERIES = [
 			"requisitos"        => [ "requirements",     "string" ],
 			"documentos"        => [ "documents",        "string" ],
 			"reglamento_version"=> [ "regulation",       "string" ],
+			"circular_archivo"  => [ "circularPath",      "string" ],
+			"normativa_archivo" => [ "regulationPath",    "string" ],
 		],
 		"error" => "No se han podido cargar los documentos y normativas.",
 	],
@@ -530,6 +533,31 @@ const CONFIG_QUERIES = [
 		],
 		"error" => "No se han podido cargar las categorías de competición.",
 	],
+	"getOrganizerCalls" => [
+		"sql" => "SELECT cv.idconvocatoria, c.nomcampeonato, c.feccampeonato,
+		                 cv.circular_archivo, cv.normativa_archivo,
+		                 CONCAT(c.nomcampeonato, ' · ', DATE_FORMAT(c.feccampeonato, '%d/%m/%Y')) AS option_label
+		            FROM CONVOCATORIAS cv
+		            JOIN CAMPEONATOS c ON c.idcampeonato = cv.idcampeonato
+		        ORDER BY c.feccampeonato DESC, cv.idconvocatoria DESC",
+		"fields" => [
+			"idconvocatoria" => [ "callId", "int" ],
+			"nomcampeonato" => [ "championshipName", "string" ],
+			"feccampeonato" => [ "championshipDate", "dateObject" ],
+			"circular_archivo" => [ "circularPath", "string" ],
+			"normativa_archivo" => [ "regulationPath", "string" ],
+			"option_label" => [ "optionLabel", "string" ],
+		],
+		"error" => "No se han podido cargar las convocatorias.",
+	],
+	"updateCallDocuments" => [
+		"sql" => "UPDATE CONVOCATORIAS
+		             SET circular_archivo = COALESCE(:circularPath, circular_archivo),
+		                 normativa_archivo = COALESCE(:regulationPath, normativa_archivo)
+		           WHERE idconvocatoria = :callId",
+		"fields" => [],
+		"error" => "No se ha podido actualizar la documentación de la convocatoria.",
+	],
 	"createChampionship" => [
 		"sql" => "INSERT INTO CAMPEONATOS
 		                 (nomcampeonato, feccampeonato, logocampeonato, sede)
@@ -545,10 +573,12 @@ const CONFIG_QUERIES = [
 	],
 	"createCall" => [
 		"sql" => "INSERT INTO CONVOCATORIAS
-		                 (idcampeonato, organismo_emisor, plazo_inscripcion, requisitos,
-		                  documentos, reglamento_version, fecha_corte_edad)
+			                 (idcampeonato, organismo_emisor, plazo_inscripcion, requisitos,
+			                  documentos, reglamento_version, fecha_corte_edad,
+			                  circular_archivo, normativa_archivo)
 		          VALUES (:championshipId, :issuer, :deadline, :requirements,
-		                  :documents, :regulation, :ageCutoff)",
+			                  :documents, :regulation, :ageCutoff,
+			                  :circularPath, :regulationPath)",
 		"fields" => [],
 		"error" => "No se ha podido crear la convocatoria.",
 	],

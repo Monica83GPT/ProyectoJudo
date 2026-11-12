@@ -12,7 +12,7 @@ if ( $_SERVER[ "REQUEST_METHOD" ] === "POST" ) {
 		$errors[] = "La sesión del formulario ha caducado. Inténtalo de nuevo.";
 	} else {
 		try {
-			$result = mod003_createChampionshipCall( $_POST );
+			$result = mod003_createChampionshipCall( $_POST, $_FILES );
 			$values = $result[ "values" ];
 			$errors = $result[ "errors" ];
 			if ( $result[ "ok" ] ) $success[] = "El campeonato y su convocatoria se han creado correctamente.";

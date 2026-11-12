@@ -21,8 +21,9 @@
 		<section class="data-form-card">
 			##errors##<div class="form-error" role="alert">#message#</div>##/errors##
 			##success##<div class="form-success" role="status">#message#</div>##/success##
-			<form method="post" action="organizador_campeonato_nuevo.php">
+			<form method="post" action="organizador_campeonato_nuevo.php" enctype="multipart/form-data">
 				<input type="hidden" name="csrf" value="#csrfToken#">
+				<input type="hidden" name="MAX_FILE_SIZE" value="10485760">
 				<div class="form-grid">
 					<label><span>Nombre del campeonato</span><input name="nombre" value="#name#" maxlength="20" required></label>
 					<label><span>Fecha</span><input name="fecha" type="date" value="#eventDate#" required></label>
@@ -34,6 +35,8 @@
 					<label class="form-span-2"><span>Documentación necesaria</span><textarea name="documentos" rows="3" required>#documentsValue#</textarea></label>
 					<label><span>Versión de normativa</span><input name="reglamento" value="#regulation#" maxlength="100" required></label>
 					<label><span>Fecha de corte de edad</span><input name="corte_edad" type="date" value="#ageCutoff#" required></label>
+					<label class="official-file-field"><span>Circular de inscripción (PDF)</span><input name="circular" type="file" accept="application/pdf,.pdf" required><small>Documento oficial · máximo 10 MB</small></label>
+					<label class="official-file-field"><span>Normativa de la convocatoria (PDF)</span><input name="normativa" type="file" accept="application/pdf,.pdf" required><small>Documento oficial · máximo 10 MB</small></label>
 				</div>
 				<div class="form-actions"><a href="organizador.php">Cancelar</a><button type="submit">Crear campeonato <span>→</span></button></div>
 			</form>

@@ -129,6 +129,24 @@ function mod004_getChampionshipForm( $csrfToken, $values, $subcategories, $error
 	return render( mod004_readTemplate( "organizador_campeonato_form.html" ), $data );
 }
 
+function mod004_getOrganizerDocumentsForm( $csrfToken, $options, $selectedValue = "", $errors = [], $success = [] ) {
+	$pendingPath = "documentos/convocatorias/pendiente-documentacion.pdf";
+	foreach ( $options as $index => $option ) {
+		$options[ $index ][ "selected" ] = (string) $option[ "callId" ] === (string) $selectedValue ? "selected" : "";
+		$publishedCount = (int) ( $option[ "circularPath" ] !== $pendingPath )
+			+ (int) ( $option[ "regulationPath" ] !== $pendingPath );
+		$options[ $index ][ "documentStatus" ] = $publishedCount === 2
+			? "Documentación publicada"
+			: ( $publishedCount === 1 ? "Documentación parcial" : "Pendiente de documentación" );
+	}
+	return render( mod004_readTemplate( "organizador_documentos_form.html" ), [
+		"csrfToken" => $csrfToken,
+		"options" => $options,
+		"errors" => mod004_messages( $errors ),
+		"success" => mod004_messages( $success ),
+	] );
+}
+
 function mod004_messages( $messages ) {
 	return array_map( fn( $message ) => [ "message" => $message ], $messages );
 }

@@ -1,5 +1,8 @@
 /config/database.php
 /config/mail.php
 /BBDD/DML_USUARIOS_COMBATES2.local.sql
-/public/uploads/j/*
-!/public/uploads/j/.gitkeep
+/public/imagenes/judokas/*
+!/public/imagenes/judokas/.gitkeep
+/public/documentos/convocatorias/*
+!/public/documentos/convocatorias/.gitkeep
+!/public/documentos/convocatorias/pendiente-documentacion.pdf

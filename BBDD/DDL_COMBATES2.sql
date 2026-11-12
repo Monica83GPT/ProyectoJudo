@@ -42,7 +42,7 @@ CREATE TABLE JUDOKAS (
     pesaje         TINYINT UNSIGNED NOT NULL,
     fecnacimiento  DATE NOT NULL,
     genero         BOOLEAN NOT NULL,
-    fotojudoka     CHAR(28) NOT NULL,
+    fotojudoka     VARCHAR(255) NOT NULL,
     PRIMARY KEY (numfederado)
 ) ENGINE=InnoDB;
 
@@ -209,6 +209,8 @@ CREATE TABLE CONVOCATORIAS (
     documentos         TEXT NOT NULL,
     reglamento_version VARCHAR(100) NOT NULL,
     fecha_corte_edad   DATE NOT NULL,
+    circular_archivo   VARCHAR(255) NOT NULL DEFAULT 'documentos/convocatorias/pendiente-documentacion.pdf',
+    normativa_archivo  VARCHAR(255) NOT NULL DEFAULT 'documentos/convocatorias/pendiente-documentacion.pdf',
     PRIMARY KEY (idconvocatoria),
     CONSTRAINT fk_CONVOCATORIAS_idcampeonato
         FOREIGN KEY (idcampeonato)

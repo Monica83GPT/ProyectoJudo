@@ -358,7 +358,7 @@ function mod003_dashboardCards( $role, $summary, $eventCount, $documentCount ) {
 	} else {
 		$cards = [
 			[ "cardUrl" => "organizador_campeonato_nuevo.php", "cardNumber" => "01", "cardTitle" => "Alta de campeonato", "cardText" => "Crea el evento, su sede, fecha y niveles de competición.", "cardMeta" => "Nuevo evento" ],
-			[ "cardUrl" => "organizador_campeonato_nuevo.php", "cardNumber" => "02", "cardTitle" => "Convocatorias", "cardText" => "Publica plazos, requisitos, documentos y normativa.", "cardMeta" => $summary[ "primaryCount" ] . " próximos" ],
+			[ "cardUrl" => "organizador_documentos.php", "cardNumber" => "02", "cardTitle" => "Convocatorias", "cardText" => "Publica o sustituye circulares y normativa oficial.", "cardMeta" => $summary[ "primaryCount" ] . " próximos" ],
 			[ "cardUrl" => "#gestion", "cardNumber" => "03", "cardTitle" => "Inscripciones y cuadros", "cardText" => "Valida participantes y prepara combates y repescas.", "cardMeta" => $summary[ "secondaryCount" ] . " inscripciones" ],
 		];
 	}
@@ -489,11 +489,26 @@ function mod003_prepareDashboardEvents( $championships ) {
 function mod003_prepareDashboardDocuments( $rows ) {
 	$documents = [];
 	foreach ( $rows as $row ) {
+		$documentFiles = [];
+		if ( !empty( $row[ "circularPath" ] ) ) {
+			$documentFiles[] = [
+				"documentUrl" => $row[ "circularPath" ],
+				"documentLabel" => "Circular de inscripción",
+			];
+		}
+		if ( !empty( $row[ "regulationPath" ] ) ) {
+			$documentFiles[] = [
+				"documentUrl" => $row[ "regulationPath" ],
+				"documentLabel" => "Normativa oficial",
+			];
+		}
 		$documents[] = [
 			"documentTitle" => $row[ "championshipName" ],
 			"documentIssuer" => $row[ "issuer" ],
 			"documentRegulation" => $row[ "regulation" ],
 			"documentText" => $row[ "documents" ],
+			"documentMark" => $documentFiles ? "PDF" : "INFO",
+			"documentFiles" => $documentFiles,
 		];
 	}
 	return $documents;
@@ -653,7 +668,64 @@ function mod003_getSubcategoryOptions() {
 	return mod002_runQuery( "getSubcategories" );
 }
 
-function mod003_createChampionshipCall( $input ) {
+function mod003_getOrganizerCallOptions() {
+	return mod002_runQuery( "getOrganizerCalls" );
+}
+
+function mod003_updateCallDocuments( $selectedValue, $files ) {
+	$callId = filter_var( $selectedValue, FILTER_VALIDATE_INT, [ "options" => [ "min_range" => 1 ] ] );
+	$selected = null;
+	foreach ( mod003_getOrganizerCallOptions() as $option ) {
+		if ( $option[ "callId" ] === $callId ) {
+			$selected = $option;
+			break;
+		}
+	}
+	if ( $selected === null ) {
+		return [ "ok" => false, "errors" => [ "Selecciona una convocatoria válida." ] ];
+	}
+
+	$circular = mod003_validateOfficialPdf( $files[ "circular" ] ?? null, "la circular de inscripción", false );
+	$regulationDocument = mod003_validateOfficialPdf( $files[ "normativa" ] ?? null, "la normativa de la convocatoria", false );
+	$errors = [];
+	if ( $circular[ "error" ] !== null ) $errors[] = $circular[ "error" ];
+	if ( $regulationDocument[ "error" ] !== null ) $errors[] = $regulationDocument[ "error" ];
+	if ( $circular[ "temporaryPath" ] === null && $regulationDocument[ "temporaryPath" ] === null ) {
+		$errors[] = "Selecciona al menos un PDF para publicar o sustituir.";
+	}
+	if ( $errors ) return [ "ok" => false, "errors" => $errors ];
+
+	$storedDocuments = [];
+	try {
+		$circularPath = null;
+		$regulationPath = null;
+		if ( $circular[ "temporaryPath" ] !== null ) {
+			$circularPath = uploads_storeCallDocument( $circular[ "temporaryPath" ], "circular" );
+			$storedDocuments[] = $circularPath;
+		}
+		if ( $regulationDocument[ "temporaryPath" ] !== null ) {
+			$regulationPath = uploads_storeCallDocument( $regulationDocument[ "temporaryPath" ], "normativa" );
+			$storedDocuments[] = $regulationPath;
+		}
+
+		mod002_runStatement( "updateCallDocuments", [
+			":callId" => $selected[ "callId" ],
+			":circularPath" => $circularPath,
+			":regulationPath" => $regulationPath,
+		] );
+	} catch ( Throwable $e ) {
+		foreach ( $storedDocuments as $storedDocument ) {
+			uploads_deleteCallDocument( $storedDocument );
+		}
+		throw $e;
+	}
+
+	if ( $circularPath !== null ) uploads_deleteCallDocument( $selected[ "circularPath" ] );
+	if ( $regulationPath !== null ) uploads_deleteCallDocument( $selected[ "regulationPath" ] );
+	return [ "ok" => true, "errors" => [] ];
+}
+
+function mod003_createChampionshipCall( $input, $files = [] ) {
 	$values = [
 		"name" => trim( (string) ( $input[ "nombre" ] ?? "" ) ),
 		"eventDate" => trim( (string) ( $input[ "fecha" ] ?? "" ) ),
@@ -678,23 +750,75 @@ function mod003_createChampionshipCall( $input ) {
 	if ( $values[ "documents" ] === "" ) $errors[] = "Indica la documentación necesaria.";
 	if ( $values[ "regulation" ] === "" || mod003_textLength( $values[ "regulation" ] ) > 100 ) $errors[] = "Indica una versión de normativa de hasta 100 caracteres.";
 	if ( !mod003_validDate( $values[ "ageCutoff" ] ) ) $errors[] = "La fecha de corte de edad no es válida.";
+	$circular = mod003_validateOfficialPdf( $files[ "circular" ] ?? null, "la circular de inscripción" );
+	$regulationDocument = mod003_validateOfficialPdf( $files[ "normativa" ] ?? null, "la normativa de la convocatoria" );
+	if ( $circular[ "error" ] !== null ) $errors[] = $circular[ "error" ];
+	if ( $regulationDocument[ "error" ] !== null ) $errors[] = $regulationDocument[ "error" ];
 	if ( $errors ) return [ "ok" => false, "errors" => $errors, "values" => $values ];
 
-	mod002_transaction( function () use ( $values ) {
-		$created = mod002_runStatement( "createChampionship", [
-			":name" => $values[ "name" ], ":eventDate" => $values[ "eventDate" ],
-			":logo" => "imagenes/SINFOTO.svg", ":venue" => $values[ "venue" ],
-		] );
-		$id = $created[ "insertId" ];
-		mod002_runStatement( "createCompetitionLevel", [ ":championshipId" => $id, ":subcategoryId" => $values[ "subcategoryId" ] ] );
-		mod002_runStatement( "createCall", [
-			":championshipId" => $id, ":issuer" => $values[ "issuer" ], ":deadline" => $values[ "deadline" ],
-			":requirements" => $values[ "requirements" ], ":documents" => $values[ "documents" ],
-			":regulation" => $values[ "regulation" ], ":ageCutoff" => $values[ "ageCutoff" ],
-		] );
-	} );
+	$storedDocuments = [];
+	try {
+		$circularPath = uploads_storeCallDocument( $circular[ "temporaryPath" ], "circular" );
+		$storedDocuments[] = $circularPath;
+		$regulationPath = uploads_storeCallDocument( $regulationDocument[ "temporaryPath" ], "normativa" );
+		$storedDocuments[] = $regulationPath;
+
+		mod002_transaction( function () use ( $values, $circularPath, $regulationPath ) {
+			$created = mod002_runStatement( "createChampionship", [
+				":name" => $values[ "name" ], ":eventDate" => $values[ "eventDate" ],
+				":logo" => "imagenes/SINFOTO.svg", ":venue" => $values[ "venue" ],
+			] );
+			$id = $created[ "insertId" ];
+			mod002_runStatement( "createCompetitionLevel", [ ":championshipId" => $id, ":subcategoryId" => $values[ "subcategoryId" ] ] );
+			mod002_runStatement( "createCall", [
+				":championshipId" => $id, ":issuer" => $values[ "issuer" ], ":deadline" => $values[ "deadline" ],
+				":requirements" => $values[ "requirements" ], ":documents" => $values[ "documents" ],
+				":regulation" => $values[ "regulation" ], ":ageCutoff" => $values[ "ageCutoff" ],
+				":circularPath" => $circularPath, ":regulationPath" => $regulationPath,
+			] );
+		} );
+	} catch ( Throwable $e ) {
+		foreach ( $storedDocuments as $storedDocument ) {
+			uploads_deleteCallDocument( $storedDocument );
+		}
+		throw $e;
+	}
 
 	return [ "ok" => true, "errors" => [], "values" => [] ];
+}
+
+function mod003_validateOfficialPdf( $file, $label, $required = true ) {
+	$result = [ "temporaryPath" => null, "error" => null ];
+	if ( !is_array( $file ) || ( $file[ "error" ] ?? UPLOAD_ERR_NO_FILE ) === UPLOAD_ERR_NO_FILE ) {
+		if ( $required ) $result[ "error" ] = "Adjunta $label en formato PDF.";
+		return $result;
+	}
+	if ( in_array( $file[ "error" ] ?? UPLOAD_ERR_NO_FILE, [ UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE ], true ) ) {
+		$result[ "error" ] = "El archivo de $label no puede superar los 10 MB.";
+		return $result;
+	}
+	if ( ( $file[ "error" ] ?? UPLOAD_ERR_NO_FILE ) !== UPLOAD_ERR_OK ) {
+		$result[ "error" ] = "El archivo de $label no se ha podido subir correctamente.";
+		return $result;
+	}
+	if ( (int) ( $file[ "size" ] ?? 0 ) <= 0 || (int) $file[ "size" ] > 10 * 1024 * 1024 ) {
+		$result[ "error" ] = "El archivo de $label debe ser un PDF de hasta 10 MB.";
+		return $result;
+	}
+
+	$temporaryPath = (string) ( $file[ "tmp_name" ] ?? "" );
+	if ( $temporaryPath === "" || !is_uploaded_file( $temporaryPath ) ) {
+		$result[ "error" ] = "El archivo recibido para $label no es una subida válida.";
+		return $result;
+	}
+	$finfo = new finfo( FILEINFO_MIME_TYPE );
+	$signature = file_get_contents( $temporaryPath, false, null, 0, 5 );
+	if ( $finfo->file( $temporaryPath ) !== "application/pdf" || $signature !== "%PDF-" ) {
+		$result[ "error" ] = "El archivo de $label debe ser un PDF válido.";
+		return $result;
+	}
+
+	return [ "temporaryPath" => $temporaryPath, "error" => null ];
 }
 
 function mod003_validDate( $date ) {

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Documentación de convocatorias · FMJYDA</title>
+	<link rel="stylesheet" href="css/login.css?v=20261112-8">
+</head>
+<body class="form-page">
+	<div class="topline"></div>
+	<header class="access-header area-header">
+		<a class="brand" href="organizador.php"><img src="imagenes/logo-fmjudo.png" alt="Logo FMJYDA"><span>FEDERACIÓN MADRILEÑA<small>JUDO Y DEPORTES ASOCIADOS</small></span></a>
+		<a class="back-link" href="organizador.php">← Volver al área de organizadores</a>
+	</header>
+	<main class="form-shell form-shell--wide visual-form-shell">
+		<section class="form-intro form-hero form-hero--championship">
+			<p class="eyebrow">Convocatorias oficiales</p>
+			<h1>Documentación y normativa</h1>
+			<p>Publica la circular de inscripción y la normativa oficial de una convocatoria existente. Puedes sustituir uno o ambos documentos.</p>
+		</section>
+		<section class="data-form-card">
+			##errors##<div class="form-error" role="alert">#message#</div>##/errors##
+			##success##<div class="form-success" role="status">#message#</div>##/success##
+			<form method="post" action="organizador_documentos.php" enctype="multipart/form-data">
+				<input type="hidden" name="csrf" value="#csrfToken#">
+				<input type="hidden" name="MAX_FILE_SIZE" value="10485760">
+				<div class="form-grid">
+					<label class="form-span-2"><span>Convocatoria</span><select name="convocatoria" required><option value="">Selecciona una convocatoria</option>##options##<option value="#callId#" #selected#>#optionLabel# · #documentStatus#</option>##/options##</select></label>
+					<label class="official-file-field"><span>Circular de inscripción (PDF)</span><input name="circular" type="file" accept="application/pdf,.pdf"><small>Máximo 10 MB · déjalo vacío para conservar la actual</small></label>
+					<label class="official-file-field"><span>Normativa oficial (PDF)</span><input name="normativa" type="file" accept="application/pdf,.pdf"><small>Máximo 10 MB · déjalo vacío para conservar la actual</small></label>
+				</div>
+				##options:empty##<p class="empty-form-state">No hay convocatorias disponibles. Crea primero un campeonato y su convocatoria.</p>##/options:empty##
+				<div class="form-actions"><a href="organizador.php">Cancelar</a><button type="submit">Publicar documentos <span>→</span></button></div>
+			</form>
+		</section>
+	</main>
+</body>
+</html>

@@ -686,6 +686,42 @@ a {
 	font-size: 12px;
 }
 
+.official-file-field {
+	padding: 14px;
+	border: 1px dashed var(--line);
+	border-radius: 6px;
+	background: var(--paper);
+}
+
+.official-file-field input[type="file"] {
+	width: 100%;
+	margin-top: 8px;
+	font-size: 11px;
+}
+
+.official-file-field small {
+	display: block;
+	margin-top: 7px;
+	color: var(--muted);
+	font-size: 10px;
+}
+
+.document-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 7px;
+	margin-top: 9px;
+}
+
+.document-links a {
+	padding: 6px 9px;
+	border-radius: 4px;
+	background: var(--blue-light);
+	color: var(--blue);
+	font-size: 10px;
+	font-weight: 850;
+}
+
 .form-page {
 	background: linear-gradient(135deg, #eef4fa, #fbfcfe 55%, #edf3f8);
 }

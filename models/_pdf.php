@@ -57,6 +57,48 @@ function mod004_buildRankingPdf( $data ) {
 	return $pdf;
 }
 
+function mod004_buildPendingDocumentationPdf() {
+	$lines = [
+		[ 20, "Documentación pendiente" ],
+		[ 12, "Federación Madrileña de Judo y Deportes Asociados" ],
+		[ 10, "" ],
+		[ 11, "La documentación oficial de esta convocatoria todavía no ha sido publicada." ],
+		[ 11, "Este archivo es un marcador temporal y será sustituido por el organizador." ],
+		[ 10, "" ],
+		[ 10, "Consulta de nuevo la convocatoria antes de realizar la inscripción." ],
+	];
+
+	$content = "BT\n";
+	$y = 760;
+	foreach ( $lines as $line ) {
+		$content .= "/F1 " . $line[ 0 ] . " Tf 1 0 0 1 48 " . $y . " Tm (" . mod004_pdf_escape( $line[ 1 ] ) . ") Tj\n";
+		$y -= $line[ 0 ] >= 18 ? 32 : 24;
+	}
+	$content .= "ET";
+
+	$objects = [
+		"<< /Type /Catalog /Pages 2 0 R >>",
+		"<< /Type /Pages /Kids [ 5 0 R ] /Count 1 >>",
+		"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>",
+		"<< /Length " . strlen( $content ) . " >>\nstream\n" . $content . "\nendstream",
+		"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>",
+	];
+
+	$pdf = "%PDF-1.4\n%\xE2\xE3\xCF\xD3\n";
+	$offsets = [ 0 ];
+	foreach ( $objects as $index => $object ) {
+		$offsets[] = strlen( $pdf );
+		$pdf .= ( $index + 1 ) . " 0 obj\n" . $object . "\nendobj\n";
+	}
+	$xrefOffset = strlen( $pdf );
+	$pdf .= "xref\n0 " . ( count( $objects ) + 1 ) . "\n0000000000 65535 f \n";
+	for ( $index = 1; $index < count( $offsets ); $index++ ) {
+		$pdf .= sprintf( "%010d 00000 n \n", $offsets[ $index ] );
+	}
+	$pdf .= "trailer\n<< /Size " . ( count( $objects ) + 1 ) . " /Root 1 0 R >>\nstartxref\n" . $xrefOffset . "\n%%EOF";
+	return $pdf;
+}
+
 function mod004_pdf_escape( $value ) {
 	$value = (string) $value;
 	if ( function_exists( "iconv" ) ) {
