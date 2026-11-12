@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>#pageTitle# · FMJYDA</title>
+	<link rel="stylesheet" href="css/login.css?v=20261109-6">
+</head>
+<body class="form-page enrollment-page">
+	<div class="topline"></div>
+	<header class="access-header area-header">
+		<a class="brand" href="#backUrl#"><img src="imagenes/logo-fmjudo.png" alt="Logo FMJYDA"><span>FEDERACIÓN MADRILEÑA<small>JUDO Y DEPORTES ASOCIADOS</small></span></a>
+		<a class="back-link" href="#backUrl#">← Volver al panel</a>
+	</header>
+	<main class="form-shell form-shell--compact visual-form-shell">
+		<section class="form-intro form-hero form-hero--enrollment">
+			<p class="eyebrow">#eyebrow#</p>
+			<h1>#pageTitle#</h1>
+			<p>#formDescription#</p>
+		</section>
+		<section class="data-form-card">
+			##errors##<div class="form-error" role="alert">#message#</div>##/errors##
+			##success##<div class="form-success" role="status">#message#</div>##/success##
+			<form method="post">
+				<input type="hidden" name="csrf" value="#csrfToken#">
+				<div class="field-with-action">
+					<label class="wide-field"><span>#fieldLabel#</span>
+						<select name="inscripcion" required>
+							<option value="">Selecciona una opción</option>
+							##options##<option value="#optionValue#">#optionLabel#</option>##/options##
+						</select>
+					</label>
+					##relatedCreate##<a class="related-create-link" href="#createUrl#">#createLabel# →</a>##/relatedCreate##
+				</div>
+				##options:empty##<p class="empty-form-state">#emptyText#</p>##/options:empty##
+				<div class="form-actions"><a href="#backUrl#">Cancelar</a><button type="submit">#submitLabel# <span>→</span></button></div>
+			</form>
+		</section>
+	</main>
+</body>
+</html>

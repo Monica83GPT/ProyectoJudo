@@ -24,10 +24,12 @@ CREATE TABLE MUNICIPIOS (
 CREATE TABLE CLUBS (
     idclub         SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
     nomclub        VARCHAR(20) NOT NULL,
+    emailcontacto  VARCHAR(120) NOT NULL,
     dirclub        VARCHAR(100) NOT NULL,
     logoclub       CHAR(26) NOT NULL DEFAULT 'clubs/images/img/00000.jpg',
     idmunicipio    TINYINT UNSIGNED NOT NULL,
     PRIMARY KEY (idclub),
+    UNIQUE KEY uq_CLUBS_email (emailcontacto),
     CONSTRAINT fk_CLUBS_idmunicipio
         FOREIGN KEY (idmunicipio)
         REFERENCES MUNICIPIOS (idmunicipio)

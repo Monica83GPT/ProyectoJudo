@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>#pageTitle# · FMJYDA</title>
+	<meta name="description" content="Últimos campeonatos, podios por categoría y rankings completos de la Federación Madrileña de Judo.">
+	<link rel="stylesheet" href="css/judo.css">
+	<link rel="stylesheet" href="css/resultados.css">
+</head>
+<body class="results-page">
+	<div class="topline"></div>
+	<header>
+		<div class="nav">
+			<a class="brand" href="judo.php" aria-label="Inicio FMJYDA">
+				<img class="brand-logo" src="imagenes/logo-fmjudo.png" alt="Logo de la Federación Madrileña de Judo">
+				<span>FEDERACIÓN MADRILEÑA<br><small>JUDO Y DEPORTES ASOCIADOS</small></span>
+			</a>
+			<nav aria-label="Navegación principal">
+				<a href="judo.php#campeonatos">Campeonatos</a>
+				<a href="judo.php#calendario">Calendario</a>
+				<a class="results-active" href="resultados.php" aria-current="page">Resultados</a>
+				<a class="login" href="login.php?perfil=club">Clubes</a>
+				<a class="login" href="login.php?perfil=federado">Federados</a>
+				<a class="login" href="login.php?perfil=organizador">Organizadores</a>
+			</nav>
+		</div>
+	</header>
+
+	<main class="results-main">
+		<section class="results-hero">
+			<div>
+				<p class="results-eyebrow">Resultados oficiales</p>
+				<h1>Últimos campeonatos</h1>
+				<p>Consulta el podio de cada categoría y descarga la clasificación completa.</p>
+			</div>
+			<div class="results-summary"><strong>#championshipCount#</strong><span>campeonatos</span><small>#categoryCount# categorías publicadas</small></div>
+		</section>
+
+		<div class="championship-list">
+			##championships##
+			<section class="championship-result">
+				<header class="championship-heading">
+					<div><p class="results-kicker">Campeonato finalizado</p><h2>#championshipName#</h2></div>
+					<div class="championship-meta"><strong>#championshipDate#</strong><span>#venue#</span></div>
+				</header>
+				<div class="category-grid">
+					##categories##
+					<article class="category-result">
+						<div class="category-heading"><div><span>Categoría</span><h3>#categoryName#</h3></div><a href="#rankingUrl#">Descargar ranking <span aria-hidden="true">↓</span></a></div>
+						<ol class="podium-list">
+							##podium##
+							<li>
+								<span class="medal #medalClass#">#position#</span>
+								<div><strong>#fullName#</strong><small>#clubName# · #federationNumber#</small></div>
+							</li>
+							##/podium##
+							##podium:empty##<li class="podium-empty">El podio todavía no está cerrado.</li>##/podium:empty##
+						</ol>
+					</article>
+					##/categories##
+				</div>
+			</section>
+			##/championships##
+			##championships:empty##
+			<section class="results-empty"><strong>Aún no hay resultados publicados</strong><p>Los podios aparecerán aquí cuando finalicen los primeros campeonatos.</p></section>
+			##/championships:empty##
+		</div>
+	</main>
+
+	<footer>
+		<span>FMJYDA · Federación Madrileña de Judo y Deportes Asociados</span>
+		<a class="footer-contact-link" href="https://judo.itsicap.com/contacto/">Contacto</a>
+	</footer>
+</body>
+</html>

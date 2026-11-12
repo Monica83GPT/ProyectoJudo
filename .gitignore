@@ -1,2 +1,5 @@
 /config/database.php
+/config/mail.php
 /BBDD/DML_USUARIOS_COMBATES2.local.sql
+/public/uploads/j/*
+!/public/uploads/j/.gitkeep

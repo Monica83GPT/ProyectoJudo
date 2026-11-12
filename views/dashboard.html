@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>#pageTitle# · FMJYDA</title>
+	<meta name="description" content="Panel privado de gestión de competiciones de judo.">
+	<link rel="stylesheet" href="css/login.css?v=20261109-4">
+</head>
+<body class="dashboard-page dashboard-#roleClass#">
+	<div class="topline"></div>
+	<header class="access-header area-header">
+		<a class="brand" href="judo.php" aria-label="Volver al inicio">
+			<img src="imagenes/logo-fmjudo.png" alt="Logo de la Federación Madrileña de Judo">
+			<span>FEDERACIÓN MADRILEÑA<small>JUDO Y DEPORTES ASOCIADOS</small></span>
+		</a>
+		<div class="header-session">
+			<span>#username#</span>
+			<form method="post" action="logout.php">
+				<input type="hidden" name="csrf" value="#csrfToken#">
+				<button class="logout-button" type="submit">Cerrar sesión</button>
+			</form>
+		</div>
+	</header>
+
+	<main class="dashboard-shell">
+		<section class="dashboard-hero">
+			<div>
+				<p class="eyebrow">#eyebrow#</p>
+				<h1>#pageTitle#</h1>
+				<p class="dashboard-welcome">Hola, <strong>#profileName#</strong>. #welcomeText#</p>
+			</div>
+			<div class="dashboard-summary">
+				<span>Agenda activa</span>
+				<strong>#eventCount#</strong>
+				<small>próximos eventos</small>
+			</div>
+		</section>
+
+		<section class="dashboard-section" id="gestion">
+			<div class="section-title">
+				<div><p class="card-kicker">Herramientas</p><h2>¿Qué necesitas gestionar?</h2></div>
+				<span>Acciones según tu perfil</span>
+			</div>
+			<div class="management-grid">
+				##cards##
+				<a class="management-card" href="#cardUrl#">
+					<span class="management-number">#cardNumber#</span>
+					<h3>#cardTitle#</h3>
+					<p>#cardText#</p>
+					<strong>#cardMeta# <span>→</span></strong>
+				</a>
+				##/cards##
+			</div>
+		</section>
+
+		<section class="dashboard-columns">
+			<div class="dashboard-panel" id="eventos">
+				<div class="panel-heading">
+					<div><p class="card-kicker">Calendario</p><h2>Próximos eventos</h2></div>
+					<span>#eventCount# eventos</span>
+				</div>
+				<div class="dashboard-list">
+					##events##
+					<article class="dashboard-event">
+						<time datetime="#eventDateIso#"><strong>#eventDay#</strong><span>#eventMonth#</span></time>
+						<div><h3>#eventName#</h3><p>#eventVenue#</p><small>#eventDeadline#</small></div>
+					</article>
+					##/events##
+					##events:empty##<p class="empty-state">No hay próximos eventos publicados.</p>##/events:empty##
+				</div>
+			</div>
+
+			<div class="dashboard-panel" id="documentos">
+				<div class="panel-heading">
+					<div><p class="card-kicker">Consulta</p><h2>Documentación y normativa</h2></div>
+					<span>#documentCount# documentos</span>
+				</div>
+				<div class="dashboard-list">
+					##documents##
+					<article class="dashboard-document">
+						<span class="document-mark">PDF</span>
+						<div><h3>#documentTitle#</h3><p>#documentText#</p><small>#documentRegulation# · #documentIssuer#</small></div>
+					</article>
+					##/documents##
+					##documents:empty##<p class="empty-state">No hay documentación publicada.</p>##/documents:empty##
+				</div>
+			</div>
+		</section>
+	</main>
+</body>
+</html>

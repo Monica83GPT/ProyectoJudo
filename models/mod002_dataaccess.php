@@ -33,6 +33,43 @@ function mod002_runQuery( $key, $params = [] ) {
 	return $arReturn;
 }
 
+/* Ejecuta INSERT, UPDATE o DELETE y devuelve filas afectadas e id autogenerado. */
+function mod002_runStatement( $key, $params = [] ) {
+	if ( !isset( CONFIG_QUERIES[ $key ] ) ) {
+		throw new InvalidArgumentException( "No existe la consulta '$key'" );
+	}
+	$query = CONFIG_QUERIES[ $key ];
+
+	try {
+		$pdo = mod001_connectDB();
+		$st = $pdo->prepare( $query[ "sql" ] );
+		$st->execute( $params );
+		return [
+			"affectedRows" => $st->rowCount(),
+			"insertId"     => (int) $pdo->lastInsertId(),
+		];
+	} catch ( PDOException $e ) {
+		error_log( "Consulta '$key': " . $e->getMessage() );
+		throw new RuntimeException( $query[ "error" ] );
+	}
+}
+
+/* Mantiene juntas las operaciones que forman una sola acción de negocio. */
+function mod002_transaction( $callback ) {
+	$pdo = mod001_connectDB();
+	$pdo->beginTransaction();
+	try {
+		$result = $callback();
+		$pdo->commit();
+		return $result;
+	} catch ( Throwable $e ) {
+		if ( $pdo->inTransaction() ) {
+			$pdo->rollBack();
+		}
+		throw $e;
+	}
+}
+
 /* Traduce una fila con los "fields" de su consulta: cada columna pasa a llamarse como en la
    aplicación y se convierte a su tipo. Dos errores de consistencia van al log (una sola vez):
    - una columna que devuelve el SQL y no está en "fields": sigue con su nombre de la BD;

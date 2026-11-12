@@ -1,0 +1,129 @@
+:root {
+	--ink: #10233e;
+	--blue: #123d6b;
+	--red: #e23b42;
+	--paper: #eef4fa;
+	--muted: #65748a;
+	--line: #d9e3ee;
+}
+
+* { box-sizing: border-box; }
+
+body {
+	margin: 0;
+	background: linear-gradient(135deg, #edf3f9, #fbfcfe 48%, #eaf1f8);
+	color: var(--ink);
+	font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.topline {
+	height: 5px;
+	background: linear-gradient(90deg, var(--red) 0 19%, var(--blue) 19% 100%);
+}
+
+.preview-header {
+	width: min(1180px, calc(100% - 40px));
+	min-height: 76px;
+	margin: auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 850; letter-spacing: .06em; line-height: 1.15; }
+.brand img { width: 42px; height: 42px; object-fit: contain; }
+.brand small { display: block; margin-top: 4px; color: var(--red); font-size: 9px; letter-spacing: .13em; }
+.back-link { color: var(--blue); font-size: 12px; font-weight: 800; }
+
+main { width: min(1180px, calc(100% - 40px)); margin: auto; padding: 52px 0 90px; }
+.intro { max-width: 760px; margin-bottom: 64px; }
+.kicker { margin: 0 0 9px; color: var(--red); font-size: 10px; font-weight: 900; letter-spacing: .17em; text-transform: uppercase; }
+.intro h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(44px, 6vw, 72px); font-weight: 500; letter-spacing: -.055em; line-height: .98; }
+.intro > p:last-child { max-width: 680px; margin: 22px 0 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
+
+.proposal { margin-top: 72px; }
+.proposal-heading { margin-bottom: 22px; display: grid; grid-template-columns: 62px minmax(0, 650px); gap: 22px; align-items: start; }
+.proposal-number { color: #b6c6d7; font-family: Georgia, serif; font-size: 44px; line-height: .9; }
+.proposal-heading h2 { margin: 0; font-size: 29px; letter-spacing: -.04em; }
+.proposal-heading div > p:last-child { margin: 9px 0 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+
+.mockup { overflow: hidden; border: 1px solid rgba(174, 193, 213, .75); border-radius: 16px; background: #f7fafe; box-shadow: 0 28px 70px rgba(18, 48, 80, .14); }
+.hero-banner { min-height: 280px; padding: clamp(35px, 6vw, 70px); display: flex; justify-content: center; flex-direction: column; background: linear-gradient(100deg, rgba(2, 8, 18, .98), rgba(5, 20, 44, .83) 49%, rgba(3, 9, 20, .2)), url('../imagenes/hero-inscripcion-tatami.png') center / cover no-repeat; color: #fff; }
+.hero-banner h3, .split-visual h3, .immersive-copy h3 { max-width: 620px; margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(38px, 5vw, 58px); font-weight: 500; letter-spacing: -.05em; line-height: 1; }
+.hero-banner > p:last-child, .split-visual > div > p:last-child, .immersive-copy > p { max-width: 520px; margin: 15px 0 0; color: #d5e2ef; font-size: 13px; line-height: 1.6; }
+.hero-banner .kicker, .split-visual .kicker, .immersive-copy .kicker { color: #ff9a9d; }
+
+.form-card { background: rgba(255, 255, 255, .98); }
+.form-card--wide { width: calc(100% - 80px); margin: -34px auto 42px; padding: clamp(25px, 4vw, 42px); border: 1px solid rgba(215, 226, 237, .9); border-radius: 11px; position: relative; box-shadow: 0 22px 55px rgba(20, 48, 80, .13); }
+.form-heading, .glass-heading { margin-bottom: 25px; padding-bottom: 18px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; }
+.form-heading span, .form-heading strong, .glass-heading small, .glass-heading strong { display: block; }
+.form-heading span { margin-bottom: 4px; color: var(--red); font-size: 9px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+.form-heading strong { font-size: 20px; }
+.form-heading small { color: var(--muted); font-size: 10px; }
+
+.fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
+.fields-grid label, .field-full { display: block; }
+.fields-grid label > span, .field-full > span { display: block; margin-bottom: 7px; font-size: 10px; font-weight: 850; }
+.fields-grid input, .fields-grid select, .field-full select { width: 100%; min-height: 44px; padding: 10px 13px; border: 1px solid #cbd7e4; border-radius: 6px; background: #fff; color: var(--ink); font: inherit; font-size: 12px; }
+.span-2 { grid-column: 1 / -1; }
+.photo-demo { margin-bottom: 22px; padding: 14px; border: 1px dashed #b9c8d8; border-radius: 8px; display: grid; grid-template-columns: 58px 1fr auto; align-items: center; gap: 14px; background: #f8fbfe; }
+.photo-demo > span { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: #e8f0f8; color: var(--blue); font-family: Georgia, serif; font-size: 18px; }
+.photo-demo strong, .photo-demo small { display: block; }
+.photo-demo strong { font-size: 12px; }
+.photo-demo small { margin-top: 4px; color: var(--muted); font-size: 9px; line-height: 1.4; }
+.photo-demo button { padding: 8px 11px; border: 0; border-radius: 5px; background: var(--blue); color: #fff; font: inherit; font-size: 9px; font-weight: 850; }
+.form-actions { margin-top: 26px; padding-top: 19px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; gap: 12px; }
+.button { min-width: 145px; min-height: 43px; padding: 0 15px; border: 0; border-radius: 6px; display: inline-flex; align-items: center; justify-content: space-between; gap: 20px; font: inherit; font-size: 11px; font-weight: 850; }
+.button--red { background: var(--red); color: #fff; box-shadow: 0 9px 22px rgba(226, 59, 66, .24); }
+.button--quiet { background: #edf3f8; color: var(--blue); }
+
+.mockup--split { min-height: 620px; display: grid; grid-template-columns: .95fr 1.05fr; }
+.split-visual { padding: clamp(35px, 5vw, 65px); display: flex; justify-content: space-between; flex-direction: column; background: linear-gradient(160deg, rgba(2, 8, 18, .88), rgba(5, 20, 44, .6)), url('../imagenes/hero-federado-combate.png') 72% center / auto 100% no-repeat, #030913; color: #fff; }
+.split-visual h3 { max-width: 420px; font-size: clamp(38px, 4.4vw, 54px); }
+.mini-steps { margin: 45px 0 0; padding: 0; display: flex; gap: 18px; list-style: none; color: #9fb2c8; font-size: 9px; font-weight: 800; text-transform: uppercase; }
+.mini-steps li { display: flex; align-items: center; gap: 7px; }
+.mini-steps span { width: 25px; height: 25px; border: 1px solid rgba(255, 255, 255, .25); border-radius: 50%; display: grid; place-items: center; }
+.mini-steps .active { color: #fff; }
+.mini-steps .active span { border-color: var(--red); background: var(--red); }
+.split-form { padding: clamp(35px, 5vw, 62px); display: flex; justify-content: center; flex-direction: column; }
+.split-form h3 { margin: 0; font-size: 28px; letter-spacing: -.04em; }
+.form-copy { margin: 9px 0 26px; color: var(--muted); font-size: 12px; line-height: 1.55; }
+.field-full { margin-top: 16px; }
+.info-box { margin-top: 22px; padding: 15px; border-left: 3px solid var(--red); background: #eef4fa; }
+.info-box strong, .info-box span { display: block; }
+.info-box strong { font-size: 11px; }
+.info-box span { margin-top: 4px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+
+.mockup--immersive { min-height: 630px; padding: clamp(35px, 6vw, 70px); display: grid; grid-template-columns: .8fr 1.2fr; align-items: center; gap: clamp(35px, 7vw, 90px); background: linear-gradient(110deg, rgba(2, 8, 18, .97), rgba(4, 17, 38, .82) 48%, rgba(2, 8, 18, .62)), url('../imagenes/hero-resultados-saludo-v2.png') center / cover no-repeat; color: #fff; }
+.immersive-copy h3 { font-size: clamp(42px, 5vw, 64px); }
+.progress { margin-top: 40px; display: flex; align-items: center; gap: 10px; color: #fff; font-size: 9px; font-weight: 900; }
+.progress span { width: 28px; height: 28px; border: 1px solid rgba(255, 255, 255, .32); border-radius: 50%; display: grid; place-items: center; }
+.progress span:first-child { border-color: var(--red); background: var(--red); }
+.progress i { width: 44px; height: 1px; background: rgba(255, 255, 255, .25); }
+.glass-card { padding: clamp(28px, 4vw, 44px); border: 1px solid rgba(255, 255, 255, .33); border-radius: 13px; background: rgba(245, 249, 253, .91); color: var(--ink); box-shadow: 0 30px 80px rgba(0, 0, 0, .32); backdrop-filter: blur(16px); }
+.glass-heading small { margin-bottom: 4px; color: var(--red); font-size: 9px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+.glass-heading strong { font-size: 19px; }
+.glass-heading > span { color: var(--muted); font-size: 10px; }
+.button--glass { border: 1px solid #b8c8d9; background: rgba(255, 255, 255, .6); color: var(--blue); }
+
+@media (max-width: 800px) {
+	.mockup--split, .mockup--immersive { grid-template-columns: 1fr; }
+	.split-visual, .immersive-copy { min-height: 410px; }
+	.form-card--wide { width: calc(100% - 32px); }
+}
+
+@media (max-width: 560px) {
+	.preview-header, main { width: min(100% - 28px, 1180px); }
+	main { padding-top: 36px; }
+	.brand span { display: none; }
+	.proposal { margin-top: 56px; }
+	.proposal-heading { grid-template-columns: 1fr; gap: 12px; }
+	.fields-grid { grid-template-columns: 1fr; }
+	.span-2 { grid-column: auto; }
+	.form-actions { align-items: stretch; flex-direction: column-reverse; }
+	.button { width: 100%; }
+	.mini-steps { align-items: flex-start; flex-direction: column; }
+}

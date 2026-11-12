@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>#pageTitle# · FMJYDA</title>
+	<meta name="description" content="Ficha privada, club e historial deportivo del federado.">
+	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/federado-ficha.css">
+</head>
+<body class="profile-page">
+	<div class="topline"></div>
+	<header class="access-header area-header">
+		<a class="brand" href="judo.php" aria-label="Volver al inicio">
+			<img src="imagenes/logo-fmjudo.png" alt="Logo de la Federación Madrileña de Judo">
+			<span>FEDERACIÓN MADRILEÑA<small>JUDO Y DEPORTES ASOCIADOS</small></span>
+		</a>
+		<div class="header-session">
+			<span>#username#</span>
+			<form method="post" action="logout.php">
+				<input type="hidden" name="csrf" value="#csrfToken#">
+				<button class="logout-button" type="submit">Cerrar sesión</button>
+			</form>
+		</div>
+	</header>
+
+	<main class="profile-shell">
+		<a class="profile-back" href="federado.php">← Volver al área de federados</a>
+
+		<section class="profile-hero">
+			<div class="profile-avatar" aria-hidden="true">#initials#</div>
+			<div>
+				<p class="eyebrow">Perfil deportivo</p>
+				<h1>#fullName#</h1>
+				<p>Licencia federativa <strong>#federationNumber#</strong></p>
+			</div>
+		</section>
+
+		<div class="profile-layout">
+			<div class="profile-main">
+				<section class="profile-panel" aria-labelledby="personal-title">
+					<div class="profile-heading"><div><p class="card-kicker">Información personal</p><h2 id="personal-title">Mis datos</h2></div></div>
+					<dl class="profile-data">
+						<div><dt>Número federativo</dt><dd>#federationNumber#</dd></div>
+						<div><dt>Fecha de nacimiento</dt><dd>#birthDate#</dd></div>
+						<div><dt>Edad</dt><dd>#age# años</dd></div>
+						<div><dt>Género</dt><dd>#gender#</dd></div>
+						<div><dt>Peso actual</dt><dd>#weight# kg</dd></div>
+					</dl>
+				</section>
+
+				<section class="profile-panel" aria-labelledby="results-title">
+					<div class="profile-heading">
+						<div><p class="card-kicker">Trayectoria</p><h2 id="results-title">Campeonatos disputados</h2></div>
+						<span>#championshipCount# campeonatos</span>
+					</div>
+					<div class="results-list">
+						##championships##
+						<article class="result-card">
+							<div class="result-position #positionClass#"><strong>#position#</strong></div>
+							<div class="result-info"><h3>#championshipName#</h3><p>#venue# · #subcategoryName#</p><time>#championshipDate#</time></div>
+						</article>
+						##/championships##
+						##championships:empty##<p class="profile-empty">Todavía no constan campeonatos disputados en tu historial.</p>##/championships:empty##
+					</div>
+				</section>
+			</div>
+
+			<aside class="club-card">
+				<span class="club-mark">CLUB</span>
+				<p class="card-kicker">Afiliación actual</p>
+				<h2>#clubName#</h2>
+				<p>#clubSince#</p>
+			</aside>
+		</div>
+	</main>
+</body>
+</html>

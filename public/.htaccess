@@ -1,0 +1,6 @@
+# Página de entrada del portal cuando se accede al alias /judo/.
+# Mantiene el mismo criterio que v04b/public/.htaccess.
+DirectoryIndex judo.php
+
+# Evita mostrar el listado de archivos si no se encuentra una página de entrada.
+Options -Indexes

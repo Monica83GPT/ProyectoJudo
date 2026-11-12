@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Pruebas de formularios · FMJYDA</title>
+	<meta name="description" content="Comparativa visual de tres propuestas para los formularios de gestión de la FMJYDA.">
+	<link rel="stylesheet" href="css/formularios-pruebas.css">
+</head>
+<body>
+	<div class="topline"></div>
+	<header class="preview-header">
+		<a class="brand" href="judo.php">
+			<img src="imagenes/logo-fmjudo.png" alt="Logo FMJYDA">
+			<span>FEDERACIÓN MADRILEÑA<small>JUDO Y DEPORTES ASOCIADOS</small></span>
+		</a>
+		<a class="back-link" href="judo.php">← Volver al inicio</a>
+	</header>
+
+	<main>
+		<section class="intro">
+			<p class="kicker">Laboratorio visual</p>
+			<h1>Tres formas de dar vida a los formularios</h1>
+			<p>Son pruebas independientes con los mismos campos. Compara cómo cambia la jerarquía, la presencia de la imagen y la sensación general.</p>
+		</section>
+
+		<article class="proposal" id="opcion-1">
+			<header class="proposal-heading">
+				<span class="proposal-number">01</span>
+				<div><p class="kicker">Opción 1 · Clara y continuista</p><h2>Cabecera visual + formulario</h2><p>Una imagen contextual identifica la tarea y el formulario permanece blanco, amplio y muy legible.</p></div>
+			</header>
+			<div class="mockup mockup--hero">
+				<section class="hero-banner">
+					<p class="kicker">Gestión del club</p>
+					<h3>Alta de judoka</h3>
+					<p>Crea la ficha federativa y vincula al deportista con tu club.</p>
+				</section>
+				<section class="form-card form-card--wide">
+					<div class="form-heading"><div><span>Datos del deportista</span><strong>Información federativa</strong></div><small>Todos los campos son obligatorios</small></div>
+					<div class="photo-demo"><span>DS</span><div><strong>Fotografía del judoka</strong><small>Si no se selecciona una imagen se utiliza SINFOTO, nunca un valor nulo.</small></div><button type="button">Seleccionar</button></div>
+					<div class="fields-grid">
+						<label><span>Número federativo</span><input value="MAD240128" readonly></label>
+						<label><span>Pesaje actual</span><input value="73 kg" readonly></label>
+						<label><span>Nombre</span><input value="Daniel" readonly></label>
+						<label><span>Apellidos</span><input value="Serrano Martín" readonly></label>
+						<label><span>Fecha de nacimiento</span><input value="18 / 04 / 2001" readonly></label>
+						<label><span>Género deportivo</span><select><option>Masculino</option></select></label>
+					</div>
+					<div class="form-actions"><button class="button button--quiet" type="button">Cancelar</button><button class="button button--red" type="button">Crear judoka <span>→</span></button></div>
+				</section>
+			</div>
+		</article>
+
+		<article class="proposal" id="opcion-2">
+			<header class="proposal-heading">
+				<span class="proposal-number">02</span>
+				<div><p class="kicker">Opción 2 · Más editorial</p><h2>Panel dividido</h2><p>La imagen acompaña todo el recorrido a la izquierda y el formulario ocupa un panel claro a la derecha.</p></div>
+			</header>
+			<div class="mockup mockup--split">
+				<section class="split-visual">
+					<div><p class="kicker">Nueva inscripción</p><h3>El siguiente combate empieza aquí.</h3><p>Selecciona el campeonato y envía la solicitud a tu club.</p></div>
+					<ol class="mini-steps"><li class="active"><span>1</span> Campeonato</li><li><span>2</span> Revisión</li><li><span>3</span> Solicitud</li></ol>
+				</section>
+				<section class="form-card split-form">
+					<p class="kicker">Paso 1 de 3</p>
+					<h3>Datos de inscripción</h3>
+					<p class="form-copy">Comprueba la competición y la categoría antes de continuar.</p>
+					<label class="field-full"><span>Campeonato</span><select><option>Campeonato de Madrid Absoluto</option></select></label>
+					<label class="field-full"><span>Categoría compatible</span><select><option>Sénior · -73 kg</option></select></label>
+					<div class="info-box"><strong>Solicitud mediante el club</strong><span>Tu club recibirá un correo para formalizar la inscripción.</span></div>
+					<div class="form-actions"><button class="button button--quiet" type="button">Atrás</button><button class="button button--red" type="button">Continuar <span>→</span></button></div>
+				</section>
+			</div>
+		</article>
+
+		<article class="proposal" id="opcion-3">
+			<header class="proposal-heading">
+				<span class="proposal-number">03</span>
+				<div><p class="kicker">Opción 3 · Más impactante</p><h2>Escenario inmersivo</h2><p>La imagen ocupa toda la página de trabajo y el formulario flota en una tarjeta translúcida con mayor profundidad.</p></div>
+			</header>
+			<div class="mockup mockup--immersive">
+				<section class="immersive-copy">
+					<p class="kicker">Control de competición</p>
+					<h3>Nuevo campeonato</h3>
+					<p>Configura evento, convocatoria y categorías desde un único lugar.</p>
+					<div class="progress"><span>01</span><i></i><span>02</span><i></i><span>03</span></div>
+				</section>
+				<section class="glass-card">
+					<div class="glass-heading"><div><small>Sección 01</small><strong>Información principal</strong></div><span>1 de 3</span></div>
+					<div class="fields-grid">
+						<label><span>Nombre del campeonato</span><input value="Open de Invierno" readonly></label>
+						<label><span>Fecha</span><input value="14 / 12 / 2026" readonly></label>
+						<label class="span-2"><span>Sede</span><input value="Pabellón Municipal de Madrid" readonly></label>
+					</div>
+					<div class="form-actions"><button class="button button--glass" type="button">Guardar borrador</button><button class="button button--red" type="button">Siguiente <span>→</span></button></div>
+				</section>
+			</div>
+		</article>
+	</main>
+</body>
+</html>
