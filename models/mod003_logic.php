@@ -100,13 +100,22 @@ function mod003_getResultsData() {
 	foreach ( mod002_runQuery( "getResultCategories" ) as $category ) {
 		$championshipId = $category[ "championshipId" ];
 		if ( !isset( $championshipIndexes[ $championshipId ] ) ) {
-			if ( count( $championships ) >= 6 ) {
-				continue;
-			}
 			$date = $category[ "championshipDate" ];
+			$championshipYear = $date instanceof DateTimeImmutable ? $date->format( "Y" ) : "Año no disponible";
+			$championshipName = $category[ "championshipName" ];
+			$championshipDisplayName = $championshipName;
+			if ( $championshipYear !== "Año no disponible" ) {
+				$nameWithoutYear = trim( preg_replace( "/\\s+" . preg_quote( $championshipYear, "/" ) . "$/u", "", $championshipName ) );
+				if ( $nameWithoutYear !== "" ) {
+					$championshipDisplayName = $nameWithoutYear;
+				}
+			}
 			$championshipIndexes[ $championshipId ] = count( $championships );
 			$championships[] = [
-				"championshipName" => $category[ "championshipName" ],
+				"championshipId" => $championshipId,
+				"championshipName" => $championshipName,
+				"championshipDisplayName" => $championshipDisplayName,
+				"championshipYear" => $championshipYear,
 				"championshipDate" => $date instanceof DateTimeImmutable ? mod003_formatSpanishDate( $date ) : "Fecha no disponible",
 				"venue" => $category[ "venue" ],
 				"categories" => [],
@@ -134,6 +143,40 @@ function mod003_getResultsData() {
 			"rankingUrl" => "ranking_descargar.php?cuadro=" . $category[ "bracketId" ],
 		];
 		$categoryCount++;
+	}
+
+	$yearTargets = [];
+	foreach ( $championships as $championship ) {
+		if ( !isset( $yearTargets[ $championship[ "championshipYear" ] ] ) ) {
+			$yearTargets[ $championship[ "championshipYear" ] ] = $championship[ "championshipId" ];
+		}
+	}
+
+	foreach ( $championships as $championshipIndex => $championship ) {
+		$nameOptions = [];
+		foreach ( $championships as $option ) {
+			if ( $option[ "championshipYear" ] !== $championship[ "championshipYear" ] ) {
+				continue;
+			}
+			$nameOptions[] = [
+				"optionValue" => $option[ "championshipId" ],
+				"optionLabel" => $option[ "championshipDisplayName" ],
+				"ariaSelected" => $option[ "championshipId" ] === $championship[ "championshipId" ] ? "true" : "false",
+			];
+		}
+
+		$yearOptions = [];
+		foreach ( $yearTargets as $optionYear => $optionChampionshipId ) {
+			$yearOptions[] = [
+				"optionValue" => $optionChampionshipId,
+				"optionLabel" => $optionYear,
+				"ariaSelected" => $optionYear === $championship[ "championshipYear" ] ? "true" : "false",
+			];
+		}
+
+		$championships[ $championshipIndex ][ "championshipNameOptions" ] = $nameOptions;
+		$championships[ $championshipIndex ][ "championshipYearOptions" ] = $yearOptions;
+		$championships[ $championshipIndex ][ "hiddenAttribute" ] = $championshipIndex === 0 ? "" : "hidden";
 	}
 
 	return [

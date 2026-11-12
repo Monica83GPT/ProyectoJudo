@@ -6,7 +6,8 @@
 	<title>#pageTitle# · FMJYDA</title>
 	<meta name="description" content="Últimos campeonatos, podios por categoría y rankings completos de la Federación Madrileña de Judo.">
 	<link rel="stylesheet" href="css/judo.css">
-	<link rel="stylesheet" href="css/resultados.css">
+	<link rel="stylesheet" href="css/resultados.css?v=4">
+	<script src="js/resultados.js?v=4" defer></script>
 </head>
 <body class="results-page">
 	<div class="topline"></div>
@@ -39,9 +40,9 @@
 
 		<div class="championship-list">
 			##championships##
-			<section class="championship-result">
+			<section class="championship-result" data-championship-id="#championshipId#" #hiddenAttribute#>
 				<header class="championship-heading">
-					<div><p class="results-kicker">Campeonato finalizado</p><h2>#championshipName#</h2></div>
+					<div class="championship-title"><p class="results-kicker">Campeonato finalizado</p><div class="championship-filters"><div class="championship-dropdown"><button class="championship-trigger" type="button" aria-expanded="false" aria-haspopup="listbox" aria-label="Seleccionar campeonato. Actual: #championshipDisplayName#"><span>#championshipDisplayName#</span><span class="championship-arrow" aria-hidden="true"></span></button><div class="championship-menu" role="listbox" hidden>##championshipNameOptions##<button class="championship-option" type="button" role="option" aria-selected="#ariaSelected#" data-championship-id="#optionValue#">#optionLabel#</button>##/championshipNameOptions##</div></div><div class="championship-dropdown championship-year"><button class="championship-trigger" type="button" aria-expanded="false" aria-haspopup="listbox" aria-label="Seleccionar año. Actual: #championshipYear#"><span>#championshipYear#</span><span class="championship-arrow" aria-hidden="true"></span></button><div class="championship-menu" role="listbox" hidden>##championshipYearOptions##<button class="championship-option" type="button" role="option" aria-selected="#ariaSelected#" data-championship-id="#optionValue#">#optionLabel#</button>##/championshipYearOptions##</div></div></div></div>
 					<div class="championship-meta"><strong>#championshipDate#</strong><span>#venue#</span></div>
 				</header>
 				<div class="category-grid">
