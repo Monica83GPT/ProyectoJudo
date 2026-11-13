@@ -118,7 +118,9 @@ function mod003_getChampionshipCatalogData() {
 			"eventAction" => $isUpcoming ? "Inscripción" : "Resultados",
 			"status" => $isUpcoming ? "upcoming" : "past",
 			"statusClass" => $isUpcoming ? "championship-card--upcoming" : "championship-card--past",
-			"logoUrl" => $championship[ "logoPath" ] ?: "imagenes/SINFOTO.svg",
+			"logoUrl" => !$championship[ "logoPath" ] || basename( $championship[ "logoPath" ] ) === "SINFOTO.svg"
+				? "imagenes/logo-fmjudo.png"
+				: $championship[ "logoPath" ],
 			"eventUrl" => $isUpcoming
 				? "inscripciones.php?campeonato=" . $championship[ "championshipId" ] . "#campeonato-" . $championship[ "championshipId" ]
 				: "resultados.php?campeonato=" . $championship[ "championshipId" ],
