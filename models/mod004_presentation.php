@@ -8,12 +8,16 @@ function mod004_getJudoHome() {
 	return render( mod004_readTemplate( "judo.html" ), mod003_getHomeData() );
 }
 
-function mod004_getResults() {
-	return render( mod004_readTemplate( "resultados.html" ), mod003_getResultsData() );
+function mod004_getCalendar() {
+	return render( mod004_readTemplate( "calendario.html" ), mod003_getCalendarData() );
 }
 
-function mod004_getPublicEnrollments() {
-	return render( mod004_readTemplate( "inscripciones.html" ), mod003_getPublicEnrollmentsData() );
+function mod004_getResults( $selectedChampionshipId = null ) {
+	return render( mod004_readTemplate( "resultados.html" ), mod003_getResultsData( $selectedChampionshipId ) );
+}
+
+function mod004_getPublicEnrollments( $selectedChampionshipId = null ) {
+	return render( mod004_readTemplate( "inscripciones.html" ), mod003_getPublicEnrollmentsData( $selectedChampionshipId ) );
 }
 
 function mod004_getFormDesignPreview() {

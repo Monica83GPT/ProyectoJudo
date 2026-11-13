@@ -17,7 +17,7 @@
 			</a>
 			<nav aria-label="Navegación principal">
 				<a href="#campeonatos">Campeonatos</a>
-				<a href="#calendario">Calendario</a>
+				<a href="calendario.php">Calendario</a>
 				<a href="resultados.php">Resultados</a>
 				<a class="login" href="login.php?perfil=club">Clubes</a>
 				<a class="login" href="login.php?perfil=federado">Federados</a>
@@ -39,14 +39,14 @@
 			</div>
 
 			<aside class="hero-card" id="calendario">
-				<small>Próximos eventos</small>
+				<small>Eventos destacados</small>
 				<h2>Competiciones y resultados<button class="event-scroll" type="button" aria-label="Desplazar próximos eventos">▾</button></h2>
 				<div class="event-list" id="event-list">
 					##events##
-					<div class="event-row">
+					<a class="event-row event-link" href="#eventUrl#">
 						<div class="date">#eventDay#<br>#eventMonth#</div>
 						<div><strong>#eventName#</strong><span>#eventDescription#</span></div>
-					</div>
+					</a>
 					##/events##
 					##events:empty##
 					<p class="events-empty">No hay campeonatos publicados.</p>

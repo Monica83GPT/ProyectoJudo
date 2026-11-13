@@ -1,0 +1,31 @@
+body.calendar-page { height: auto !important; min-height: 100vh; overflow-y: auto !important; background: linear-gradient(135deg, #eef4fa, #fbfcfe 55%, #edf3f8); }
+.calendar-active { color: var(--red); }
+.calendar-main { width: min(1060px, calc(100% - 40px)); margin: 0 auto; padding: 34px 0 60px; }
+.calendar-hero { position: relative; overflow: hidden; min-height: 215px; padding: clamp(32px, 5vw, 52px); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 30px; background: linear-gradient(105deg, rgba(2, 8, 18, .96) 0%, rgba(4, 18, 39, .8) 50%, rgba(3, 9, 20, .22) 100%), url('../imagenes/hero-resultados-saludo-v2.png') center / cover no-repeat; color: #fff; box-shadow: 0 24px 55px rgba(16, 35, 62, .16); }
+.calendar-hero::after { content: ""; position: absolute; right: -90px; top: -160px; width: 380px; height: 380px; border: 1px solid rgba(255, 255, 255, .12); border-radius: 50%; box-shadow: 0 0 0 60px rgba(255, 255, 255, .025), 0 0 0 120px rgba(255, 255, 255, .018); }
+.calendar-hero > * { position: relative; z-index: 1; }
+.calendar-eyebrow { margin: 0 0 10px; color: #ff9a9d; font-size: 10px; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
+.calendar-hero h1 { margin: 0 0 12px; font-family: Georgia, serif; font-size: clamp(34px, 5vw, 54px); font-weight: 500; letter-spacing: -.05em; }
+.calendar-hero p:not(.calendar-eyebrow) { max-width: 650px; margin: 0; color: #d5e1ed; font-size: 14px; line-height: 1.6; }
+.calendar-summary { flex: 0 0 150px; min-height: 120px; padding: 18px; border: 1px solid rgba(255,255,255,.18); border-radius: 8px; display: flex; flex-direction: column; justify-content: center; background: rgba(255,255,255,.09); }
+.calendar-summary strong { font-family: Georgia, serif; font-size: 42px; font-weight: 500; line-height: 1; }
+.calendar-summary span { margin-top: 7px; color: #cbdbea; font-size: 10px; }
+.calendar-list { margin-top: 24px; display: grid; gap: 14px; }
+.calendar-event { padding: 22px 24px; border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 10px; display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; align-items: center; gap: 20px; background: #fff; box-shadow: 0 12px 30px rgba(31,62,96,.07); }
+.calendar-event--past { border-left-color: #9aa8b7; }
+.calendar-event-date { width: 58px; height: 64px; border-radius: 7px; display: grid; place-content: center; text-align: center; background: #edf3f8; color: var(--blue); }
+.calendar-event-date strong { font-size: 25px; line-height: 1; }
+.calendar-event-date span { margin-top: 5px; font-size: 10px; font-weight: 800; }
+.calendar-event-status { margin: 0 0 5px; color: var(--red); font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.calendar-event--past .calendar-event-status { color: var(--muted); }
+.calendar-event h2 { margin: 0; color: var(--ink); font-size: 19px; }
+.calendar-event-details { margin-top: 13px; display: flex; flex-wrap: wrap; gap: 18px 28px; }
+.calendar-event-details span { color: var(--muted); font-size: 11px; }
+.calendar-event-details strong { display: block; margin-bottom: 3px; color: var(--ink); font-size: 9px; text-transform: uppercase; }
+.calendar-event-action { padding: 10px 0 6px; border-bottom: 2px solid var(--red); color: var(--blue); font-size: 11px; font-weight: 800; white-space: nowrap; text-decoration: none; }
+.calendar-event-action span { margin-left: 5px; color: var(--red); }
+.calendar-event-action:hover, .calendar-event-action:focus-visible { color: var(--red); outline: none; }
+.calendar-empty { padding: 48px; border: 1px solid var(--line); border-radius: 10px; background: #fff; text-align: center; }
+.calendar-empty p { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+@media (max-width: 720px) { .calendar-hero { align-items: flex-start; flex-direction: column; } .calendar-summary { width: 100%; min-height: auto; flex-basis: auto; } .calendar-event { grid-template-columns: 58px minmax(0, 1fr); } .calendar-event-action { grid-column: 2; justify-self: start; } }
+@media (max-width: 520px) { .calendar-main { width: min(100% - 28px, 1060px); padding-top: 20px; } .calendar-event { padding: 18px 16px; gap: 14px; } .calendar-event-details { display: grid; gap: 10px; } }

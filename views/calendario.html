@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>#pageTitle# · FMJYDA</title>
+	<meta name="description" content="Calendario completo de campeonatos de la Federación Madrileña de Judo y Deportes Asociados.">
+	<link rel="stylesheet" href="css/judo.css">
+	<link rel="stylesheet" href="css/calendario.css">
+</head>
+<body class="calendar-page">
+	<div class="topline"></div>
+	<header>
+		<div class="nav">
+			<a class="brand" href="judo.php" aria-label="Inicio FMJYDA">
+				<img class="brand-logo" src="imagenes/logo-fmjudo.png" alt="Logo de la Federación Madrileña de Judo">
+				<span>FEDERACIÓN MADRILEÑA<br><small>JUDO Y DEPORTES ASOCIADOS</small></span>
+			</a>
+			<nav aria-label="Navegación principal">
+				<a href="judo.php#campeonatos">Campeonatos</a>
+				<a class="calendar-active" href="calendario.php" aria-current="page">Calendario</a>
+				<a href="resultados.php">Resultados</a>
+				<a class="login" href="login.php?perfil=club">Clubes</a>
+				<a class="login" href="login.php?perfil=federado">Federados</a>
+				<a class="login" href="login.php?perfil=organizador">Organizadores</a>
+			</nav>
+		</div>
+	</header>
+
+	<main class="calendar-main">
+		<section class="calendar-hero">
+			<div>
+				<p class="calendar-eyebrow">Agenda FMJYDA</p>
+				<h1>Calendario de competiciones</h1>
+				<p>Consulta los próximos campeonatos, revisa los eventos finalizados y accede directamente a sus inscripciones o resultados.</p>
+			</div>
+			<div class="calendar-summary"><strong>#eventCount#</strong><span>eventos publicados</span></div>
+		</section>
+
+		<section class="calendar-list" aria-label="Listado de campeonatos">
+			##events##
+			<article class="calendar-event #statusClass#">
+				<div class="calendar-event-date"><strong>#eventDay#</strong><span>#eventMonth#</span></div>
+				<div class="calendar-event-body">
+					<p class="calendar-event-status">#eventStatus#</p>
+					<h2>#championshipName#</h2>
+					<div class="calendar-event-details"><span><strong>Fecha</strong>#championshipDate#</span><span><strong>Sede</strong>#venue#</span><span><strong>Inscripción</strong>#registrationDate#</span></div>
+				</div>
+				<a class="calendar-event-action" href="#eventUrl#">#eventAction# <span aria-hidden="true">→</span></a>
+			</article>
+			##/events##
+			##events:empty##
+			<div class="calendar-empty"><strong>No hay eventos publicados</strong><p>Cuando se publiquen campeonatos aparecerán aquí.</p></div>
+			##/events:empty##
+		</section>
+	</main>
+
+	<footer>
+		<span>FMJYDA · Federación Madrileña de Judo y Deportes Asociados</span>
+		<a class="footer-contact-link" href="https://judo.itsicap.com/contacto/">Contacto</a>
+	</footer>
+</body>
+</html>

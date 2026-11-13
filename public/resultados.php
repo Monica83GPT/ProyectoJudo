@@ -2,7 +2,7 @@
 require __DIR__ . "/../models/mod004_presentation.php";
 
 try {
-	echo mod004_getResults();
+	echo mod004_getResults( $_GET[ "campeonato" ] ?? null );
 } catch ( RuntimeException $e ) {
 	http_response_code( 500 );
 	echo mod004_showError( $e->getMessage() );

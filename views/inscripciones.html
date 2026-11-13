@@ -18,7 +18,7 @@
 			</a>
 			<nav aria-label="Navegación principal">
 				<a class="enrollments-active" href="inscripciones.php" aria-current="page">Inscripciones</a>
-				<a href="judo.php#calendario">Calendario</a>
+				<a href="calendario.php">Calendario</a>
 				<a href="resultados.php">Resultados</a>
 				<a class="login" href="login.php?perfil=club">Clubes</a>
 				<a class="login" href="login.php?perfil=federado">Federados</a>
@@ -45,7 +45,7 @@
 				</div>
 				<div class="enrollment-list">
 					##openEnrollments##
-					<article class="enrollment-card">
+					<article class="enrollment-card" id="inscripcion-campeonato-#championshipId#">
 						<div class="enrollment-card-heading">
 							<div><p>#issuer#</p><h3>#championshipName#</h3></div>
 							<div class="enrollment-deadline#deadlineClass#"><span>Plazo hasta</span><strong>#registrationDeadline#</strong><small>#deadlineNote#</small></div>
@@ -72,14 +72,14 @@
 				<h2 id="upcoming-title">Próximos campeonatos</h2>
 				<div class="upcoming-list">
 					##upcomingChampionships##
-					<article class="upcoming-item">
+					<article class="upcoming-item" id="campeonato-#championshipId#">
 						<time><strong>#eventDay#</strong><span>#eventMonth#</span></time>
 						<div><h3>#championshipName#</h3><p>#venue#</p><small>#registrationStatus#</small></div>
 					</article>
 					##/upcomingChampionships##
 					##upcomingChampionships:empty##<p class="upcoming-empty">Todavía no hay campeonatos próximos publicados.</p>##/upcomingChampionships:empty##
 				</div>
-				<a class="calendar-link" href="judo.php#calendario">Ver calendario completo <span aria-hidden="true">→</span></a>
+				<a class="calendar-link" href="calendario.php">Ver calendario completo <span aria-hidden="true">→</span></a>
 			</aside>
 		</div>
 	</main>

@@ -28,6 +28,9 @@ function mod003_getHomeData() {
 			"eventMonth"       => mod003_monthAbbreviation( $date ),
 			"eventName"        => $championship[ "championshipName" ],
 			"eventDescription" => mod003_eventDescription( $championship, $isUpcoming ),
+			"eventUrl"         => $isUpcoming
+				? "inscripciones.php?campeonato=" . $championship[ "championshipId" ] . "#campeonato-" . $championship[ "championshipId" ]
+				: "resultados.php?campeonato=" . $championship[ "championshipId" ],
 		];
 	}
 
@@ -41,11 +44,58 @@ function mod003_getHomeData() {
 	];
 }
 
+/* Prepara la agenda completa, con más información que el resumen de la portada. */
+function mod003_getCalendarData() {
+	$today = new DateTimeImmutable( "today" );
+	$events = [];
+
+	foreach ( mod002_runQuery( "getChampionships" ) as $championship ) {
+		$date = $championship[ "championshipDate" ];
+		if ( !( $date instanceof DateTimeImmutable ) ) {
+			continue;
+		}
+
+		$isUpcoming = $date >= $today;
+		$deadline = $championship[ "registrationDate" ];
+		$events[] = [
+			"sortDate" => $date->format( "Y-m-d" ),
+			"sortGroup" => $isUpcoming ? 0 : 1,
+			"championshipName" => $championship[ "championshipName" ],
+			"championshipDate" => mod003_formatSpanishDate( $date ),
+			"eventDay" => $date->format( "d" ),
+			"eventMonth" => mod003_monthAbbreviation( $date ),
+			"venue" => $championship[ "venue" ] ?: "Sede no disponible",
+			"eventStatus" => $isUpcoming ? "Próximo campeonato" : "Campeonato finalizado",
+			"registrationDate" => $deadline instanceof DateTimeImmutable ? mod003_formatSpanishDate( $deadline ) : "No disponible",
+			"eventAction" => $isUpcoming ? "Inscripción" : "Resultados",
+			"eventUrl" => $isUpcoming
+				? "inscripciones.php?campeonato=" . $championship[ "championshipId" ] . "#campeonato-" . $championship[ "championshipId" ]
+				: "resultados.php?campeonato=" . $championship[ "championshipId" ],
+			"statusClass" => $isUpcoming ? "calendar-event--upcoming" : "calendar-event--past",
+		];
+	}
+
+	usort( $events, function ( $first, $second ) {
+		if ( $first[ "sortGroup" ] !== $second[ "sortGroup" ] ) {
+			return $first[ "sortGroup" ] <=> $second[ "sortGroup" ];
+		}
+		$dateOrder = strcmp( $first[ "sortDate" ], $second[ "sortDate" ] );
+		return $first[ "sortGroup" ] === 0 ? $dateOrder : -$dateOrder;
+	} );
+
+	return [
+		"pageTitle" => "Calendario de competiciones",
+		"events" => $events,
+		"eventCount" => count( $events ),
+	];
+}
+
 /* Prepara las convocatorias públicas con plazo vigente y un resumen del calendario próximo. */
-function mod003_getPublicEnrollmentsData() {
+function mod003_getPublicEnrollmentsData( $selectedChampionshipId = null ) {
 	$today = new DateTimeImmutable( "today" );
 	$openEnrollments = [];
 	$upcomingChampionships = [];
+	$selectedId = filter_var( $selectedChampionshipId, FILTER_VALIDATE_INT, [ "options" => [ "min_range" => 1 ] ] );
 
 	foreach ( mod002_runQuery( "getUpcomingChampionships" ) as $championship ) {
 		$eventDate = $championship[ "championshipDate" ];
@@ -54,8 +104,9 @@ function mod003_getPublicEnrollmentsData() {
 			continue;
 		}
 
-		if ( count( $upcomingChampionships ) < 3 ) {
+		if ( count( $upcomingChampionships ) < 3 || ( $selectedId !== false && (int) $championship[ "championshipId" ] === (int) $selectedId ) ) {
 			$upcomingChampionships[] = [
+				"championshipId" => $championship[ "championshipId" ],
 				"eventDay" => $eventDate->format( "d" ),
 				"eventMonth" => mod003_monthAbbreviation( $eventDate ),
 				"championshipName" => $championship[ "championshipName" ],
@@ -72,6 +123,7 @@ function mod003_getPublicEnrollmentsData() {
 
 		$remainingDays = (int) $today->diff( $deadline )->format( "%a" );
 		$openEnrollments[] = [
+			"championshipId" => $championship[ "championshipId" ],
 			"championshipName" => $championship[ "championshipName" ],
 			"championshipDate" => mod003_formatSpanishDate( $eventDate ),
 			"venue" => $championship[ "venue" ],
@@ -92,7 +144,7 @@ function mod003_getPublicEnrollmentsData() {
 }
 
 /* Agrupa los últimos campeonatos publicados y prepara el podio de cada categoría. */
-function mod003_getResultsData() {
+function mod003_getResultsData( $selectedChampionshipId = null ) {
 	$championships = [];
 	$championshipIndexes = [];
 	$categoryCount = 0;
@@ -154,6 +206,17 @@ function mod003_getResultsData() {
 		}
 	}
 
+	$selectedId = filter_var( $selectedChampionshipId, FILTER_VALIDATE_INT, [ "options" => [ "min_range" => 1 ] ] );
+	$visibleIndex = 0;
+	if ( $selectedId !== false && $selectedId !== null ) {
+		foreach ( $championships as $championshipIndex => $championship ) {
+			if ( (int) $championship[ "championshipId" ] === (int) $selectedId ) {
+				$visibleIndex = $championshipIndex;
+				break;
+			}
+		}
+	}
+
 	foreach ( $championships as $championshipIndex => $championship ) {
 		$nameOptions = [];
 		foreach ( $championships as $option ) {
@@ -178,7 +241,7 @@ function mod003_getResultsData() {
 
 		$championships[ $championshipIndex ][ "championshipNameOptions" ] = $nameOptions;
 		$championships[ $championshipIndex ][ "championshipYearOptions" ] = $yearOptions;
-		$championships[ $championshipIndex ][ "hiddenAttribute" ] = $championshipIndex === 0 ? "" : "hidden";
+		$championships[ $championshipIndex ][ "hiddenAttribute" ] = $championshipIndex === $visibleIndex ? "" : "hidden";
 	}
 
 	return [
