@@ -26,6 +26,7 @@
 				<input type="hidden" name="MAX_FILE_SIZE" value="10485760">
 				<div class="form-grid">
 					<label class="form-span-2"><span>Convocatoria</span><select name="convocatoria" required><option value="">Selecciona una convocatoria</option>##options##<option value="#callId#" #selected#>#optionLabel# · #documentStatus#</option>##/options##</select></label>
+					<label class="form-span-2"><span>Versión de normativa</span><input name="reglamento" maxlength="100" value="#regulationValue#" required><small>Se completa aquí junto con la documentación oficial.</small></label>
 					<label class="official-file-field"><span>Circular de inscripción (PDF)</span><input name="circular" type="file" accept="application/pdf,.pdf"><small>Máximo 10 MB · déjalo vacío para conservar la actual</small></label>
 					<label class="official-file-field"><span>Normativa oficial (PDF)</span><input name="normativa" type="file" accept="application/pdf,.pdf"><small>Máximo 10 MB · déjalo vacío para conservar la actual</small></label>
 				</div>

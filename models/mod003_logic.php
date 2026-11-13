@@ -829,7 +829,7 @@ function mod003_getOrganizerCallOptions() {
 	return mod002_runQuery( "getOrganizerCalls" );
 }
 
-function mod003_updateCallDocuments( $selectedValue, $files ) {
+function mod003_updateCallDocuments( $selectedValue, $files, $input = [] ) {
 	$callId = filter_var( $selectedValue, FILTER_VALIDATE_INT, [ "options" => [ "min_range" => 1 ] ] );
 	$selected = null;
 	foreach ( mod003_getOrganizerCallOptions() as $option ) {
@@ -844,6 +844,8 @@ function mod003_updateCallDocuments( $selectedValue, $files ) {
 
 	$circular = mod003_validateOfficialPdf( $files[ "circular" ] ?? null, "la circular de inscripción", false );
 	$regulationDocument = mod003_validateOfficialPdf( $files[ "normativa" ] ?? null, "la normativa de la convocatoria", false );
+	$regulation = trim( (string) ( $input[ "reglamento" ] ?? "" ) );
+	if ( $regulation === "" || mod003_textLength( $regulation ) > 100 ) return [ "ok" => false, "errors" => [ "Indica una versión de normativa de hasta 100 caracteres." ] ];
 	$errors = [];
 	if ( $circular[ "error" ] !== null ) $errors[] = $circular[ "error" ];
 	if ( $regulationDocument[ "error" ] !== null ) $errors[] = $regulationDocument[ "error" ];
@@ -867,6 +869,7 @@ function mod003_updateCallDocuments( $selectedValue, $files ) {
 
 		mod002_runStatement( "updateCallDocuments", [
 			":callId" => $selected[ "callId" ],
+			":regulation" => $regulation,
 			":circularPath" => $circularPath,
 			":regulationPath" => $regulationPath,
 		] );
@@ -887,26 +890,21 @@ function mod003_createChampionshipCall( $input, $files = [] ) {
 		"name" => trim( (string) ( $input[ "nombre" ] ?? "" ) ),
 		"eventDate" => trim( (string) ( $input[ "fecha" ] ?? "" ) ),
 		"venue" => trim( (string) ( $input[ "sede" ] ?? "" ) ),
-		"subcategoryId" => filter_var( $input[ "subcategoria" ] ?? null, FILTER_VALIDATE_INT ),
 		"issuer" => trim( (string) ( $input[ "organismo" ] ?? "" ) ),
 		"deadline" => trim( (string) ( $input[ "plazo" ] ?? "" ) ),
 		"requirements" => trim( (string) ( $input[ "requisitos" ] ?? "" ) ),
 		"documents" => trim( (string) ( $input[ "documentos" ] ?? "" ) ),
 		"regulation" => trim( (string) ( $input[ "reglamento" ] ?? "" ) ),
-		"ageCutoff" => trim( (string) ( $input[ "corte_edad" ] ?? "" ) ),
 	];
 	$errors = [];
 	if ( $values[ "name" ] === "" || mod003_textLength( $values[ "name" ] ) > 20 ) $errors[] = "El campeonato necesita un nombre de hasta 20 caracteres.";
 	if ( !mod003_validDate( $values[ "eventDate" ] ) || $values[ "eventDate" ] < date( "Y-m-d" ) ) $errors[] = "La fecha del campeonato debe ser válida y futura.";
 	if ( $values[ "venue" ] === "" || mod003_textLength( $values[ "venue" ] ) > 100 ) $errors[] = "La sede es obligatoria y admite hasta 100 caracteres.";
-	$subcategories = mod003_getSubcategoryOptions();
-	if ( !in_array( $values[ "subcategoryId" ], array_column( $subcategories, "subcategoryId" ), true ) ) $errors[] = "Selecciona una categoría válida.";
 	if ( $values[ "issuer" ] === "" || mod003_textLength( $values[ "issuer" ] ) > 100 ) $errors[] = "El organismo emisor es obligatorio.";
 	if ( !mod003_validDate( $values[ "deadline" ] ) || ( mod003_validDate( $values[ "eventDate" ] ) && $values[ "deadline" ] > $values[ "eventDate" ] ) ) $errors[] = "El plazo debe ser una fecha válida anterior al campeonato.";
 	if ( $values[ "requirements" ] === "" ) $errors[] = "Indica los requisitos de participación.";
 	if ( $values[ "documents" ] === "" ) $errors[] = "Indica la documentación necesaria.";
-	if ( $values[ "regulation" ] === "" || mod003_textLength( $values[ "regulation" ] ) > 100 ) $errors[] = "Indica una versión de normativa de hasta 100 caracteres.";
-	if ( !mod003_validDate( $values[ "ageCutoff" ] ) ) $errors[] = "La fecha de corte de edad no es válida.";
+	if ( $values[ "regulation" ] !== "" && mod003_textLength( $values[ "regulation" ] ) > 100 ) $errors[] = "La versión de normativa admite hasta 100 caracteres.";
 	$circular = mod003_validateOfficialPdf( $files[ "circular" ] ?? null, "la circular de inscripción" );
 	$regulationDocument = mod003_validateOfficialPdf( $files[ "normativa" ] ?? null, "la normativa de la convocatoria" );
 	if ( $circular[ "error" ] !== null ) $errors[] = $circular[ "error" ];
@@ -920,17 +918,17 @@ function mod003_createChampionshipCall( $input, $files = [] ) {
 		$regulationPath = uploads_storeCallDocument( $regulationDocument[ "temporaryPath" ], "normativa" );
 		$storedDocuments[] = $regulationPath;
 
-		mod002_transaction( function () use ( $values, $circularPath, $regulationPath ) {
+		$championshipId = 0;
+		mod002_transaction( function () use ( $values, $circularPath, $regulationPath, &$championshipId ) {
 			$created = mod002_runStatement( "createChampionship", [
 				":name" => $values[ "name" ], ":eventDate" => $values[ "eventDate" ],
 				":logo" => "imagenes/SINFOTO.svg", ":venue" => $values[ "venue" ],
 			] );
 			$id = $created[ "insertId" ];
-			mod002_runStatement( "createCompetitionLevel", [ ":championshipId" => $id, ":subcategoryId" => $values[ "subcategoryId" ] ] );
+			$championshipId = $id;
 			mod002_runStatement( "createCall", [
 				":championshipId" => $id, ":issuer" => $values[ "issuer" ], ":deadline" => $values[ "deadline" ],
 				":requirements" => $values[ "requirements" ], ":documents" => $values[ "documents" ],
-				":regulation" => $values[ "regulation" ], ":ageCutoff" => $values[ "ageCutoff" ],
 				":circularPath" => $circularPath, ":regulationPath" => $regulationPath,
 			] );
 		} );
@@ -941,7 +939,53 @@ function mod003_createChampionshipCall( $input, $files = [] ) {
 		throw $e;
 	}
 
-	return [ "ok" => true, "errors" => [], "values" => [] ];
+	return [ "ok" => true, "errors" => [], "values" => [], "championshipId" => $championshipId ];
+}
+
+function mod003_getChampionshipSetup( $championshipId ) {
+	return mod002_runQuery( "getOrganizerChampionshipSetup", [ ":championshipId" => (int) $championshipId ] )[ 0 ] ?? null;
+}
+
+function mod003_getCompetitionCategories() {
+	return mod002_runQuery( "getCompetitionCategories" );
+}
+
+function mod003_getCompetitionSubcategories( $championshipId ) {
+	return mod002_runQuery( "getCompetitionSubcategories", [ ":championshipId" => (int) $championshipId ] );
+}
+
+function mod003_saveChampionshipLevels( $championshipId, $input ) {
+	$championshipId = filter_var( $championshipId, FILTER_VALIDATE_INT, [ "options" => [ "min_range" => 1 ] ] );
+	if ( !$championshipId || mod003_getChampionshipSetup( $championshipId ) === null ) return [ "ok" => false, "errors" => [ "El campeonato seleccionado no existe." ] ];
+	$selected = array_values( array_unique( array_filter( array_map( "intval", (array) ( $input[ "subcategorias" ] ?? [] ) ), fn( $id ) => $id > 0 ) ) );
+	$categoryId = filter_var( $input[ "nueva_categoria" ] ?? null, FILTER_VALIDATE_INT );
+	$newCategoryName = trim( (string) ( $input[ "nombre_categoria" ] ?? "" ) );
+	$gender = filter_var( $input[ "genero" ] ?? null, FILTER_VALIDATE_INT );
+	$minAge = filter_var( $input[ "edad_minima" ] ?? null, FILTER_VALIDATE_INT );
+	$maxAge = filter_var( $input[ "edad_maxima" ] ?? null, FILTER_VALIDATE_INT );
+	$newSubcategoryName = trim( (string) ( $input[ "nombre_subcategoria" ] ?? "" ) );
+	$minWeight = trim( (string) ( $input[ "peso_minimo" ] ?? "" ) );
+	$maxWeight = trim( (string) ( $input[ "peso_maximo" ] ?? "" ) );
+	$errors = [];
+	if ( $newSubcategoryName !== "" ) {
+		if ( $categoryId < 1 && $newCategoryName === "" ) $errors[] = "Selecciona una categoría o escribe una nueva.";
+		if ( mod003_textLength( $newSubcategoryName ) > 25 ) $errors[] = "El nombre del rango admite hasta 25 caracteres.";
+		if ( !is_numeric( $minWeight ) || !is_numeric( $maxWeight ) || (float) $minWeight > (float) $maxWeight ) $errors[] = "Indica un rango de peso válido.";
+		if ( $categoryId < 1 && ( $gender === false || $minAge === false || $maxAge === false || $minAge < 0 || $maxAge < $minAge ) ) $errors[] = "Completa el género y el rango de edad de la nueva categoría.";
+	} elseif ( $minWeight !== "" || $maxWeight !== "" || $newCategoryName !== "" ) $errors[] = "Completa el nombre y el rango de la nueva subcategoría.";
+	if ( !$selected && $newSubcategoryName === "" ) $errors[] = "Selecciona al menos un nivel de competición.";
+	if ( $errors ) return [ "ok" => false, "errors" => $errors ];
+	try {
+		mod002_transaction( function () use ( &$selected, $championshipId, $categoryId, $newCategoryName, $gender, $minAge, $maxAge, $newSubcategoryName, $minWeight, $maxWeight ) {
+			if ( $newSubcategoryName !== "" ) {
+				$resolvedCategoryId = $categoryId > 0 ? $categoryId : mod002_runStatement( "createCategory", [ ":name" => $newCategoryName, ":gender" => $gender, ":minAge" => $minAge, ":maxAge" => $maxAge ] )[ "insertId" ];
+				$newSubcategory = mod002_runStatement( "createSubcategory", [ ":name" => $newSubcategoryName, ":minWeight" => $minWeight, ":maxWeight" => $maxWeight, ":categoryId" => $resolvedCategoryId ] );
+				$selected[] = $newSubcategory[ "insertId" ];
+			}
+			foreach ( array_unique( $selected ) as $subcategoryId ) mod002_runStatement( "createCompetitionLevel", [ ":championshipId" => $championshipId, ":subcategoryId" => $subcategoryId ] );
+		} );
+	} catch ( Throwable $e ) { return [ "ok" => false, "errors" => [ $e->getMessage() ] ]; }
+	return [ "ok" => true, "errors" => [] ];
 }
 
 function mod003_validateOfficialPdf( $file, $label, $required = true ) {

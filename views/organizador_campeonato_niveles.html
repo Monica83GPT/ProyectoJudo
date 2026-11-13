@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Niveles de competición · FMJYDA</title>
+	<link rel="stylesheet" href="css/login.css?v=20261113-1">
+	<link rel="stylesheet" href="css/organizador_niveles.css?v=20261113-1">
+</head>
+<body class="form-page">
+	<div class="topline"></div>
+	<header class="access-header area-header">
+		<a class="brand" href="organizador.php"><img src="imagenes/logo-fmjudo.png" alt="Logo FMJYDA"><span>FEDERACIÓN MADRILEÑA<small>JUDO Y DEPORTES ASOCIADOS</small></span></a>
+		<a class="back-link" href="organizador.php">← Volver al área de organizadores</a>
+	</header>
+	<main class="form-shell form-shell--wide visual-form-shell">
+		<section class="form-intro form-hero form-hero--championship">
+			<p class="eyebrow">Configuración de competición</p>
+			<h1>Niveles del campeonato</h1>
+			<p>Asigna las subcategorías en las que se podrán inscribir los judokas.</p>
+		</section>
+		<section class="data-form-card levels-card">
+			<div class="setup-summary"><strong>#championshipName#</strong><span>#championshipDate# · #venue#</span></div>
+			##errors##<div class="form-error" role="alert">#message#</div>##/errors##
+			##success##<div class="form-success" role="status">#message#</div>##/success##
+			<form method="post" action="organizador_campeonato_niveles.php?campeonato=#championshipId#">
+				<input type="hidden" name="csrf" value="#csrfToken#"><input type="hidden" name="campeonato" value="#championshipId#">
+				<h2>Subcategorías disponibles</h2>
+				<p class="form-help">Marca todos los pesos que formarán parte de este campeonato.</p>
+				<div class="subcategory-list">##subcategories##<label class="subcategory-option"><input type="checkbox" name="subcategorias[]" value="#subcategoryId#" #checked#><span><b>#categoryName#</b><strong>#subcategoryName#</strong><small>#minWeight# – #maxWeight# kg</small></span></label>##/subcategories##</div>
+				##subcategories:empty##<p class="empty-form-state">Todavía no hay subcategorías creadas.</p>##/subcategories:empty##
+				<div class="new-level">
+					<h2>Crear una subcategoría nueva</h2><p class="form-help">Puedes usar una categoría existente o crearla ahora.</p>
+					<div class="form-grid">
+						<label><span>Categoría existente</span><select name="nueva_categoria"><option value="">Selecciona o crea una nueva</option>##categories##<option value="#categoryId#">#categoryName#</option>##/categories##</select></label>
+						<label><span>Nueva categoría (opcional)</span><input name="nombre_categoria" maxlength="25"></label>
+						<label><span>Género de nueva categoría</span><select name="genero"><option value="">Selecciona</option><option value="1">Masculino</option><option value="0">Femenino</option></select></label>
+						<label><span>Edad mínima</span><input name="edad_minima" type="number" min="0" max="99"></label>
+						<label><span>Edad máxima</span><input name="edad_maxima" type="number" min="0" max="99"></label>
+						<label><span>Nombre del rango</span><input name="nombre_subcategoria" maxlength="50" placeholder="Ej.: -66 kg"></label>
+						<label><span>Peso mínimo (kg)</span><input name="peso_minimo" type="number" step="0.1" min="0"></label>
+						<label><span>Peso máximo (kg)</span><input name="peso_maximo" type="number" step="0.1" min="0"></label>
+					</div>
+				</div>
+				<div class="form-actions"><a href="organizador.php">Cancelar</a><button type="submit">Guardar niveles <span>→</span></button></div>
+			</form>
+		</section>
+	</main>
+</body>
+</html>

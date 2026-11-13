@@ -13,7 +13,7 @@ if ( $_SERVER[ "REQUEST_METHOD" ] === "POST" ) {
 		$errors[] = "La sesión del formulario ha caducado. Inténtalo de nuevo.";
 	} else {
 		try {
-			$result = mod003_updateCallDocuments( $selectedValue, $_FILES );
+			$result = mod003_updateCallDocuments( $selectedValue, $_FILES, $_POST );
 			$errors = $result[ "errors" ];
 			if ( $result[ "ok" ] ) $success[] = "La documentación oficial se ha publicado correctamente.";
 		} catch ( RuntimeException $e ) {

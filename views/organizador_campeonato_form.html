@@ -16,7 +16,7 @@
 		<section class="form-intro form-hero form-hero--championship">
 			<p class="eyebrow">Control de competición</p>
 			<h1>Nuevo campeonato</h1>
-			<p>Crea el evento, su nivel de competición y la convocatoria pública en una sola operación.</p>
+			<p>Crea el evento y su convocatoria pública. En el siguiente paso podrás asignar todos sus niveles de competición.</p>
 		</section>
 		<section class="data-form-card">
 			##errors##<div class="form-error" role="alert">#message#</div>##/errors##
@@ -28,13 +28,10 @@
 					<label><span>Nombre del campeonato</span><input name="nombre" value="#name#" maxlength="20" required></label>
 					<label><span>Fecha</span><input name="fecha" type="date" value="#eventDate#" required></label>
 					<label class="form-span-2"><span>Sede</span><input name="sede" value="#venue#" maxlength="100" required></label>
-					<label><span>Categoría inicial</span><select name="subcategoria" required><option value="">Selecciona</option>##subcategories##<option value="#subcategoryId#" #selected#>#subcategoryName#</option>##/subcategories##</select></label>
 					<label><span>Plazo de inscripción</span><input name="plazo" type="date" value="#deadline#" required></label>
 					<label class="form-span-2"><span>Organismo emisor</span><input name="organismo" value="#issuer#" maxlength="100" required></label>
 					<label class="form-span-2"><span>Requisitos</span><textarea name="requisitos" rows="3" required>#requirements#</textarea></label>
 					<label class="form-span-2"><span>Documentación necesaria</span><textarea name="documentos" rows="3" required>#documentsValue#</textarea></label>
-					<label><span>Versión de normativa</span><input name="reglamento" value="#regulation#" maxlength="100" required></label>
-					<label><span>Fecha de corte de edad</span><input name="corte_edad" type="date" value="#ageCutoff#" required></label>
 					<label class="official-file-field"><span>Circular de inscripción (PDF)</span><input name="circular" type="file" accept="application/pdf,.pdf" required><small>Documento oficial · máximo 10 MB</small></label>
 					<label class="official-file-field"><span>Normativa de la convocatoria (PDF)</span><input name="normativa" type="file" accept="application/pdf,.pdf" required><small>Documento oficial · máximo 10 MB</small></label>
 				</div>

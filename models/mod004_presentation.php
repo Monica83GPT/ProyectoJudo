@@ -129,7 +129,6 @@ function mod004_getChampionshipForm( $csrfToken, $values, $subcategories, $error
 		"requirements" => $values[ "requirements" ] ?? "",
 		"documentsValue" => $values[ "documents" ] ?? "",
 		"regulation" => $values[ "regulation" ] ?? "",
-		"ageCutoff" => $values[ "ageCutoff" ] ?? "",
 		"subcategories" => $subcategories,
 		"errors" => mod004_messages( $errors ),
 		"success" => mod004_messages( $success ),
@@ -141,6 +140,7 @@ function mod004_getOrganizerDocumentsForm( $csrfToken, $options, $selectedValue 
 	$pendingPath = "documentos/convocatorias/pendiente-documentacion.pdf";
 	foreach ( $options as $index => $option ) {
 		$options[ $index ][ "selected" ] = (string) $option[ "callId" ] === (string) $selectedValue ? "selected" : "";
+		$options[ $index ][ "regulationValue" ] = $option[ "regulation" ] ?? "";
 		$publishedCount = (int) ( $option[ "circularPath" ] !== $pendingPath )
 			+ (int) ( $option[ "regulationPath" ] !== $pendingPath );
 		$options[ $index ][ "documentStatus" ] = $publishedCount === 2
@@ -152,6 +152,16 @@ function mod004_getOrganizerDocumentsForm( $csrfToken, $options, $selectedValue 
 		"options" => $options,
 		"errors" => mod004_messages( $errors ),
 		"success" => mod004_messages( $success ),
+	] );
+}
+
+function mod004_getChampionshipLevelsForm( $csrfToken, $championship, $categories, $subcategories, $errors = [], $success = [] ) {
+	foreach ( $subcategories as $index => $subcategory ) $subcategories[ $index ][ "checked" ] = $subcategory[ "assigned" ] ? "checked" : "";
+	return render( mod004_readTemplate( "organizador_campeonato_niveles.html" ), [
+		"csrfToken" => $csrfToken, "championshipId" => $championship[ "championshipId" ], "championshipName" => $championship[ "championshipName" ],
+		"championshipDate" => $championship[ "championshipDate"]->format( "d/m/Y" ), "venue" => $championship[ "venue" ],
+		"categories" => $categories, "subcategories" => $subcategories,
+		"errors" => mod004_messages( $errors ), "success" => mod004_messages( $success ),
 	] );
 }
 

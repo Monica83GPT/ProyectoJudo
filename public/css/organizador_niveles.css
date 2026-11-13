@@ -1,0 +1,11 @@
+.levels-card { max-width: 980px; }
+.setup-summary { display:flex; justify-content:space-between; gap:18px; padding:14px 16px; margin-bottom:22px; background:#f1f6fb; border-left:4px solid var(--red); color:var(--ink); }
+.setup-summary strong { font-size:16px; }.setup-summary span { color:var(--muted); font-size:12px; }
+.levels-card h2 { margin:24px 0 5px; color:var(--ink); font-size:16px; }.levels-card h2:first-of-type { margin-top:0; }
+.form-help { margin:0 0 14px; color:var(--muted); font-size:12px; }
+.subcategory-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.subcategory-option { display:flex; align-items:flex-start; gap:10px; padding:13px; border:1px solid #d7e0ea; border-radius:6px; cursor:pointer; background:#fff; }
+.subcategory-option:has(input:checked) { border-color:var(--red); background:#fff8f8; }.subcategory-option input { margin-top:3px; accent-color:var(--red); }
+.subcategory-option span { display:grid; gap:3px; }.subcategory-option b { color:var(--muted); font-size:11px; }.subcategory-option strong { color:var(--ink); font-size:13px; }.subcategory-option small { color:var(--muted); font-size:11px; }
+.new-level { margin-top:24px; padding-top:20px; border-top:1px solid var(--line); }
+@media (max-width:700px) { .subcategory-list { grid-template-columns:1fr; }.setup-summary { flex-direction:column; gap:5px; } }

@@ -166,30 +166,26 @@ INSERT INTO INSCRITOS (
 
 INSERT INTO CONVOCATORIAS (
     idconvocatoria, idcampeonato, organismo_emisor, plazo_inscripcion,
-    requisitos, documentos, reglamento_version, fecha_corte_edad
+    requisitos, documentos, reglamento_version
 ) VALUES
     (1, 1, 'Federacion Madrilena de Judo y D.A.', '2025-10-20',
      'Dato tecnico: licencia en vigor y categoria Senior -100 kg.',
      'Acta oficial del Sector Madrid Absoluto 2025.',
-     'Normativa aplicable en 2025; version no publicada en el acta.',
-     '2025-12-31'),
+     'Normativa aplicable en 2025; version no publicada en el acta.'),
     -- Las fechas y sedes siguientes son oficiales. Los plazos, requisitos
     -- concretos y documentos son provisionales hasta publicarse la circular.
     (2, 2, 'Real Federación Española de Judo y D.A.', '2026-11-20',
      'Provisional: licencia en vigor, categoria Senior -100 kg y clasificacion cuando proceda.',
      'Pendiente de circular oficial; fecha y sede constan en el calendario RFEJYDA 2026.',
-     'Pendiente de circular oficial',
-     '2026-12-31'),
+     'Pendiente de circular oficial'),
     (3, 3, 'European Judo Union / RFEJYDA', '2027-04-09',
      'Provisional: licencia en vigor, categoria Senior -100 kg y autorizacion federativa.',
      'Pendiente de circular oficial; fecha y sede constan en el calendario FMJYDA 2026/2027.',
-     'Pendiente de circular oficial',
-     '2027-12-31'),
+     'Pendiente de circular oficial'),
     (4, 4, 'Federacion Madrilena de Judo y D.A.', '2027-04-30',
      'Provisional: licencia en vigor, grado kyu admitido y categoria Senior -100 kg.',
      'Pendiente de circular oficial; evento incluido en el calendario FMJYDA 2026/2027.',
-     'Pendiente de circular oficial',
-     '2027-12-31');
+     'Pendiente de circular oficial');
 
 INSERT INTO CUADROS (
     idcuadro, idcampeonato, idsubcategoria, idformato,

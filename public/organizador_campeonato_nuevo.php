@@ -15,11 +15,14 @@ if ( $_SERVER[ "REQUEST_METHOD" ] === "POST" ) {
 			$result = mod003_createChampionshipCall( $_POST, $_FILES );
 			$values = $result[ "values" ];
 			$errors = $result[ "errors" ];
-			if ( $result[ "ok" ] ) $success[] = "El campeonato y su convocatoria se han creado correctamente.";
+			if ( $result[ "ok" ] ) {
+				header( "Location: organizador_campeonato_niveles.php?campeonato=" . (int) $result[ "championshipId" ] );
+				exit;
+			}
 		} catch ( RuntimeException $e ) {
 			$errors[] = $e->getMessage();
 		}
 	}
 }
 
-echo mod004_getChampionshipForm( $_SESSION[ "csrf" ], $values, mod003_getSubcategoryOptions(), $errors, $success );
+echo mod004_getChampionshipForm( $_SESSION[ "csrf" ], $values, [], $errors, $success );

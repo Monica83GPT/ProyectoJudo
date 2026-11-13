@@ -588,7 +588,7 @@ const CONFIG_QUERIES = [
 	],
 	"getOrganizerCalls" => [
 		"sql" => "SELECT cv.idconvocatoria, c.nomcampeonato, c.feccampeonato,
-		                 cv.circular_archivo, cv.normativa_archivo,
+		                 cv.circular_archivo, cv.normativa_archivo, cv.reglamento_version,
 		                 CONCAT(c.nomcampeonato, ' · ', DATE_FORMAT(c.feccampeonato, '%d/%m/%Y')) AS option_label
 		            FROM CONVOCATORIAS cv
 		            JOIN CAMPEONATOS c ON c.idcampeonato = cv.idcampeonato
@@ -599,13 +599,15 @@ const CONFIG_QUERIES = [
 			"feccampeonato" => [ "championshipDate", "dateObject" ],
 			"circular_archivo" => [ "circularPath", "string" ],
 			"normativa_archivo" => [ "regulationPath", "string" ],
+			"reglamento_version" => [ "regulation", "string" ],
 			"option_label" => [ "optionLabel", "string" ],
 		],
 		"error" => "No se han podido cargar las convocatorias.",
 	],
 	"updateCallDocuments" => [
 		"sql" => "UPDATE CONVOCATORIAS
-		             SET circular_archivo = COALESCE(:circularPath, circular_archivo),
+		             SET reglamento_version = :regulation,
+		                 circular_archivo = COALESCE(:circularPath, circular_archivo),
 		                 normativa_archivo = COALESCE(:regulationPath, normativa_archivo)
 		           WHERE idconvocatoria = :callId",
 		"fields" => [],
@@ -619,18 +621,42 @@ const CONFIG_QUERIES = [
 		"error" => "No se ha podido crear el campeonato.",
 	],
 	"createCompetitionLevel" => [
-		"sql" => "INSERT INTO NIVELESCOMPETICION (idcampeonato, idsubcategoria)
+		"sql" => "INSERT IGNORE INTO NIVELESCOMPETICION (idcampeonato, idsubcategoria)
 		          VALUES (:championshipId, :subcategoryId)",
 		"fields" => [],
 		"error" => "No se ha podido asignar la categoría al campeonato.",
 	],
+	"getOrganizerChampionshipSetup" => [
+		"sql" => "SELECT idcampeonato, nomcampeonato, feccampeonato, sede FROM CAMPEONATOS WHERE idcampeonato = :championshipId",
+		"fields" => [ "idcampeonato" => [ "championshipId", "int" ], "nomcampeonato" => [ "championshipName", "string" ], "feccampeonato" => [ "championshipDate", "dateObject" ], "sede" => [ "venue", "string" ] ],
+		"error" => "No se ha podido cargar el campeonato.",
+	],
+	"getCompetitionCategories" => [
+		"sql" => "SELECT idcategoria, nomcategoria FROM CATEGORIAS ORDER BY nomcategoria",
+		"fields" => [ "idcategoria" => [ "categoryId", "int" ], "nomcategoria" => [ "categoryName", "string" ] ],
+		"error" => "No se han podido cargar las categorías.",
+	],
+	"getCompetitionSubcategories" => [
+		"sql" => "SELECT sc.idsubcategoria, sc.nomrangopesaje, sc.pesajemin, sc.pesajemax, cat.nomcategoria, nc.idcampeonato AS assigned
+		            FROM SUBCATEGORIAS sc JOIN CATEGORIAS cat ON cat.idcategoria = sc.idcategoria
+		       LEFT JOIN NIVELESCOMPETICION nc ON nc.idsubcategoria = sc.idsubcategoria AND nc.idcampeonato = :championshipId
+		        ORDER BY cat.nomcategoria, sc.pesajemin",
+		"fields" => [ "idsubcategoria" => [ "subcategoryId", "int" ], "nomrangopesaje" => [ "subcategoryName", "string" ], "pesajemin" => [ "minWeight", "float" ], "pesajemax" => [ "maxWeight", "float" ], "nomcategoria" => [ "categoryName", "string" ], "assigned" => [ "assigned", "int" ] ],
+		"error" => "No se han podido cargar las subcategorías.",
+	],
+	"createCategory" => [
+		"sql" => "INSERT INTO CATEGORIAS (nomcategoria, genero, edadmax, edadmin) VALUES (:name, :gender, :maxAge, :minAge)", "fields" => [], "error" => "No se ha podido crear la categoría.",
+	],
+	"createSubcategory" => [
+		"sql" => "INSERT INTO SUBCATEGORIAS (nomrangopesaje, pesajemin, pesajemax, idcategoria) VALUES (:name, :minWeight, :maxWeight, :categoryId)", "fields" => [], "error" => "No se ha podido crear la subcategoría.",
+	],
 	"createCall" => [
 		"sql" => "INSERT INTO CONVOCATORIAS
 			                 (idcampeonato, organismo_emisor, plazo_inscripcion, requisitos,
-			                  documentos, reglamento_version, fecha_corte_edad,
+			                  documentos, reglamento_version,
 			                  circular_archivo, normativa_archivo)
 		          VALUES (:championshipId, :issuer, :deadline, :requirements,
-			                  :documents, :regulation, :ageCutoff,
+			                  :documents, 'pendiente-documentacion.pdf',
 			                  :circularPath, :regulationPath)",
 		"fields" => [],
 		"error" => "No se ha podido crear la convocatoria.",

@@ -1,6 +1,6 @@
 /* Añade los PDF oficiales asociados a cada convocatoria. */
 ALTER TABLE CONVOCATORIAS
-    ADD COLUMN IF NOT EXISTS circular_archivo VARCHAR(255) NULL AFTER fecha_corte_edad,
+    ADD COLUMN IF NOT EXISTS circular_archivo VARCHAR(255) NULL,
     ADD COLUMN IF NOT EXISTS normativa_archivo VARCHAR(255) NULL AFTER circular_archivo;
 
 UPDATE CONVOCATORIAS
