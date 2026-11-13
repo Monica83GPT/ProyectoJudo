@@ -387,6 +387,17 @@ body.results-page {
 	}
 }
 
+/* Paginación horizontal de categorías */
+.category-carousel { position: relative; overflow: hidden; }
+.category-grid[data-category-track] { display: flex; flex-wrap: nowrap; gap: 15px; transition: transform .28s ease; }
+.category-grid[data-category-track] .category-result { flex: 0 0 auto; }
+.category-grid[data-category-track] { width: 100% !important; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.category-grid[data-category-track] .category-result { width: auto; min-width: 0; }
+.category-pager { position: absolute; z-index: 2; top: 50%; width: 30px; height: 30px; padding: 0 0 3px; border: 1px solid rgba(40, 64, 88, .18); border-radius: 50%; background: rgba(255, 255, 255, .94); color: var(--blue); font: 24px/1 Arial, sans-serif; box-shadow: 0 3px 10px rgba(31, 62, 96, .12); transform: translateY(-50%); cursor: pointer; }
+.category-pager:hover, .category-pager:focus-visible { border-color: var(--red); color: var(--red); outline: none; }
+.category-pager-prev { left: 5px; }
+.category-pager-next { right: 5px; }
+
 @media (max-width: 520px) {
 	.results-main {
 		width: min(100% - 28px, 1060px);

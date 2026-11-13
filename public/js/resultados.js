@@ -55,3 +55,31 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("[data-category-carousel]").forEach((carousel) => {
+    const track = carousel.querySelector("[data-category-track]");
+    const cards = Array.from(track.querySelectorAll(".category-result"));
+    const previous = carousel.querySelector("[data-category-prev]");
+    const next = carousel.querySelector("[data-category-next]");
+    let page = 0;
+    // Cada página mantiene dos categorías, también en pantallas estrechas.
+    const pageSize = () => 2;
+    const update = () => {
+      const size = pageSize();
+      const totalPages = Math.ceil(cards.length / size);
+      page = Math.min(page, Math.max(0, totalPages - 1));
+      cards.forEach((card) => {
+        const cardIndex = cards.indexOf(card);
+        card.hidden = cardIndex < page * size || cardIndex >= (page + 1) * size;
+      });
+      track.style.transform = "none";
+      previous.hidden = cards.length <= size || page === 0;
+      next.hidden = cards.length <= size || page === totalPages - 1;
+    };
+    previous.addEventListener("click", () => { page -= 1; update(); });
+    next.addEventListener("click", () => { page += 1; update(); });
+    window.addEventListener("resize", update);
+    update();
+  });
+});
