@@ -147,7 +147,7 @@ CREATE TABLE CAMPEONATOS (
     idcampeonato    TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
     nomcampeonato   VARCHAR(100) NOT NULL,
     feccampeonato   DATE NOT NULL,
-    logocampeonato  CHAR(31) NOT NULL DEFAULT 'campeonato/images/img/00000.jpg',
+    logocampeonato  CHAR(11) NOT NULL DEFAULT 'cam0000.svg',
     sede            VARCHAR(100) NOT NULL,
     PRIMARY KEY (idcampeonato)
 ) ENGINE=InnoDB;

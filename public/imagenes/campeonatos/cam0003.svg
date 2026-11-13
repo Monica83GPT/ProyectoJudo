@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-labelledby="title desc">
+  <title id="title">European Open 2027</title><desc id="desc">Iniciales EO y año 27 sobre un fondo azul europeo.</desc>
+  <rect width="320" height="180" rx="18" fill="#164194"/>
+  <g fill="#ffd700" transform="translate(160 64)"><circle cx="0" cy="-31" r="4"/><circle cx="16" cy="-26" r="4"/><circle cx="27" cy="-12" r="4"/><circle cx="31" cy="5" r="4"/><circle cx="26" cy="21" r="4"/><circle cx="12" cy="31" r="4"/><circle cx="-5" cy="32" r="4"/><circle cx="-21" cy="24" r="4"/><circle cx="-30" cy="9" r="4"/><circle cx="-30" cy="-8" r="4"/><circle cx="-19" cy="-23" r="4"/><circle cx="-4" cy="-31" r="4"/></g>
+  <text x="160" y="120" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="55" font-weight="800" letter-spacing="3">EO</text>
+  <text x="160" y="157" text-anchor="middle" fill="#ffd700" font-family="Arial,sans-serif" font-size="27" font-weight="800" letter-spacing="5">27</text>
+</svg>

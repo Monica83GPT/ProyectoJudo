@@ -109,14 +109,14 @@ INSERT INTO SUBCATEGORIAS (
 INSERT INTO CAMPEONATOS (
     idcampeonato, nomcampeonato, feccampeonato, logocampeonato, sede
 ) VALUES
-    (1, 'Sector Madrid 2025', '2025-11-01', 'imagenes/SINFOTO.svg',
+    (1, 'Sector Madrid 2025', '2025-11-01', 'cam0001.svg',
      'CTD de Villaviciosa de Odon'),
     -- Proximos campeonatos del calendario oficial 2026/2027.
-    (2, 'España Absoluto 2026', '2026-11-28', 'imagenes/SINFOTO.svg',
+    (2, 'España Absoluto 2026', '2026-11-28', 'cam0002.svg',
      'Lugo'),
-    (3, 'European Open 2027', '2027-04-24', 'imagenes/SINFOTO.svg',
+    (3, 'European Open 2027', '2027-04-24', 'cam0003.svg',
      'La Nucia (Alicante)'),
-    (4, 'Trofeo San Isidro', '2027-05-09', 'imagenes/SINFOTO.svg',
+    (4, 'Trofeo San Isidro', '2027-05-09', 'cam0004.svg',
      'Villaviciosa de Odon');
 
 INSERT INTO NIVELESCOMPETICION (idcampeonato, idsubcategoria) VALUES

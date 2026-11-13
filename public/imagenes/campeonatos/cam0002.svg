@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" role="img" aria-labelledby="title desc">
+  <title id="title">España Absoluto 2026</title><desc id="desc">Iniciales EA y año 26 sobre la bandera de España.</desc>
+  <rect width="320" height="180" rx="18" fill="#c60b1e"/><rect y="52" width="320" height="76" fill="#ffc400"/>
+  <text x="160" y="112" text-anchor="middle" fill="#c60b1e" font-family="Arial,sans-serif" font-size="58" font-weight="800" letter-spacing="4">EA</text>
+  <text x="160" y="157" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="27" font-weight="800" letter-spacing="5">26</text>
+</svg>

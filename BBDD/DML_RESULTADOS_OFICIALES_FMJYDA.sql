@@ -49,14 +49,14 @@ WHERE NOT EXISTS (
 );
 
 INSERT INTO CAMPEONATOS (nomcampeonato, feccampeonato, logocampeonato, sede)
-SELECT 'Sector Junior 2025', '2025-02-22', 'imagenes/SINFOTO.svg',
+SELECT 'Sector Junior 2025', '2025-02-22', 'cam0005.svg',
        'Pabellón Francisco Valcárcel, Villaviciosa de Odón'
 WHERE NOT EXISTS (
     SELECT 1 FROM CAMPEONATOS
     WHERE nomcampeonato = 'Sector Junior 2025' AND feccampeonato = '2025-02-22'
 );
 INSERT INTO CAMPEONATOS (nomcampeonato, feccampeonato, logocampeonato, sede)
-SELECT 'Sector Absoluto 2024', '2024-11-16', 'imagenes/SINFOTO.svg',
+SELECT 'Sector Absoluto 2024', '2024-11-16', 'cam0006.svg',
        'Pabellón Francisco Valcárcel, Villaviciosa de Odón'
 WHERE NOT EXISTS (
     SELECT 1 FROM CAMPEONATOS

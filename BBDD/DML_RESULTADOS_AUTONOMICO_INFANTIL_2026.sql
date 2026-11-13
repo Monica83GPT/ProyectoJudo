@@ -64,7 +64,7 @@ WHERE NOT EXISTS (
 );
 
 INSERT INTO CAMPEONATOS (nomcampeonato, feccampeonato, logocampeonato, sede)
-SELECT 'Autonómico Infantil 2026', '2026-03-29', 'imagenes/SINFOTO.svg',
+SELECT 'Autonómico Infantil 2026', '2026-03-29', 'cam0007.svg',
        'Pabellón Francisco Valcárcel, Villaviciosa de Odón'
 WHERE NOT EXISTS (
     SELECT 1 FROM CAMPEONATOS

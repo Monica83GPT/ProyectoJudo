@@ -118,9 +118,7 @@ function mod003_getChampionshipCatalogData() {
 			"eventAction" => $isUpcoming ? "Inscripción" : "Resultados",
 			"status" => $isUpcoming ? "upcoming" : "past",
 			"statusClass" => $isUpcoming ? "championship-card--upcoming" : "championship-card--past",
-			"logoUrl" => !$championship[ "logoPath" ] || basename( $championship[ "logoPath" ] ) === "SINFOTO.svg"
-				? "imagenes/logo-fmjudo.png"
-				: $championship[ "logoPath" ],
+			"logoUrl" => mod003_championshipLogo( $championship[ "championshipId" ], $championship[ "championshipName" ], $championship[ "logoPath" ] ),
 			"eventUrl" => $isUpcoming
 				? "inscripciones.php?campeonato=" . $championship[ "championshipId" ] . "#campeonato-" . $championship[ "championshipId" ]
 				: "resultados.php?campeonato=" . $championship[ "championshipId" ],
@@ -128,6 +126,14 @@ function mod003_getChampionshipCatalogData() {
 	}
 
 	return [ "pageTitle" => "Campeonatos", "championships" => $championships, "championshipCount" => count( $championships ) ];
+}
+
+function mod003_championshipLogo( $championshipId, $championshipName, $storedPath ) {
+	if ( $storedPath !== "" && basename( $storedPath ) !== "SINFOTO.svg" && $storedPath !== "cam0000.svg" ) {
+		return "imagenes/campeonatos/" . basename( $storedPath );
+	}
+
+	return "imagenes/logo-fmjudo.png";
 }
 
 /* Prepara las convocatorias públicas con plazo vigente y un resumen del calendario próximo. */
