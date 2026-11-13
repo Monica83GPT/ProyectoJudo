@@ -26,6 +26,41 @@ const CONFIG_QUERIES = [
 		],
 		"error"  => "No se han podido cargar los datos federativos.",
 	],
+	"getChampionshipCatalog" => [
+		"sql" => "SELECT c.idcampeonato, c.nomcampeonato, c.feccampeonato, c.logocampeonato, c.sede,
+		                 cv.organismo_emisor, cv.plazo_inscripcion, cv.requisitos, cv.documentos,
+		                 cv.reglamento_version, cv.circular_archivo, cv.normativa_archivo,
+		                 COUNT(DISTINCT CONCAT(i.numfederado, '|', i.idsubcategoria)) AS inscritos,
+		                 GROUP_CONCAT(DISTINCT CONCAT(cat.nomcategoria, ' · ', sc.nomrangopesaje)
+		                              ORDER BY cat.nomcategoria, sc.pesajemin SEPARATOR ' · ') AS categorias
+		            FROM CAMPEONATOS c
+	       LEFT JOIN CONVOCATORIAS cv ON cv.idcampeonato = c.idcampeonato
+	       LEFT JOIN NIVELESCOMPETICION nc ON nc.idcampeonato = c.idcampeonato
+	       LEFT JOIN SUBCATEGORIAS sc ON sc.idsubcategoria = nc.idsubcategoria
+	       LEFT JOIN CATEGORIAS cat ON cat.idcategoria = sc.idcategoria
+	       LEFT JOIN INSCRITOS i ON i.idcampeonato = c.idcampeonato
+	        GROUP BY c.idcampeonato, c.nomcampeonato, c.feccampeonato, c.logocampeonato, c.sede,
+	                 cv.organismo_emisor, cv.plazo_inscripcion, cv.requisitos, cv.documentos,
+	                 cv.reglamento_version, cv.circular_archivo, cv.normativa_archivo
+	        ORDER BY (c.feccampeonato >= CURDATE()) DESC, c.feccampeonato ASC, c.idcampeonato ASC",
+		"fields" => [
+			"idcampeonato" => [ "championshipId", "int" ],
+			"nomcampeonato" => [ "championshipName", "string" ],
+			"feccampeonato" => [ "championshipDate", "dateObject" ],
+			"logocampeonato" => [ "logoPath", "string" ],
+			"sede" => [ "venue", "string" ],
+			"organismo_emisor" => [ "issuer", "string" ],
+			"plazo_inscripcion" => [ "registrationDate", "dateObject" ],
+			"requisitos" => [ "requirements", "string" ],
+			"documentos" => [ "documents", "string" ],
+			"reglamento_version" => [ "regulation", "string" ],
+			"circular_archivo" => [ "circularPath", "string" ],
+			"normativa_archivo" => [ "regulationPath", "string" ],
+			"inscritos" => [ "registeredCount", "int" ],
+			"categorias" => [ "categoriesText", "string" ],
+		],
+		"error" => "No se ha podido cargar el catálogo de campeonatos.",
+	],
 	"getResultCategories" => [
 		"sql" => "SELECT cu.idcuadro, c.idcampeonato, c.nomcampeonato, c.feccampeonato,
 		                 c.sede, sc.idsubcategoria,

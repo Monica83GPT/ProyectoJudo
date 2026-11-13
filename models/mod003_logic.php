@@ -90,6 +90,44 @@ function mod003_getCalendarData() {
 	];
 }
 
+/* Prepara el catálogo completo de campeonatos para la página de consulta. */
+function mod003_getChampionshipCatalogData() {
+	$today = new DateTimeImmutable( "today" );
+	$championships = [];
+
+	foreach ( mod002_runQuery( "getChampionshipCatalog" ) as $championship ) {
+		$date = $championship[ "championshipDate" ];
+		if ( !( $date instanceof DateTimeImmutable ) ) continue;
+		$isUpcoming = $date >= $today;
+		$championships[] = [
+			"championshipId" => $championship[ "championshipId" ],
+			"championshipName" => $championship[ "championshipName" ],
+			"championshipDate" => mod003_formatSpanishDate( $date ),
+			"eventDay" => $date->format( "d" ),
+			"eventMonth" => mod003_monthAbbreviation( $date ),
+			"year" => $date->format( "Y" ),
+			"venue" => $championship[ "venue" ] ?: "Sede no disponible",
+			"issuer" => $championship[ "issuer" ] ?: "Organizador no indicado",
+			"registrationDate" => $championship[ "registrationDate" ] instanceof DateTimeImmutable ? mod003_formatSpanishDate( $championship[ "registrationDate" ] ) : "No disponible",
+			"requirements" => $championship[ "requirements" ] ?: "Consulta los requisitos de la convocatoria.",
+			"documents" => $championship[ "documents" ] ?: "Documentación pendiente de publicación.",
+			"regulation" => $championship[ "regulation" ] ?: "Normativa pendiente de publicación.",
+			"categoriesText" => $championship[ "categoriesText" ] ?: "Categorías pendientes de publicación.",
+			"registeredCount" => $championship[ "registeredCount" ],
+			"eventStatus" => $isUpcoming ? "Próximo campeonato" : "Campeonato finalizado",
+			"eventAction" => $isUpcoming ? "Inscripción" : "Resultados",
+			"status" => $isUpcoming ? "upcoming" : "past",
+			"statusClass" => $isUpcoming ? "championship-card--upcoming" : "championship-card--past",
+			"logoUrl" => $championship[ "logoPath" ] ?: "imagenes/SINFOTO.svg",
+			"eventUrl" => $isUpcoming
+				? "inscripciones.php?campeonato=" . $championship[ "championshipId" ] . "#campeonato-" . $championship[ "championshipId" ]
+				: "resultados.php?campeonato=" . $championship[ "championshipId" ],
+		];
+	}
+
+	return [ "pageTitle" => "Campeonatos", "championships" => $championships, "championshipCount" => count( $championships ) ];
+}
+
 /* Prepara las convocatorias públicas con plazo vigente y un resumen del calendario próximo. */
 function mod003_getPublicEnrollmentsData( $selectedChampionshipId = null ) {
 	$today = new DateTimeImmutable( "today" );

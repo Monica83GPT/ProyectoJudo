@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>#pageTitle# · FMJYDA</title>
+	<meta name="description" content="Información completa de los campeonatos de la Federación Madrileña de Judo y Deportes Asociados.">
+	<link rel="stylesheet" href="css/judo.css">
+	<link rel="stylesheet" href="css/campeonatos.css">
+	<script src="js/campeonatos.js" defer></script>
+</head>
+<body class="championships-page">
+	<div class="topline"></div>
+	<header>
+		<div class="nav">
+			<a class="brand" href="judo.php" aria-label="Inicio FMJYDA">
+				<img class="brand-logo" src="imagenes/logo-fmjudo.png" alt="Logo de la Federación Madrileña de Judo">
+				<span>FEDERACIÓN MADRILEÑA<br><small>JUDO Y DEPORTES ASOCIADOS</small></span>
+			</a>
+			<nav aria-label="Navegación principal">
+				<a class="championships-active" href="campeonatos.php" aria-current="page">Campeonatos</a>
+				<a href="calendario.php">Calendario</a>
+				<a href="resultados.php">Resultados</a>
+				<a class="login" href="login.php?perfil=club">Clubes</a>
+				<a class="login" href="login.php?perfil=federado">Federados</a>
+				<a class="login" href="login.php?perfil=organizador">Organizadores</a>
+			</nav>
+		</div>
+	</header>
+
+	<main class="championships-main">
+		<section class="championships-hero">
+			<div>
+				<p class="championships-eyebrow">Información de competición</p>
+				<h1>Campeonatos</h1>
+				<p>Consulta las categorías, requisitos, documentación y estado de cada competición.</p>
+			</div>
+			<div class="championships-summary"><strong>#championshipCount#</strong><span>campeonatos publicados</span></div>
+		</section>
+
+		<section class="championships-toolbar" aria-label="Filtros de campeonatos">
+			<label class="championship-search">Buscar campeonato<input type="search" placeholder="Nombre o sede" data-championship-search></label>
+			<label>Estado<select data-championship-status><option value="upcoming" selected>Próximos</option><option value="all">Todos</option><option value="past">Finalizados</option></select></label>
+			<label>Año<select data-championship-year><option value="all">Todos los años</option></select></label>
+		</section>
+
+		<section class="championship-catalog" aria-live="polite">
+			<div class="championship-grid" data-championship-grid>
+				##championships##
+				<article class="championship-card #statusClass#" data-status="#status#" data-year="#year#" data-search="#championshipName# #venue# #categoriesText#">
+					<div class="championship-card-top">
+						<img class="championship-logo" src="#logoUrl#" alt="">
+						<div class="championship-date"><strong>#eventDay#</strong><span>#eventMonth#</span></div>
+						<div><p class="championship-status">#eventStatus#</p><h2>#championshipName#</h2><p class="championship-issuer">#issuer#</p></div>
+					</div>
+					<div class="championship-facts"><span><strong>Fecha</strong>#championshipDate#</span><span><strong>Sede</strong>#venue#</span><span><strong>Inscritos</strong>#registeredCount#</span></div>
+					<div class="championship-info"><div><strong>Categorías</strong><p>#categoriesText#</p></div><div><strong>Inscripción hasta</strong><p>#registrationDate#</p></div></div>
+					<details class="championship-more"><summary>Ver información</summary><p><strong>Requisitos:</strong> #requirements#</p><p><strong>Documentación:</strong> #documents#</p><p><strong>Normativa:</strong> #regulation#</p></details>
+					<a class="championship-action" href="#eventUrl#">#eventAction# <span aria-hidden="true">→</span></a>
+				</article>
+				##/championships##
+			</div>
+			<div class="championship-empty" data-championship-empty hidden><strong>No hay campeonatos que coincidan</strong><p>Prueba a cambiar los filtros de búsqueda.</p></div>
+			<div class="championship-pagination" data-championship-pagination hidden><button type="button" data-championship-prev aria-label="Campeonatos anteriores">←</button><span data-championship-page></span><button type="button" data-championship-next aria-label="Más campeonatos">→</button></div>
+		</section>
+	</main>
+
+	<footer><span>FMJYDA · Federación Madrileña de Judo y Deportes Asociados</span><a class="footer-contact-link" href="https://judo.itsicap.com/contacto/">Contacto</a></footer>
+</body>
+</html>

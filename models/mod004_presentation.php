@@ -12,6 +12,10 @@ function mod004_getCalendar() {
 	return render( mod004_readTemplate( "calendario.html" ), mod003_getCalendarData() );
 }
 
+function mod004_getChampionships() {
+	return render( mod004_readTemplate( "campeonatos.html" ), mod003_getChampionshipCatalogData() );
+}
+
 function mod004_getResults( $selectedChampionshipId = null ) {
 	return render( mod004_readTemplate( "resultados.html" ), mod003_getResultsData( $selectedChampionshipId ) );
 }
