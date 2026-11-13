@@ -520,7 +520,15 @@ function mod003_dashboardCards( $role, $summary, $eventCount, $documentCount ) {
 		];
 	}
 
-	return array_merge( $cards, $common );
+	$allCards = array_merge( $cards, $common );
+	$cardIcons = [
+		"club_judoka_nuevo.php" => "icon-live icon-single", "club_judokas.php" => "icon-live icon-group", "club_inscripcion.php" => "icon-registration icon-folder",
+		"federado_ficha.php" => "icon-live icon-single", "federado_inscripcion.php" => "icon-registration icon-folder",
+		"organizador_campeonato_nuevo.php" => "icon-trophy", "organizador_documentos.php" => "icon-stack",
+		"#gestion" => "icon-live icon-group", "#eventos" => "icon-calendar", "#documentos" => "icon-folder",
+	];
+	foreach ( $allCards as $index => $card ) $allCards[ $index ][ "cardIcon" ] = $cardIcons[ $card[ "cardUrl" ] ] ?? "activity";
+	return $allCards;
 }
 
 /* Agrupa los judokas del club y sus participaciones durante los últimos doce meses. */
@@ -533,6 +541,7 @@ function mod003_getClubJudokasData( $auth ) {
 	$judokaIndexes = [];
 	foreach ( $judokas as $index => $judoka ) {
 		$judokaIndexes[ $judoka[ "federationNumber" ] ] = $index;
+		$judokas[ $index ][ "editUrl" ] = "club_judoka_editar.php?numfederado=" . rawurlencode( $judoka[ "federationNumber" ] );
 		$judokas[ $index ][ "categoryName" ] = $judoka[ "categoryName" ] ?: "Sin categoría compatible";
 		$judokas[ $index ][ "competitions" ] = [];
 	}
@@ -742,6 +751,34 @@ function mod003_createClubJudoka( $auth, $input, $photoFile = null ) {
 	}
 
 	return [ "ok" => true, "errors" => [], "values" => [ "federationNumber" => "", "firstName" => "", "lastName" => "", "weight" => "", "birthDate" => "", "gender" => "1" ] ];
+}
+
+function mod003_getClubJudokaForEdit( $auth, $federationNumber ) {
+	if ( ( $auth[ "role" ] ?? "" ) !== "CLUB" ) throw new DomainException( "Solo los clubes pueden editar judokas." );
+	return mod002_runQuery( "getClubJudokaForEdit", [ ":userId" => $auth[ "userId" ], ":federationNumber" => strtoupper( trim( (string) $federationNumber ) ) ] )[ 0 ] ?? null;
+}
+
+function mod003_updateClubJudoka( $auth, $federationNumber, $input, $photoFile = null ) {
+	$selected = mod003_getClubJudokaForEdit( $auth, $federationNumber );
+	if ( $selected === null ) return [ "ok" => false, "errors" => [ "Este judoka no pertenece actualmente a tu club." ], "values" => [] ];
+	$weight = filter_var( $input[ "pesaje" ] ?? null, FILTER_VALIDATE_INT );
+	$values = [ "federationNumber" => $selected[ "federationNumber" ], "firstName" => $selected[ "firstName" ], "lastName" => $selected[ "lastName" ], "weight" => $weight === false ? (string) ( $input[ "pesaje" ] ?? "" ) : $weight, "birthDate" => $selected[ "birthDate" ], "gender" => (string) $selected[ "gender" ], "photo" => $selected[ "photo" ] ];
+	$errors = [];
+	if ( $weight === false || $weight < 1 || $weight > 255 ) $errors[] = "El pesaje debe ser un número entre 1 y 255 kg.";
+	$photo = mod003_validateJudokaPhoto( $photoFile );
+	if ( $photo[ "error" ] !== null ) $errors[] = $photo[ "error" ];
+	if ( $errors ) return [ "ok" => false, "errors" => $errors, "values" => $values ];
+	$newPhotoPath = null;
+	if ( $photo[ "temporaryPath" ] !== null ) $newPhotoPath = uploads_storeJudokaPhoto( $photo[ "temporaryPath" ], $photo[ "extension" ] );
+	try {
+		$updated = mod002_runStatement( "updateClubJudoka", [ ":userId" => $auth[ "userId" ], ":federationNumber" => $selected[ "federationNumber" ], ":weight" => $weight, ":photo" => $newPhotoPath ] );
+		if ( $updated[ "affectedRows" ] < 1 && $newPhotoPath === null && (int) $selected[ "weight" ] !== $weight ) throw new RuntimeException( "No se ha podido actualizar la ficha del judoka." );
+		if ( $newPhotoPath !== null && $selected[ "photo" ] !== $newPhotoPath ) uploads_deleteJudokaPhoto( $selected[ "photo" ] );
+	} catch ( Throwable $e ) {
+		if ( $newPhotoPath !== null ) uploads_deleteJudokaPhoto( $newPhotoPath );
+		throw $e;
+	}
+	return [ "ok" => true, "errors" => [], "values" => $values ];
 }
 
 function mod003_validateJudokaPhoto( $photoFile ) {

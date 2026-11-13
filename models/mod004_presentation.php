@@ -93,6 +93,18 @@ function mod004_getJudokaForm( $csrfToken, $values, $errors = [], $success = [],
 	return render( mod004_readTemplate( "club_judoka_form.html" ), $data );
 }
 
+function mod004_getJudokaEditForm( $csrfToken, $values, $errors = [], $success = [] ) {
+	$photo = $values[ "photo" ] ?? "imagenes/SINFOTO.svg";
+	return render( mod004_readTemplate( "club_judoka_edit_form.html" ), [
+		"csrfToken" => $csrfToken, "federationNumber" => $values[ "federationNumber" ] ?? "",
+		"firstName" => $values[ "firstName" ] ?? "", "lastName" => $values[ "lastName" ] ?? "",
+		"weight" => $values[ "weight" ] ?? "", "birthDate" => $values[ "birthDate" ] ?? "",
+		"genderLabel" => (string) ( $values[ "gender" ] ?? "1" ) === "1" ? "Masculino" : "Femenino",
+		"photoSrc" => $photo, "photoText" => $photo === "imagenes/SINFOTO.svg" ? "Se utilizará SINFOTO si no eliges una imagen." : "Fotografía actual",
+		"errors" => mod004_messages( $errors ), "success" => mod004_messages( $success ),
+	] );
+}
+
 function mod004_getEnrollmentForm( $auth, $csrfToken, $options, $errors = [], $success = [] ) {
 	$isClub = $auth[ "role" ] === "CLUB";
 	$data = [

@@ -9,21 +9,43 @@
 }
 
 .club-list-hero {
+	position: relative;
+	overflow: hidden;
+	min-height: 190px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 28px;
+	gap: 30px;
 	margin-bottom: 22px;
-	padding: 30px;
-	border-radius: 10px;
-	background: linear-gradient(135deg, var(--ink), var(--blue));
+	padding: clamp(28px, 5vw, 48px);
+	border-radius: 12px;
+	background:
+		linear-gradient(105deg, rgba(2, 8, 18, .97) 0%, rgba(5, 20, 44, .84) 48%, rgba(3, 9, 20, .28) 100%),
+		url('../imagenes/hero-federado-combate.png') center / cover no-repeat;
 	color: #fff;
+	box-shadow: 0 24px 55px rgba(16, 35, 62, .16);
 }
+
+.club-list-hero::after {
+	content: "";
+	position: absolute;
+	right: -85px;
+	top: -145px;
+	width: 360px;
+	height: 360px;
+	border: 1px solid rgba(255, 255, 255, .12);
+	border-radius: 50%;
+	box-shadow: 0 0 0 55px rgba(255, 255, 255, .025), 0 0 0 110px rgba(255, 255, 255, .018);
+}
+
+.club-list-hero > * { position: relative; z-index: 1; }
 
 .club-list-hero h1 {
 	margin: 4px 0 8px;
 	font-family: Georgia, serif;
-	font-size: clamp(28px, 4vw, 42px);
+	font-size: clamp(38px, 5vw, 58px);
+	font-weight: 500;
+	letter-spacing: -.05em;
 }
 
 .club-list-hero p:last-child {
@@ -35,11 +57,16 @@
 }
 
 .club-list-count {
-	min-width: 118px;
-	padding: 17px;
+	flex: 0 0 130px;
+	min-height: 120px;
+	padding: 18px;
 	border: 1px solid rgba(255, 255, 255, .22);
 	border-radius: 8px;
 	background: rgba(255, 255, 255, .09);
+	backdrop-filter: blur(8px);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	text-align: center;
 }
 
@@ -206,6 +233,18 @@
 	font-size: 12px;
 	font-weight: 850;
 }
+
+.judoka-edit-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 12px 24px 16px;
+	color: var(--red);
+	font-size: 12px;
+	font-weight: 800;
+}
+
+.judoka-edit-link span { font-size: 15px; }
 
 @media (max-width: 680px) {
 	.club-list-hero,

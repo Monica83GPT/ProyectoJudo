@@ -6,6 +6,8 @@
 	<title>#pageTitle# · FMJYDA</title>
 	<meta name="description" content="Panel privado de gestión de competiciones de judo.">
 	<link rel="stylesheet" href="css/login.css?v=20261109-4">
+	<link rel="stylesheet" href="css/judo.css?v=20261113-1">
+	<link rel="stylesheet" href="css/management-icons.css?v=20261113-1">
 </head>
 <body class="dashboard-page dashboard-#roleClass#">
 	<div class="topline"></div>
@@ -45,7 +47,18 @@
 			<div class="management-grid">
 				##cards##
 				<a class="management-card" href="#cardUrl#">
-					<span class="management-number">#cardNumber#</span>
+					<span class="management-icon card-icon #cardIcon#" aria-hidden="true">
+						<span class="icon-folder-back"></span><span class="icon-folder-paper"></span><span class="icon-folder-front"></span><span class="icon-folder-check"></span><span class="icon-folder-person"><img src="imagenes/icono-alta-judoka-azul.png" alt=""></span>
+						<span class="icon-tatami"></span><span class="icon-tatami-zone"></span><span class="icon-judoka icon-judoka-blue"></span><span class="icon-judoka icon-judoka-red"></span>
+						<span class="icon-judoka icon-judoka-group"></span>
+						<span class="icon-judoka-group-image icon-judoka-group-image-left"><img src="imagenes/icono-alta-judoka-azul.png" alt=""></span><span class="icon-judoka-group-image icon-judoka-group-image-center"><img src="imagenes/icono-alta-judoka-azul.png" alt=""></span><span class="icon-judoka-group-image icon-judoka-group-image-right"><img src="imagenes/icono-alta-judoka-azul.png" alt=""></span>
+						<span class="icon-judoka-belt"></span>
+						<span class="icon-judoka-single-image"><img src="imagenes/icono-alta-judoka-azul.png" alt=""></span>
+						<span class="icon-calendar-base"></span><span class="icon-calendar-page icon-calendar-page-back"></span><span class="icon-calendar-page icon-calendar-page-front"></span><span class="icon-calendar-ring icon-calendar-ring-left"></span><span class="icon-calendar-ring icon-calendar-ring-right"></span>
+						<span class="icon-trophy"><span class="icon-trophy-cup"></span><span class="icon-trophy-stem"></span><span class="icon-trophy-base"></span></span>
+						<span class="icon-stack-page icon-stack-page-back"></span><span class="icon-stack-page icon-stack-page-front"></span>
+						<span class="icon-logo-disc"><img src="imagenes/logo-fmjudo.png" alt=""></span><span class="icon-logo-ring"></span>
+					</span>
 					<h3>#cardTitle#</h3>
 					<p>#cardText#</p>
 					<strong>#cardMeta# <span>→</span></strong>

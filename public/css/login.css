@@ -542,17 +542,47 @@ a {
 	box-shadow: 0 16px 28px rgba(31, 62, 96, .1);
 }
 
-.management-number {
+.management-icon {
 	display: inline-grid;
-	width: 29px;
-	height: 29px;
+	position: relative;
+	width: 50px;
+	height: 50px;
 	place-items: center;
-	border-radius: 50%;
-	background: var(--blue-light);
+	border: 1px solid #c9d9e8;
+	border-radius: 15px;
+	background: linear-gradient(145deg, #fff, #dce7f3);
 	color: var(--blue);
-	font-family: Georgia, serif;
-	font-size: 11px;
+	box-shadow: 0 10px 16px rgba(16, 35, 62, .13), inset -5px -6px 9px rgba(18, 61, 107, .12), inset 5px 5px 8px rgba(255, 255, 255, .9);
+	transform: rotateX(18deg) rotateZ(-4deg);
+	transition: transform .25s ease, box-shadow .25s ease;
 }
+
+.management-card:hover .management-icon,
+.management-card:focus-visible .management-icon {
+	transform: rotateX(18deg) rotateZ(4deg) translateY(-4px);
+	box-shadow: 0 16px 22px rgba(16, 35, 62, .18), inset -5px -6px 9px rgba(18, 61, 107, .12), inset 5px 5px 8px rgba(255, 255, 255, .9);
+}
+
+.management-icon::before,
+.management-icon::after { content: ""; position: absolute; display: block; }
+.management-icon::before { width: 14px; height: 11px; border: 2px solid currentColor; border-radius: 3px; }
+.management-icon::after { width: 5px; height: 5px; border: 2px solid currentColor; border-radius: 50%; background: var(--blue-light); }
+.management-icon--add-judoka::before { width: 8px; height: 8px; border-radius: 50%; border: 2px solid currentColor; transform: translateY(-5px); }
+.management-icon--add-judoka::after { width: 15px; height: 7px; border: 2px solid currentColor; border-bottom: 0; border-radius: 9px 9px 0 0; transform: translateY(7px); }
+.management-icon--judokas::before { transform: translateX(-4px); }
+.management-icon--judokas::after { transform: translate(5px, -2px); }
+.management-icon--registration::before { border-radius: 50%; width: 17px; height: 17px; }
+.management-icon--registration::after { width: 8px; height: 4px; border-width: 0 0 2px 2px; border-style: solid; transform: translate(1px, 1px) rotate(-45deg); }
+.management-icon--profile::before { width: 9px; height: 9px; border-radius: 50%; transform: translateY(-5px); }
+.management-icon--profile::after { width: 15px; height: 7px; border-radius: 9px 9px 0 0; transform: translateY(7px); }
+.management-icon--calendar::before { width: 16px; height: 15px; }
+.management-icon--calendar::after { width: 12px; height: 2px; border: 0; border-top: 2px solid currentColor; transform: translateY(-4px); }
+.management-icon--document::before { width: 13px; height: 17px; border-radius: 2px; }
+.management-icon--document::after { width: 7px; height: 2px; border: 0; border-top: 2px solid currentColor; transform: translateY(2px); box-shadow: 0 4px currentColor; }
+.management-icon--championship::before { width: 15px; height: 15px; border-radius: 50%; }
+.management-icon--championship::after { width: 5px; height: 5px; border: 0; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: translateY(10px) rotate(-45deg); }
+.management-icon--activity::before { width: 17px; height: 13px; border-width: 2px 0; border-radius: 0; transform: rotate(-30deg); }
+.management-icon--activity::after { width: 17px; height: 13px; border-width: 0 2px; border-radius: 0; transform: rotate(30deg); }
 
 .management-card h3 {
 	margin: 15px 0 7px;

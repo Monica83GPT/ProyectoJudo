@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Editar ficha · FMJYDA</title>
+	<link rel="stylesheet" href="css/login.css?v=20261109-6">
+</head>
+<body class="form-page">
+	<div class="topline"></div>
+	<header class="access-header area-header">
+		<a class="brand" href="club.php"><img src="imagenes/logo-fmjudo.png" alt="Logo FMJYDA"><span>FEDERACIÓN MADRILEÑA<small>JUDO Y DEPORTES ASOCIADOS</small></span></a>
+		<a class="back-link" href="club_judokas.php">← Volver a mis judokas</a>
+	</header>
+	<main class="form-shell visual-form-shell">
+		<section class="form-intro form-hero form-hero--judoka">
+			<p class="eyebrow">Gestión del club</p>
+			<h1>Editar ficha</h1>
+			<p>Actualiza la fotografía y el pesaje del judoka seleccionado.</p>
+			<div class="form-note"><strong>Datos protegidos</strong><span>La identidad federativa solo puede modificarse por la federación.</span></div>
+		</section>
+		<section class="data-form-card">
+			##errors##<div class="form-error" role="alert">#message#</div>##/errors##
+			##success##<div class="form-success" role="status">#message#</div>##/success##
+			<form method="post" action="club_judoka_editar.php?numfederado=#federationNumber#" enctype="multipart/form-data">
+				<input type="hidden" name="csrf" value="#csrfToken#"><input type="hidden" name="MAX_FILE_SIZE" value="2097152">
+				<label class="photo-upload" for="foto">
+					<span class="photo-preview-shell"><img id="photo-preview" src="#photoSrc#" alt="Fotografía del judoka"></span>
+					<span class="photo-upload-copy"><strong>Fotografía del judoka</strong><small>JPG, PNG o WebP · máximo 2 MB</small><span class="photo-button">Seleccionar archivo</span><span id="photo-name" class="photo-name">#photoText#</span></span>
+					<input id="foto" name="foto" type="file" accept="image/jpeg,image/png,image/webp">
+				</label>
+				<div class="form-grid">
+					<label><span>Número federativo</span><input value="#federationNumber#" readonly></label>
+					<label><span>Pesaje actual (kg)</span><input name="pesaje" type="number" value="#weight#" min="1" max="255" required></label>
+					<label><span>Nombre</span><input value="#firstName#" readonly></label>
+					<label><span>Apellidos</span><input value="#lastName#" readonly></label>
+					<label><span>Fecha de nacimiento</span><input value="#birthDate#" readonly></label>
+					<label><span>Género deportivo</span><input value="#genderLabel#" readonly></label>
+				</div>
+				<div class="form-actions"><a href="club_judokas.php">Cancelar</a><button type="submit">Guardar cambios <span>→</span></button></div>
+			</form>
+		</section>
+	</main>
+	<script src="js/judoka-form.js"></script>
+</body>
+</html>

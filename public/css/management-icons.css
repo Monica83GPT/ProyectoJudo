@@ -1,0 +1,189 @@
+/* Iconos 3D de las tarjetas de área, derivados del lenguaje visual de judo.php. */
+.dashboard-page { height: auto; min-height: 100vh; overflow-y: auto; }
+.management-icon { margin-bottom: 8px; background: transparent; border: 0; box-shadow: none; }
+.management-icon::before,
+.management-icon::after { display: none !important; }
+.management-icon > span { display: none !important; }
+.management-icon.icon-folder > .icon-folder-back,
+.management-icon.icon-folder > .icon-folder-paper,
+.management-icon.icon-folder > .icon-folder-front,
+.management-icon.icon-folder > .icon-folder-check,
+.management-icon.icon-registration > .icon-folder-label,
+.management-icon.icon-registration > .icon-folder-person,
+.management-icon.icon-single > .icon-judoka-single-image,
+.management-icon.icon-group > .icon-judoka-group-image,
+.management-icon.icon-calendar > .icon-calendar-base,
+.management-icon.icon-calendar > .icon-calendar-page,
+.management-icon.icon-calendar > .icon-calendar-ring,
+.management-icon.icon-trophy > .icon-trophy,
+.management-icon.icon-stack > .icon-stack-page,
+.management-icon.icon-logo > .icon-logo-disc,
+.management-icon.icon-logo > .icon-logo-ring { display: block !important; }
+.management-icon.icon-logo > .icon-logo-disc { display: grid !important; }
+.management-icon.icon-single > .icon-judoka-single-image { display: grid !important; place-items: center; }
+.management-icon.icon-single .icon-judoka-single-image img { width: 51px; height: 51px; object-fit: contain; filter: drop-shadow(0 8px 8px rgba(18,61,107,.2)); transition: transform .28s ease, filter .28s ease; }
+.management-icon.icon-group > .icon-judoka-group-image { display: grid !important; place-items: center; z-index: 2; }
+.management-icon.icon-group .icon-judoka-group-image img { width: 32px; height: 42px; object-fit: contain; filter: opacity(.72) drop-shadow(0 6px 6px rgba(18,61,107,.2)); transition: transform .28s ease, filter .28s ease; }
+.management-icon.icon-group .icon-judoka-group-image-left { left: 5px; bottom: 9px; transform: rotateZ(-8deg); z-index: 1; }
+.management-icon.icon-group .icon-judoka-group-image-center { left: 13px; bottom: 13px; }
+.management-icon.icon-group .icon-judoka-group-image-right { left: 23px; bottom: 9px; transform: rotateZ(8deg); z-index: 1; }
+.management-icon.icon-group .icon-judoka-group-image-center img { filter: brightness(.96) saturate(1.1) drop-shadow(0 8px 8px rgba(18,61,107,.28)); }
+.management-icon .icon-folder-back { background: linear-gradient(145deg, #3f83f4, #0e3b99); box-shadow: 0 9px 13px rgba(14, 59, 153, .26); }
+.management-icon .icon-folder-front { background: linear-gradient(145deg, #4d8df7, #2057c7); box-shadow: inset -6px -7px 10px rgba(14, 42, 111, .25), inset 4px 4px 8px rgba(255, 255, 255, .25), 0 10px 14px rgba(14, 59, 153, .24); }
+.management-icon.icon-folder .icon-folder-paper { left: 16px; bottom: 21px; width: 28px; height: 34px; border: 2px solid #162b4b; background: linear-gradient(160deg, #fff, #edf3f9); box-shadow: 0 8px 12px rgba(18,61,107,.18); transform: rotate(-2deg); }
+.management-icon.icon-folder .icon-folder-paper:before,
+.management-icon.icon-folder .icon-folder-paper:after { left: 6px; right: 5px; height: 2px; background: #162b4b; }
+.management-icon.icon-folder .icon-folder-paper:before { top: 12px; box-shadow: 0 6px 0 #6f86a4, 0 12px 0 #6f86a4; }
+.management-icon.icon-folder .icon-folder-paper:after { top: 30px; width: 13px; right: auto; background: #6f86a4; }
+.management-icon .icon-folder-check { border-color: #123d6b; }
+.management-icon.icon-registration .icon-folder-label {
+	left: 20px; bottom: 39px; z-index: 4; color: #162b4b; font: 700 4px/1 Arial, sans-serif;
+	letter-spacing: .2px; transform: rotate(-2deg); white-space: nowrap;
+}
+.management-icon.icon-registration .icon-folder-back {
+	left: 10px; bottom: 8px; width: 38px; height: 45px; border: 3px solid #0e3b99;
+	border-radius: 8px 8px 5px 5px; background: linear-gradient(145deg, #3f83f4, #0e3b99);
+}
+.management-icon.icon-registration .icon-folder-paper {
+	left: 17px; bottom: 24px; width: 27px; height: 35px; border: 2px solid #162b4b;
+	border-radius: 3px; transform: none; z-index: 2;
+}
+.management-icon.icon-registration .icon-folder-front {
+	left: 17px; bottom: 8px; width: 43px; height: 29px; border-radius: 8px 8px 9px 9px;
+	background: linear-gradient(145deg, #4d8df7, #2057c7); clip-path: polygon(0 0, 100% 0, 89% 100%, 11% 100%);
+	box-shadow: inset -6px -7px 10px rgba(5,14,29,.3), inset 4px 4px 8px rgba(255,255,255,.14), 0 10px 14px rgba(18,61,107,.24);
+}
+.management-icon.icon-registration .icon-folder-check { display: none !important; }
+.management-icon.icon-registration .icon-folder-person {
+	left: 27px; bottom: 12px; z-index: 5; width: 22px; height: 28px; overflow: hidden;
+	transform: rotateZ(2deg); transition: transform .28s ease, filter .28s ease;
+}
+.management-icon.icon-registration .icon-folder-person img {
+	width: 42px; height: 42px; object-fit: contain; filter: brightness(0) invert(1) drop-shadow(0 3px 3px rgba(5,14,29,.26));
+	transform: translate(-10px, -4px);
+}
+.management-icon.icon-live .icon-tatami { background: linear-gradient(135deg, #123d6b 0 18%, #6f9fc5 18% 82%, #1c5b8f 82% 100%); }
+.management-icon.icon-live .icon-tatami-zone { border-color: rgba(18, 61, 107, .5); }
+.management-icon.icon-live .icon-judoka-blue,
+.management-icon.icon-live .icon-judoka-red { background: #123d6b; }
+.management-icon.icon-group .icon-judoka-group { background: #2b6da2; }
+.management-icon.icon-logo .icon-logo-disc img { filter: grayscale(1) brightness(.7) contrast(1.1); }
+.management-icon.icon-logo .icon-logo-ring { border-color: rgba(18, 61, 107, .55); box-shadow: 0 9px 13px rgba(18, 61, 107, .14); }
+
+.management-icon.icon-single .icon-judoka-blue {
+	transform: none; left: 22px; right: auto; bottom: 19px; width: 16px; height: 22px;
+	background: linear-gradient(100deg, #0d2d51, #4b8abb 48%, #123d6b 52%, #0d2d51);
+	border-radius: 8px 8px 5px 5px;
+}
+.management-icon.icon-single .icon-judoka-blue:before { width: 11px; height: 11px; left: 2px; top: -9px; background: #2b6da2; }
+.management-icon.icon-single .icon-judoka-blue:after { width: 25px; height: 6px; left: -5px; top: 7px; background: #1c5b8f; }
+.management-icon.icon-single .icon-judoka-belt {
+	left: 17px; bottom: 29px; z-index: 4; width: 26px; height: 5px; border-radius: 999px;
+	background: linear-gradient(180deg, #2b6da2, #0d2d51); box-shadow: 0 3px 4px rgba(18,61,107,.24);
+	transform: rotateZ(-2deg);
+}
+.management-icon.icon-single .icon-judoka-belt:after {
+	content: ""; position: absolute; left: 11px; top: 3px; width: 14px; height: 3px; border-radius: 0 0 999px 999px;
+	background: #123d6b; transform: rotateZ(18deg); box-shadow: 0 2px 2px rgba(13,29,56,.18);
+}
+.management-icon.icon-group .icon-judoka-group { left: 28px; bottom: 24px; transform: rotateZ(4deg) scale(.86); }
+.management-icon.icon-group .icon-judoka-group:before { width: 7px; height: 7px; left: 2px; top: -6px; }
+.management-icon.icon-group .icon-judoka-group:after { width: 17px; height: 5px; left: -3px; top: 7px; }
+
+.management-icon.icon-calendar .icon-calendar-base {
+	left: 7px; bottom: 9px; width: 45px; height: 43px; border: 3px solid #0e3b99; border-radius: 7px;
+	background: linear-gradient(145deg, #fff, #edf3f9);
+	box-shadow: 5px 8px 0 rgba(18, 61, 107, .14), 0 9px 13px rgba(18, 61, 107, .18);
+}
+.management-icon.icon-calendar .icon-calendar-base:before {
+	content: ""; position: absolute; left: -3px; right: -3px; top: 9px; height: 5px; background: #0e3b99;
+}
+.management-icon.icon-calendar .icon-calendar-base:after {
+	content: ""; position: absolute; left: 7px; top: 19px; width: 5px; height: 5px; border-radius: 50%;
+	background: #0e3b99; box-shadow: 10px 0 #0e3b99, 20px 0 #0e3b99, 30px 0 #0e3b99, 0 10px #0e3b99, 10px 10px #0e3b99, 20px 10px #0e3b99, 30px 10px #0e3b99;
+}
+.management-icon.icon-calendar .icon-calendar-page {
+	width: 27px; height: 31px; left: 17px; bottom: 23px; border: 2px solid #123d6b; border-radius: 4px;
+	background: linear-gradient(160deg, #fff, #edf3f9); box-shadow: 0 7px 11px rgba(18,61,107,.16);
+}
+.management-icon.icon-calendar .icon-calendar-page:after {
+	content: ""; position: absolute; left: 6px; right: 6px; top: 10px; height: 2px;
+	background: #2b6da2; box-shadow: 0 7px 0 #9eb8d0;
+}
+.management-icon.icon-calendar .icon-calendar-page-back { transform: rotate(-8deg) translate(-6px, 3px); opacity: .78; }
+.management-icon.icon-calendar .icon-calendar-page-front { z-index: 3; transform: rotate(5deg); }
+.management-icon.icon-calendar .icon-calendar-ring {
+	width: 6px; height: 15px; top: 8px; border-radius: 999px; background: #0e3b99; z-index: 4;
+}
+.management-icon.icon-calendar .icon-calendar-ring-left { left: 17px; }
+.management-icon.icon-calendar .icon-calendar-ring-right { left: 38px; }
+.management-icon.icon-trophy { width: 58px; height: 58px; }
+.management-icon.icon-trophy > .icon-trophy { position: absolute; inset: 0; display: block !important; overflow: hidden; transition: transform .28s ease; }
+.management-icon.icon-trophy .icon-trophy-cup {
+	left: 17px; top: 14px; width: 25px; height: 22px; border-radius: 4px 4px 10px 10px;
+	background: linear-gradient(145deg, #4d8df7, #0e3b99); box-shadow: 0 8px 10px rgba(14,59,153,.24);
+}
+.management-icon.icon-trophy .icon-trophy-cup:before,
+.management-icon.icon-trophy .icon-trophy-cup:after {
+	content: ""; position: absolute; top: 3px; width: 8px; height: 11px; border: 3px solid #2057c7; border-radius: 8px;
+}
+.management-icon.icon-trophy .icon-trophy-cup:before { left: -9px; border-right: 0; }
+.management-icon.icon-trophy .icon-trophy-cup:after { right: -9px; border-left: 0; }
+.management-icon.icon-trophy .icon-trophy-stem { left: 27px; top: 36px; width: 5px; height: 8px; background: #0e3b99; }
+.management-icon.icon-trophy .icon-trophy-base { left: 21px; top: 44px; width: 17px; height: 5px; border-radius: 4px; background: #2057c7; box-shadow: 0 5px 7px rgba(14,59,153,.22); }
+.management-icon.icon-stack .icon-stack-page {
+	width: 29px; height: 35px; left: 15px; bottom: 14px; border: 2px solid #0e3b99; border-radius: 4px;
+	background: linear-gradient(160deg, #fff, #dce9fa); box-shadow: 0 8px 12px rgba(14,59,153,.2);
+}
+.management-icon.icon-stack .icon-stack-page:after { content: ""; position: absolute; left: 6px; right: 6px; top: 11px; height: 2px; background: #2057c7; box-shadow: 0 7px 0 #6d93d1, 0 14px 0 #6d93d1; }
+.management-icon.icon-stack .icon-stack-page-back { transform: rotate(-8deg) translate(-5px, 3px); opacity: .72; }
+.management-icon.icon-stack .icon-stack-page-front { z-index: 2; transform: rotate(5deg); }
+
+.management-card:hover .management-icon:before,
+.management-card:focus-visible .management-icon:before { transform: rotateX(58deg) rotateZ(13deg) translateY(-4px); }
+.management-card:hover .management-icon:after,
+.management-card:focus-visible .management-icon:after { opacity: .65; transform: scaleX(2.35); }
+.management-card:hover .management-icon .icon-folder-front,
+.management-card:focus-visible .management-icon .icon-folder-front { transform: rotateX(50deg) rotateZ(8deg) translateY(-5px); }
+.management-card:hover .management-icon .icon-folder-paper,
+.management-card:focus-visible .management-icon .icon-folder-paper { transform: rotateZ(10deg) translate(2px, -8px); }
+.management-card:hover .management-icon.icon-registration .icon-folder-person,
+.management-card:focus-visible .management-icon.icon-registration .icon-folder-person { transform: rotateZ(4deg) translateY(-5px); }
+.management-card:hover .management-icon.icon-live .icon-tatami,
+.management-card:focus-visible .management-icon.icon-live .icon-tatami,
+.management-card:hover .management-icon.icon-live .icon-tatami-zone,
+.management-card:focus-visible .management-icon.icon-live .icon-tatami-zone { transform: rotateX(58deg) rotateZ(8deg) translateY(-4px); }
+.management-card:hover .management-icon.icon-live .icon-judoka-blue,
+.management-card:focus-visible .management-icon.icon-live .icon-judoka-blue { transform: rotateZ(48deg) translate(2px, -7px); }
+.management-card:hover .management-icon.icon-live .icon-judoka-red,
+.management-card:focus-visible .management-icon.icon-live .icon-judoka-red { transform: rotateZ(-48deg) translate(-2px, -7px); }
+.management-card:hover .management-icon.icon-single .icon-judoka-blue,
+.management-card:focus-visible .management-icon.icon-single .icon-judoka-blue { transform: rotateZ(8deg) translate(1px, -7px); }
+.management-card:hover .management-icon.icon-single .icon-judoka-single-image img,
+.management-card:focus-visible .management-icon.icon-single .icon-judoka-single-image img { transform: rotateY(18deg) rotateZ(5deg) translateY(-4px); filter: drop-shadow(0 13px 11px rgba(18,61,107,.28)); }
+.management-card:hover .management-icon.icon-single .icon-judoka-belt,
+.management-card:focus-visible .management-icon.icon-single .icon-judoka-belt { transform: rotateZ(8deg) translate(1px, -7px); }
+.management-card:hover .management-icon.icon-group .icon-judoka-group,
+.management-card:focus-visible .management-icon.icon-group .icon-judoka-group { transform: rotateZ(-8deg) translate(-2px, -7px) scale(.86); }
+.management-card:hover .management-icon.icon-group .icon-judoka-group-image-left,
+.management-card:focus-visible .management-icon.icon-group .icon-judoka-group-image-left { transform: rotateZ(-13deg) translate(-2px, -4px); }
+.management-card:hover .management-icon.icon-group .icon-judoka-group-image-center,
+.management-card:focus-visible .management-icon.icon-group .icon-judoka-group-image-center { transform: translateY(-6px) scale(1.05); }
+.management-card:hover .management-icon.icon-group .icon-judoka-group-image-right,
+.management-card:focus-visible .management-icon.icon-group .icon-judoka-group-image-right { transform: rotateZ(13deg) translate(2px, -4px); }
+.management-card:hover .management-icon.icon-calendar .icon-calendar-page-front,
+.management-card:focus-visible .management-icon.icon-calendar .icon-calendar-page-front { transform: rotateZ(15deg) translate(10px, -9px); }
+.management-card:hover .management-icon.icon-calendar .icon-calendar-page-back,
+.management-card:focus-visible .management-icon.icon-calendar .icon-calendar-page-back { transform: rotateZ(-12deg) translate(-3px, -4px); }
+.management-card:hover .management-icon.icon-trophy > .icon-trophy,
+.management-card:focus-visible .management-icon.icon-trophy > .icon-trophy { transform: rotateZ(8deg) translateY(-4px); }
+.management-card:hover .management-icon.icon-stack .icon-stack-page-front,
+.management-card:focus-visible .management-icon.icon-stack .icon-stack-page-front { transform: rotateZ(13deg) translate(7px, -7px); }
+.management-card:hover .management-icon .icon-logo-disc,
+.management-card:focus-visible .management-icon .icon-logo-disc { transform: rotateY(25deg) rotateZ(8deg) translateY(-5px); }
+.management-card:hover .management-icon .icon-logo-ring,
+.management-card:focus-visible .management-icon .icon-logo-ring { opacity: .45; transform: rotate(25deg) scale(1.13); }
+
+@media (prefers-reduced-motion: reduce) {
+	.management-icon, .management-icon:before, .management-icon:after, .management-icon span { transition: none; }
+}

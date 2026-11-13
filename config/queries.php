@@ -259,6 +259,33 @@ const CONFIG_QUERIES = [
 		],
 		"error" => "No se han podido cargar los judokas del club.",
 	],
+	"getClubJudokaForEdit" => [
+		"sql" => "SELECT j.numfederado, j.nombre, j.apellidos, j.pesaje, j.fecnacimiento, j.genero, j.fotojudoka
+		            FROM USUARIOS_CLUB uc
+		            JOIN PERTENECIENTES p ON p.idclub = uc.idclub
+		            JOIN JUDOKAS j ON j.numfederado = p.numfederado
+		           WHERE uc.idusuario = :userId AND j.numfederado = :federationNumber
+		             AND p.idclub = (SELECT p2.idclub FROM PERTENECIENTES p2 WHERE p2.numfederado = p.numfederado ORDER BY p2.fechaaltaclub DESC, p2.idclub DESC LIMIT 1)
+	             AND p.fechaaltaclub = (SELECT MAX(p3.fechaaltaclub) FROM PERTENECIENTES p3 WHERE p3.numfederado = p.numfederado AND p3.idclub = p.idclub)",
+		"fields" => [
+			"numfederado" => [ "federationNumber", "string" ], "nombre" => [ "firstName", "string" ],
+			"apellidos" => [ "lastName", "string" ], "pesaje" => [ "weight", "int" ],
+			"fecnacimiento" => [ "birthDate", "date" ], "genero" => [ "gender", "int" ],
+			"fotojudoka" => [ "photo", "string" ],
+		],
+		"error" => "No se ha encontrado el judoka en el club actual.",
+	],
+	"updateClubJudoka" => [
+		"sql" => "UPDATE JUDOKAS j
+		            JOIN PERTENECIENTES p ON p.numfederado = j.numfederado
+		            JOIN USUARIOS_CLUB uc ON uc.idclub = p.idclub
+		           SET j.pesaje = :weight, j.fotojudoka = COALESCE(:photo, j.fotojudoka)
+		         WHERE uc.idusuario = :userId AND j.numfederado = :federationNumber
+		           AND p.idclub = (SELECT p2.idclub FROM PERTENECIENTES p2 WHERE p2.numfederado = p.numfederado ORDER BY p2.fechaaltaclub DESC, p2.idclub DESC LIMIT 1)
+		           AND p.fechaaltaclub = (SELECT MAX(p3.fechaaltaclub) FROM PERTENECIENTES p3 WHERE p3.numfederado = p.numfederado AND p3.idclub = p.idclub)",
+		"fields" => [],
+		"error" => "No se ha podido actualizar la ficha del judoka.",
+	],
 	"getClubJudokaRecentResults" => [
 		"sql" => "SELECT pc.numfederado, c.nomcampeonato, c.feccampeonato, c.sede,
 		                 CONCAT(cat.nomcategoria, ' · ', sc.nomrangopesaje) AS categoria_competicion,
